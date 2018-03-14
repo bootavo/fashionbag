@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">fashionbag</string>
+
+    <!-- NavigationButtomViewEx -->
+    <string name="home">Inicio</string>
+    <string name="catalog">Catálogo</string>
+    <string name="bag">Reservas</string>
+    <string name="map">Ubicación</string>
+    <string name="settings">Congfig</string>
+
+    <!-- ProgressDialog -->
+    <string name="pd_message">Cargando...</string>
+
+    <!-- Validation Apis -->
+    <string name="data_incomplete">Complete los datos solicitados</string>
+    <string name="network_problems">Revise su conexión a internet y vuelva a intentarlo</string>
+    <string name="server_problems">Ha ocurrido un error, Vuelva a intentarlo</string>
+
+</resources>
