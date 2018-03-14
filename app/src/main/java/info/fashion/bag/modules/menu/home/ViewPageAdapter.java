@@ -19,7 +19,7 @@ public class ViewPageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private  int []images={R.drawable.slider1,R.drawable.slider1,R.drawable.slider1};
+    private  int []images={R.drawable.slider1,R.drawable.cover_bags_offers,R.drawable.cover_jewels_offers};
 
 
     public ViewPageAdapter(Context context){

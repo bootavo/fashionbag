@@ -188,7 +188,7 @@ public class SharedPreferencesHelper {
     public String getProfilePicture(){
         String photo = "";
         if(getValueString("profile_picture") == null || getValueString("profile_picture").equals("")){
-            photo = "No Definido";
+            photo = "No definido";
         }else{
             photo = getValueString("profile_picture");
         }
@@ -197,7 +197,7 @@ public class SharedPreferencesHelper {
 
     public String getPhoneNumber(){
         if(getValueString("phone_number") == null || getValueString("phone_number").equals("")){
-            return "No Definido";
+            return "No definido";
         }else{
             return getValueString("phone_number");
         }
@@ -205,7 +205,7 @@ public class SharedPreferencesHelper {
 
     public String getMobilePhone(){
         if(getValueString("mobile_phone") == null || getValueString("mobile_phone").equals("")){
-            return "No Definido";
+            return "No definido";
         }else{
             return getValueString("mobile_phone");
         }

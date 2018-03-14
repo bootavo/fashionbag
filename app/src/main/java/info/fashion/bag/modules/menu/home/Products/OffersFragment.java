@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import info.fashion.bag.R;
-import info.fashion.bag.modules.menu.catalogue.CatalogFragment;
 import info.fashion.bag.modules.menu.home.HomeFragment;
-import info.fashion.bag.modules.menu.maps.MapFragment;
-import info.fashion.bag.modules.menu.settings.SettingsFragment;
 
 /**
  * Created by gtufinof on 3/12/18.
@@ -47,9 +44,9 @@ public class OffersFragment extends Fragment {
     }
 
     public void setupViewPager(ViewPager mViewPager){
-        mSectionPageAdapter.addFragment(new JewelOfferFragment(), "CARTERAS");
-        mSectionPageAdapter.addFragment(new MapFragment(), "JOYAS");
-        mSectionPageAdapter.addFragment(new SettingsFragment(), "TODOS");
+        mSectionPageAdapter.addFragment(new BagOfferFragment(), "CARTERAS");
+        mSectionPageAdapter.addFragment(new JewelOfferFragment(), "JOYAS");
+        //mSectionPageAdapter.addFragment(new SettingsFragment(), "TODOS");
         mViewPager.setAdapter(mSectionPageAdapter);
     }
 

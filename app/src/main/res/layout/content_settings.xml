@@ -335,7 +335,7 @@
                     android:gravity="start|center_vertical"
                     android:layout_centerVertical="true"
                     android:paddingLeft="20dp"
-                    android:text="Acerca de Midoc"
+                    android:text="Acerca de FashionBag"
                     android:textAllCaps="false"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/content"

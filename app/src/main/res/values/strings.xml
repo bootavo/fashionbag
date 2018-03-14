@@ -15,5 +15,6 @@
     <string name="data_incomplete">Complete los datos solicitados</string>
     <string name="network_problems">Revise su conexión a internet y vuelva a intentarlo</string>
     <string name="server_problems">Ha ocurrido un error, Vuelva a intentarlo</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

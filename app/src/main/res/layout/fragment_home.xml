@@ -178,7 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/slider1"
+                        android:src="@drawable/cover_bags_offers"
                         android:contentDescription="background"
                         />
 
@@ -221,7 +221,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/slider1"
+                        android:src="@drawable/cover_jewels_offers"
                         android:contentDescription="background"
                         />
 
