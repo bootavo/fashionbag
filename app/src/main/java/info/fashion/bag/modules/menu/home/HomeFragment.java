@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import info.fashion.bag.R;
 import info.fashion.bag.modules.auth.login.LoginActivity;
-import info.fashion.bag.modules.menu.home.Products.OffersFragment;
+import info.fashion.bag.modules.menu.home.products.OffersFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -14,10 +14,10 @@ public interface ProductsInterface {
     @GET("catalog/?product__is_offer=True&ordering=-created")
     Call<JsonProducts> getGeneralProducts();
 
-    @GET("catalog/?product__is_offer=True&ordering=-created")
+    @GET("catalog/?product__is_offer=True&product__product_type__category=1")
     Call<JsonProducts> getOffersBags();
 
-    @GET("catalog/?product__is_offer=True&ordering=-created")
+    @GET("catalog/?product__is_offer=True&product__product_type__category=2")
     Call<JsonProducts> getOfferJewels();
 
 }

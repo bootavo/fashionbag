@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.modules.auth.login.LoginActivity;
+import info.fashion.bag.modules.auth.register.RegisterActivity;
 import info.fashion.bag.utilities.GlideApp;
 import info.fashion.bag.utilities.SharedPreferencesHelper;
 
@@ -31,7 +32,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Nullable @BindView(R.id.tv_name) TextView mName;
     @Nullable @BindView(R.id.iv_picture) CircleImageView mPicture;
+
     @Nullable @BindView(R.id.btn_login) Button btnLogin;
+    @Nullable @BindView(R.id.btn_register) Button btnRegister;
 
     private String TAG = SettingsFragment.class.getSimpleName();
     private SharedPreferencesHelper mSP;
@@ -47,6 +50,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ctx = container.getContext();
         mSP = new SharedPreferencesHelper(ctx);
+
         if(mSP.getToken().equals("No definido")){
             Log.d(TAG, "no token");
             view = inflater.inflate(R.layout.fragment_need_login, container, false);
@@ -58,6 +62,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
 
         btnLogin.setOnClickListener(this);
+        btnRegister.setOnClickListener(this);
 
         return view;
     }
@@ -108,8 +113,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_login:
-                Intent intent = new Intent(ctx, LoginActivity.class);
-                ctx.startActivity(intent);
+                Intent intentLogin = new Intent(ctx, LoginActivity.class);
+                ctx.startActivity(intentLogin);
+                break;
+            case R.id.btn_register:
+                Intent intentRegister= new Intent(ctx, RegisterActivity.class);
+                ctx.startActivity(intentRegister);
                 break;
         }
     }

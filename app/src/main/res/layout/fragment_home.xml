@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FASHIONBAG"
+                android:text="INICIO"
                 android:textSize="@dimen/subtitle"
                 android:textColor="@color/white"
                 android:gravity="center_horizontal|center_vertical"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v4.view.ViewPager
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/banner"
                     android:layout_width="match_parent"
                     android:id="@+id/viewPager">
 
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
-                    android:text="INICIAR SESIÓN"
+                    android:text="ACCEDER"
                     android:background="@drawable/bg_btn_bordered_wo_main"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"/>
@@ -162,7 +162,7 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/btn_jewel_offers"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/banner"
                     app:cardElevation="3dp"
                     app:cardCornerRadius="3dp"
                     android:clickable="true"
@@ -204,7 +204,7 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/btn_bags_offers"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/banner"
                     app:cardElevation="3dp"
                     app:cardCornerRadius="3dp"
                     android:clickable="true"

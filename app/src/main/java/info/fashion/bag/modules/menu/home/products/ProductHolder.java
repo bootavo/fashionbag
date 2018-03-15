@@ -1,15 +1,12 @@
-package info.fashion.bag.modules.menu.home.Products;
+package info.fashion.bag.modules.menu.home.products;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import info.fashion.bag.R;
 import info.fashion.bag.interfaces.OnItemClickListener;
 import info.fashion.bag.models.Products;
@@ -43,12 +40,16 @@ public class ProductHolder extends RecyclerView.ViewHolder {
 
     public void bind(@NonNull final Products products, @NonNull final OnItemClickListener listener){
 
+        mTitleProduct.setText(products.getProduct().getProduct_type().getName());
+        mPriceUnitary.setText("S/."+products.getProduct().getSuggested_price()+"");
+        mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
+
         GlideApp
                 .with(ctx)
-                .asBitmap()
+                //.asBitmap()
                 .load(products.getThumbnail_url())
-                //.error(R.drawable.ic_doctor_male)
-                //.placeholder(R.drawable.ic_doctor_male)
+                .into(mPictureProduct);
+                /*
                 .into(new SimpleTarget<Bitmap>(500,500) {
                     @Override
                     public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
@@ -57,6 +58,7 @@ public class ProductHolder extends RecyclerView.ViewHolder {
                         //BitmapHelper.getInstance().setBitmap(bitmap);
                     }
                 });
+                */
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
-package info.fashion.bag.modules.menu.home.Products;
+package info.fashion.bag.modules.menu.home.products;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,17 +18,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.Product;
+import info.fashion.bag.models.Products;
+import info.fashion.bag.modules.menu.home.product_detail.ProductDetailActivity;
 import info.fashion.bag.utilities.GridSpacingItemDecoration;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,18 +40,18 @@ import retrofit2.Response;
  * Created by gtufinof on 3/13/18.
  */
 
-public class BagOfferFragment extends Fragment{
+public class JewelOfferFragment extends Fragment{
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
-    private String TAG = BagOfferFragment.class.getSimpleName();
+    private String TAG = JewelOfferFragment.class.getSimpleName();
     private Context ctx = null;
     private View view = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_bag_offers, container, false);
+        view = inflater.inflate(R.layout.fragment_jewel_offers, container, false);
         ctx = container.getContext();
         ButterKnife.bind(this, view);
 
@@ -108,8 +112,9 @@ public class BagOfferFragment extends Fragment{
                     mRecyclerView.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
                         @Override
                         public void onItemClick(Object o, int position) {
-                            Product product = (Product) o;
-                            Toast.makeText(ctx, product.getName(), Toast.LENGTH_SHORT).show();
+                            Products products = (Products) o;
+                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            ctx.startActivity(mIntent);
                         }
                     }, ctx));
 

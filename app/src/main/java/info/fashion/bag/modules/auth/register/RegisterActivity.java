@@ -1,4 +1,4 @@
-package info.fashion.bag.modules.auth.login;
+package info.fashion.bag.modules.auth.register;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,20 +12,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.UserInterface;
 import info.fashion.bag.models.JsonUser;
 import info.fashion.bag.models.Token;
-import info.fashion.bag.modules.auth.register.RegisterActivity;
-import info.fashion.bag.utilities.BaseActivity;
+import info.fashion.bag.utilities.JsonHelper;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.ProgressDialogHelper;
 import info.fashion.bag.utilities.SharedPreferencesHelper;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,16 +38,19 @@ import retrofit2.Response;
  * Created by gtufinof on 3/12/18.
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.et_email) EditText mEmail;
+    @BindView(R.id.et_first_name) EditText mFirrstName;
+    @BindView(R.id.et_last_name) EditText mLastName;
+    @BindView(R.id.et_mobile_number) EditText mMobileNumber;
+    @BindView(R.id.et_dni) EditText mDni;
     @BindView(R.id.et_password) EditText mPassword;
 
-    @BindView(R.id.btn_login) Button btnLogin;
     @BindView(R.id.btn_register) Button btnRegister;
 
-    private String TAG = LoginActivity.class.getSimpleName();
+    private String TAG = RegisterActivity.class.getSimpleName();
     private SharedPreferencesHelper mSP;
     private ProgressDialogHelper mPD;
     private Context ctx = this;
@@ -51,7 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         initButterKnide();
         init();
         initEventUI();
@@ -64,11 +71,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void init(){
         mToolbar.setTitle("");
 
-        btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-
-        mEmail.setText("tavo.tf@gmail.com");
-        mPassword.setText("test12345");
 
         mSP = new SharedPreferencesHelper(ctx);
         mPD = new ProgressDialogHelper(ctx);
@@ -92,11 +95,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return mEmail.getText().toString().trim();
     }
 
+    public String getFirstName(){
+        return mFirrstName.getText().toString().trim();
+    }
+
+    public String getLastName(){
+        return mLastName.getText().toString().trim();
+    }
+
+    public String getMobileNumber(){
+        return mMobileNumber.getText().toString().trim();
+    }
+
+    public String getDni(){
+        return mDni.getText().toString().trim();
+    }
+
     public String getPassword(){
         return mPassword.getText().toString().trim();
     }
 
-    public boolean verifyLogin(){
+    public boolean verifyRegister(){
 
         if(getEmail().equals("") || getEmail() == null){
             mEmail.setError("Ingrese su email");
@@ -113,16 +132,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             return false;
         }
 
+        if(getFirstName().equals("") || getPassword() == null){
+            mFirrstName.setError("Ingrese su nombre");
+            return false;
+        }
+
+        if(getLastName().equals("") || getPassword() == null){
+            mLastName.setError("Ingrese sus apellidos");
+            return false;
+        }
+
+        if(getDni().equals("") || getPassword() == null){
+            mDni.setError("Ingrese su dni");
+            return false;
+        }
+
+        if(getMobileNumber().equals("") || getPassword() == null){
+            mMobileNumber.setError("Ingrese su número de teléfono");
+            return false;
+        }
+
         return true;
 
     }
 
     public void service(){
         mPD.showPD();
-        if(verifyLogin()){
+        if(verifyRegister()){
             if(NetworkHelper.isNetworkAvailable(this)){
                 UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
-                Call<Token> mCall = mInterface.login(getEmail(), getPassword());
+                Call<Token> mCall = mInterface.createUser(getJson());
                 Log.d(TAG, "------> email: "+getEmail());
                 Log.d(TAG, "------> pass : "+ getPassword());
                 mCall.enqueue(new Callback<Token>() {
@@ -187,12 +226,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_login:
-                service();
-                break;
             case R.id.btn_register:
-                next(RegisterActivity.class, false);
+                service();
+                Toast.makeText(ctx, "Registrando", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
+    public Map<String, Object> getJson(){
+        final JSONObject jsonChangePassword = new JSONObject();
+        Map<String, Object> requestBody = new HashMap<>();
+
+        try {
+            jsonChangePassword.put("email", getEmail());
+            jsonChangePassword.put("first_name", getFirstName());
+            jsonChangePassword.put("last_name", getLastName());
+            jsonChangePassword.put("password", getPassword());
+            jsonChangePassword.put("dni", getDni());
+            jsonChangePassword.put("mobile_number", getMobileNumber());
+            requestBody = JsonHelper.toMap(jsonChangePassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return requestBody;
+    }
+
 }

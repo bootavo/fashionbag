@@ -10,6 +10,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
         android:elevation="3dp"
+        card_view:cardUseCompatPadding="true"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <RelativeLayout
@@ -22,7 +23,7 @@
                 android:layout_height="@dimen/album_cover_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/picture_bag"/>
 
             <TextView
