@@ -8,6 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import info.fashion.bag.R;
+import info.fashion.bag.apis.ApiRetrofitClient;
+import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.interfaces.ProductsInterface;
+import info.fashion.bag.models.JsonProducts;
+import info.fashion.bag.models.Products;
 import info.fashion.bag.modules.auth.login.LoginActivity;
+import info.fashion.bag.modules.menu.home.product_detail.ProductDetailActivity;
 import info.fashion.bag.modules.menu.home.products.OffersFragment;
 
 import java.util.Timer;
@@ -26,6 +37,13 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import info.fashion.bag.modules.menu.home.products.ProductAdapter;
+import info.fashion.bag.utilities.GridSpacingItemDecoration;
+import info.fashion.bag.utilities.JsonPretty;
+import info.fashion.bag.utilities.NetworkHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by gtufinof on 3/11/18.
@@ -35,8 +53,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.btn_login) Button btnLogin;
     @BindView(R.id.btn_search) ImageButton btnSearch;
-    @BindView(R.id.btn_jewel_offers) CardView btnJewelOffers;
-    @BindView(R.id.btn_bags_offers) CardView btnBagsOffers;
+
+    @BindView(R.id.recycler_view_bags) RecyclerView mRecyclerViewBags;
+    @BindView(R.id.recycler_view_jewels) RecyclerView mRecyclerViewJewels;
 
     private String TAG = HomeFragment.class.getSimpleName();
     private Context ctx = null;
@@ -60,9 +79,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ctx = container.getContext();
         ButterKnife.bind(this, view);
 
-        btnBagsOffers.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
-        btnJewelOffers.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
         sliderDots = (LinearLayout) view.findViewById(R.id.sliderDots);
@@ -78,6 +95,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            /*
             case R.id.btn_jewel_offers:
                 getFragmentManager()
                         .beginTransaction()
@@ -90,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         .replace(R.id.content, new OffersFragment(), OffersFragment.class.getSimpleName())
                         .commit();
                 break;
+                */
             case R.id.btn_login:
                 Intent intent = new Intent(ctx, LoginActivity.class);
                 ctx.startActivity(intent);
@@ -163,7 +182,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        callService();
+        callOfferBags();
+        callOfferJewels();
     }
 
     @Override
@@ -183,8 +203,82 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
     }
 
-    public void callService(){
+    public void callOfferBags(){
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
+            Call<JsonProducts> mCall = mInterface.getOffersBags();
+            mCall.enqueue(new Callback<JsonProducts>() {
+                @Override
+                public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
+                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
+                    //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+                    LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
+                    mRecyclerViewBags.setLayoutManager(horizontalLayoutManagaer);
+                    //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10,ctx), true));
+                    mRecyclerViewBags.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerViewBags.setHasFixedSize(true);
+                    mRecyclerViewBags.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            Products products = (Products) o;
+                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            ctx.startActivity(mIntent);
+                        }
+                    }, ctx));
+
+                    //mRecyclerViewBags.setHasFixedSize(true);
+                    //mRecyclerViewBags.getLayoutManager().setMeasurementCacheEnabled(false);
+                    //mRecyclerView.setNestedScrollingEnabled(false);
+                }
+
+                @Override
+                public void onFailure(Call<JsonProducts> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void callOfferJewels(){
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
+            Call<JsonProducts> mCall = mInterface.getOfferJewels();
+            mCall.enqueue(new Callback<JsonProducts>() {
+                @Override
+                public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
+                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+
+                    //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+                    LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
+                    mRecyclerViewJewels.setLayoutManager(horizontalLayoutManagaer);
+                    //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    mRecyclerViewJewels.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerViewJewels.setHasFixedSize(true);
+                    mRecyclerViewJewels.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            Products products = (Products) o;
+                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            ctx.startActivity(mIntent);
+                        }
+                    }, ctx));
+
+                    //mRecyclerViewJewels.setHasFixedSize(true);
+                    //mRecyclerViewJewels.getLayoutManager().setMeasurementCacheEnabled(false);
+                    //mRecyclerView.setNestedScrollingEnabled(false);
+                }
+
+                @Override
+                public void onFailure(Call<JsonProducts> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

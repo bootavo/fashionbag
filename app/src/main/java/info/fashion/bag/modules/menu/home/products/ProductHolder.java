@@ -40,7 +40,7 @@ public class ProductHolder extends RecyclerView.ViewHolder {
 
     public void bind(@NonNull final Products products, @NonNull final OnItemClickListener listener){
 
-        mTitleProduct.setText(products.getProduct().getProduct_type().getName());
+        mTitleProduct.setText(products.getProduct().getName());
         mPriceUnitary.setText("S/."+products.getProduct().getSuggested_price()+"");
         mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
 
