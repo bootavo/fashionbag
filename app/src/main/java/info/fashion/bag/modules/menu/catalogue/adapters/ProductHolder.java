@@ -1,8 +1,9 @@
-package info.fashion.bag.modules.menu.home.products;
+package info.fashion.bag.modules.menu.catalogue.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import info.fashion.bag.R;
 import info.fashion.bag.interfaces.OnItemClickListener;
 import info.fashion.bag.models.Products;
+import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.GlideApp;
 
 import java.util.List;
@@ -41,8 +43,34 @@ public class ProductHolder extends RecyclerView.ViewHolder {
     public void bind(@NonNull final Products products, @NonNull final OnItemClickListener listener){
 
         mTitleProduct.setText(products.getProduct().getName());
-        mPriceUnitary.setText("S/."+products.getProduct().getSuggested_price()+"");
-        mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
+
+        float discount_price = 0.0f;
+        if(Constant.ACTIVE_PERCENT){
+            Log.d("PORCENTAJE",""+Constant.CATEGORIES_DISCOUNT_OFFER);
+            Log.d("CATEGORIE", ""+products.getCategory());
+            if(Constant.CATEGORIES_DISCOUNT_OFFER.contains(products.getCategory().getId())){
+                Log.d("Category: ", "ENTRO AL PRIMER IF DE PORCENTAJE®");
+                discount_price = products.getProduct().getSuggested_price()*Constant.DISCOUNT_PERCENT/100.0f;
+                mPriceWholeSale.setText("S/."+discount_price+"");
+            }
+        }else if(Constant.ACTIVE_AMOUNT){
+            Log.d("MONTO",""+Constant.CATEGORIES_DISCOUNT_OFFER);
+            if(Constant.CATEGORIES_DISCOUNT_OFFER.contains(products.getCategory().getId())){
+                discount_price = products.getProduct().getSuggested_price()-Constant.DISCOUNT_AMOUNT;
+                mPriceWholeSale.setText("S/."+discount_price+"");
+            }
+        }else{
+            Log.d("NORMAL",""+Constant.CATEGORIES_DISCOUNT_OFFER);
+            if(products.getProduct().getOnly_price()>0.0f){
+                Log.d("NORMAL CON OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
+                mPriceWholeSale.setText("S/."+products.getProduct().getOnly_price()+"");
+            }else {
+                Log.d("NORMAL SIN OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
+                mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
+            }
+        }
+
+        mPriceUnitary.setText("S/."+products.getProduct().getSale_price()+"");
 
         GlideApp
                 .with(ctx)

@@ -1,4 +1,4 @@
-package info.fashion.bag.modules.menu.home.products;
+package info.fashion.bag.modules.menu.catalogue;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,11 +23,10 @@ import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
-import info.fashion.bag.models.Product;
 import info.fashion.bag.models.Products;
-import info.fashion.bag.modules.menu.home.product_detail.ProductDetailActivity;
+import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
+import info.fashion.bag.modules.menu.catalogue.product_detail.ProductDetailActivity;
 import info.fashion.bag.utilities.GridSpacingItemDecoration;
-import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 
 import butterknife.BindView;
@@ -40,18 +39,22 @@ import retrofit2.Response;
  * Created by gtufinof on 3/13/18.
  */
 
-public class JewelOfferFragment extends Fragment{
+public class JewelsFragment extends Fragment{
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
-    private String TAG = JewelOfferFragment.class.getSimpleName();
+    private String TAG = JewelsFragment.class.getSimpleName();
     private Context ctx = null;
     private View view = null;
+
+    public static JewelsFragment newInstance(){
+        return new JewelsFragment();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_jewel_offers, container, false);
+        view = inflater.inflate(R.layout.fragment_jewels, container, false);
         ctx = container.getContext();
         ButterKnife.bind(this, view);
 
@@ -59,9 +62,45 @@ public class JewelOfferFragment extends Fragment{
         //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         initCollapsingToolbar();
-        service();
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "----> onCreateView");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "----> onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "----> onResume");
+        service();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "----> onStop");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "----> onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "----> onDestroy");
     }
 
     private void initCollapsingToolbar() {
@@ -91,11 +130,6 @@ public class JewelOfferFragment extends Fragment{
         });
     }
 
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
-
     public void service(){
         if(NetworkHelper.isNetworkAvailable(ctx)){
             ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
@@ -103,11 +137,11 @@ public class JewelOfferFragment extends Fragment{
             mCall.enqueue(new Callback<JsonProducts>() {
                 @Override
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
-                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     mRecyclerView.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
                         @Override
@@ -124,11 +158,11 @@ public class JewelOfferFragment extends Fragment{
 
                 @Override
                 public void onFailure(Call<JsonProducts> call, Throwable t) {
-                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, ctx.getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
-            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, ctx.getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
     }
 

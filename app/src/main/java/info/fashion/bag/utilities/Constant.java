@@ -3,6 +3,7 @@ package info.fashion.bag.utilities;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Constant {
 
@@ -10,5 +11,12 @@ public class Constant {
 
     public static int NOTIFICATION_ID = 0;
     public static int NOTIFICATION_ID_BIG_IMAGE = 0;
+
+    //UNIQUE DISCOUNT_OFFER
+    public static boolean ACTIVE_PERCENT = false;
+    public static boolean ACTIVE_AMOUNT = false;
+    public static float DISCOUNT_PERCENT = 0.0f;
+    public static float DISCOUNT_AMOUNT = 0.0f;
+    public static List<Integer> CATEGORIES_DISCOUNT_OFFER = null;
 
 }

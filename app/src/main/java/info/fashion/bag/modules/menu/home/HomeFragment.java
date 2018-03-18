@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,16 +27,14 @@ import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.Products;
 import info.fashion.bag.modules.auth.login.LoginActivity;
-import info.fashion.bag.modules.menu.home.product_detail.ProductDetailActivity;
-import info.fashion.bag.modules.menu.home.products.OffersFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import info.fashion.bag.modules.menu.home.products.ProductAdapter;
-import info.fashion.bag.utilities.GridSpacingItemDecoration;
+import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
+import info.fashion.bag.modules.menu.catalogue.product_detail.ProductDetailActivity;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import retrofit2.Call;
@@ -99,13 +95,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_jewel_offers:
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content, new OffersFragment(), OffersFragment.class.getSimpleName())
+                        .replace(R.id.content, new CatalogFragment(), CatalogFragment.class.getSimpleName())
                         .commit();
                 break;
             case R.id.btn_bags_offers:
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content, new OffersFragment(), OffersFragment.class.getSimpleName())
+                        .replace(R.id.content, new CatalogFragment(), CatalogFragment.class.getSimpleName())
                         .commit();
                 break;
                 */
@@ -182,6 +178,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "----> onStart");
         callOfferBags();
         callOfferJewels();
     }
@@ -189,18 +186,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStop() {
         super.onStop();
+        Log.d(TAG, "----> onStop");
         timer.cancel();
         timer.purge();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public void callOfferBags(){
@@ -210,7 +198,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mCall.enqueue(new Callback<JsonProducts>() {
                 @Override
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
-                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
@@ -234,7 +222,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<JsonProducts> call, Throwable t) {
-                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, ctx.getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
@@ -249,7 +237,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mCall.enqueue(new Callback<JsonProducts>() {
                 @Override
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
-                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
@@ -279,6 +267,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }else{
             Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "----> onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "----> onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "----> onDestroy");
     }
 
 }

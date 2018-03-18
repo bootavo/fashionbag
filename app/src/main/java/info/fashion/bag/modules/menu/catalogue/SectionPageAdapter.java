@@ -1,4 +1,4 @@
-package info.fashion.bag.modules.menu.home.products;
+package info.fashion.bag.modules.menu.catalogue;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

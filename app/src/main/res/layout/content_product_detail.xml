@@ -90,7 +90,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/fragment_jewel_offers">
+        tools:showIn="@layout/fragment_jewels">
 
         <LinearLayout
             android:layout_width="match_parent"

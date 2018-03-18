@@ -39,7 +39,7 @@
                 android:text="Cartera 123"/>
 
             <LinearLayout
-                android:id="@+id/ll_price_unitary"
+                android:id="@+id/ll_price_whole_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -55,7 +55,7 @@
                     android:text="Precio X \n Mayor"/>
 
                 <TextView
-                    android:id="@+id/tv_price_unitary"
+                    android:id="@+id/tv_price_whole_sale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/songs_count_padding_bottom"
@@ -68,11 +68,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_price_whole_sale"
+                android:id="@+id/ll_price_unitary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/ll_price_unitary">
+                android:layout_below="@+id/ll_price_whole_sale">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                     android:text="Precio X \n Unidad"/>
 
                 <TextView
-                    android:id="@+id/tv_price_whole_sale"
+                    android:id="@+id/tv_price_unitary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/songs_count_padding_bottom"

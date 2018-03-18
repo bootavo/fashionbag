@@ -116,19 +116,20 @@ public class MainApp extends AppCompatActivity{
 
                 switch (item.getItemId()) {
                     case R.id.i_home:
-                        transaction.replace(R.id.content, fragments.get(0));
+                        transaction.replace(R.id.content, HomeFragment.newInstance());
                         transaction.commit();
                         return true;
                     case R.id.i_catalog:
-                        transaction.replace(R.id.content, fragments.get(1));
+                        transaction.replace(R.id.content, CatalogFragment.newInstance());
+                        fragmentManager.popBackStack(null, 0);
                         transaction.commit();
                         return true;
                     case R.id.i_map:
-                        transaction.replace(R.id.content, fragments.get(3));
+                        transaction.replace(R.id.content, MapFragment.newInstance());
                         transaction.commit();
                         return true;
                     case R.id.i_settings:
-                        transaction.replace(R.id.content, fragments.get(4));
+                        transaction.replace(R.id.content, SettingsFragment.newInstance());
                         transaction.commit();
                         return true;
                     case R.id.i_empty:

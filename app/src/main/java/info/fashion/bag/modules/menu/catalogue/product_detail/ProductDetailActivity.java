@@ -1,8 +1,7 @@
-package info.fashion.bag.modules.menu.home.product_detail;
+package info.fashion.bag.modules.menu.catalogue.product_detail;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;

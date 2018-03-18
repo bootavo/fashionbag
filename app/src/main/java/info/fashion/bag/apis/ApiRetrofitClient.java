@@ -11,7 +11,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ApiRetrofitClient {
 
     public static final String BASE_URL = "https://www.fashionbagperu.com/api/";
-    //public static final String BASE_URL = "http://192.168.0.5/api/";
+    //public static final String BASE_URL = "http://192.168.1.102:12000/api/";
     public static Retrofit retrofit = null;
 
     public static Retrofit getRetrofitClient(){
