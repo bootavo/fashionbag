@@ -102,9 +102,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        getPatientData();
         callService();
         if(state == 1){
+            getPatientData();
             btnShareUs.setOnClickListener(this);
             btnAboutUs.setOnClickListener(this);
             btnTermsConditions.setOnClickListener(this);

@@ -89,7 +89,7 @@
             android:theme="@style/NoActionBarTheme" />
 
         <activity
-            android:name=".modules.menu.catalogue.product_detail.ProductDetailActivity"
+            android:name=".modules.menu.product_detail.ProductDetailActivity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

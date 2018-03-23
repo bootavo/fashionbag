@@ -23,7 +23,7 @@ import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.Products;
 import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
-import info.fashion.bag.modules.menu.catalogue.product_detail.ProductDetailActivity;
+import info.fashion.bag.modules.menu.product_detail.ProductDetailActivity;
 import info.fashion.bag.utilities.GridSpacingItemDecoration;
 import info.fashion.bag.utilities.NetworkHelper;
 

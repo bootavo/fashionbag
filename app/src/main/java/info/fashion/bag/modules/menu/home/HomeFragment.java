@@ -34,7 +34,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
-import info.fashion.bag.modules.menu.catalogue.product_detail.ProductDetailActivity;
+import info.fashion.bag.modules.menu.product_detail.ProductDetailActivity;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.SharedPreferencesHelper;

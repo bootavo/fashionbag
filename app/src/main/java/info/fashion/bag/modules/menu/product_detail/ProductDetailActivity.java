@@ -1,7 +1,9 @@
-package info.fashion.bag.modules.menu.catalogue.product_detail;
+package info.fashion.bag.modules.menu.product_detail;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,9 +12,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,21 +26,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.ColorsInterfaces;
-import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.interfaces.VariantsInterface;
-import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.models.Color;
-import info.fashion.bag.models.JsonProducts;
-import info.fashion.bag.models.Products;
 import info.fashion.bag.models.Variant;
-import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
 import info.fashion.bag.utilities.BaseActivity;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.GlideApp;
-import info.fashion.bag.utilities.GridSpacingItemDecoration;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.ProgressDialogHelper;
+import info.fashion.bag.utilities.SharedPreferencesHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,6 +51,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.btn_call) Button btnCall;
     @BindView(R.id.btn_bag) Button btnBag;
 
+    @BindView(R.id.tv_quantity) TextView mQuantity;
+    @BindView(R.id.btn_increase) Button btnIncrease;
+    @BindView(R.id.btn_decrease) Button btnDecrease;
+
     @BindView(R.id.tv_product_name) TextView mProductName;
     @BindView(R.id.tv_product_category) TextView mProductCategory;
     @BindView(R.id.tv_product_sku) TextView mProductSku;
@@ -69,6 +67,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.btn_share) Button btnShare;
 
     private String TAG = ProductDetailActivity.class.getSimpleName();
+    private SharedPreferencesHelper mSP;
     private ProgressDialogHelper mPD;
     private Context ctx = this;
 
@@ -89,7 +88,12 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
         btnCall.setOnClickListener(this);
         btnBag.setOnClickListener(this);
+
+        btnIncrease.setOnClickListener(this);
+        btnDecrease.setOnClickListener(this);
+
         mPD = new ProgressDialogHelper(ctx);
+        mSP = new SharedPreferencesHelper(ctx);
     }
 
     public void initButterKnide(){
@@ -122,9 +126,76 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 permissions();
                 break;
             case R.id.btn_bag:
-                Toast.makeText(ctx, "Agregando a la bolsa...", Toast.LENGTH_SHORT).show();
+                if(mSP.getToken().equals("No definido")){
+                    showDialog();
+                }else{
+                    Toast.makeText(ctx, "El producto se ha agregado correctamente", Toast.LENGTH_SHORT).show();
+                    verifiySalesStore();
+                }
+                break;
+            case R.id.btn_increase:
+                increase();
+                break;
+            case R.id.btn_decrease:
+                decrease();
                 break;
         }
+    }
+
+    public void showDialog(){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(ctx);
+        } else {
+            builder = new AlertDialog.Builder(ctx);
+        }
+        builder.setTitle("Aún no has iniciado sesión")
+                .setMessage("¿Desea iniciar sesión o crearse una cuenta ahora?")
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ctx, "Yes", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ctx, "No", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setIcon(R.drawable.ic_user)
+                .show();
+    }
+
+    public void increase(){
+        updateQuantity(1);
+    }
+
+    public void decrease(){
+        updateQuantity(-1);
+    }
+
+    public void updateQuantity(int value){
+
+        int current_quantity = Integer.parseInt(getQuantity());
+        current_quantity += value;
+
+        if(isNegative(current_quantity)){
+
+        }else {
+            mQuantity.setText(current_quantity+"");
+        }
+
+    }
+
+    public boolean isNegative(int number){
+        if(number < 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public String getQuantity(){
+        return mQuantity.getText().toString();
     }
 
     @Override
@@ -192,6 +263,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             mPD.dimissPD();
             Toast.makeText(ctx, ctx.getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void verifiySalesStore(){
+
     }
 
     public void permissions() {

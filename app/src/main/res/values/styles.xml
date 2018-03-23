@@ -30,4 +30,19 @@
         <item name="colorControlActivated">@color/stars</item>
     </style>
 
+    <!-- Picker -->
+    <!-- Style for header text in the order form -->
+    <style name="HeaderTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Style for a button in the quantity picker -->
+    <style name="QuantityPickerButtonStyle">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
 </resources>

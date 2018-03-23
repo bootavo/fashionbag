@@ -29,6 +29,7 @@ public class ProductHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_title_product) TextView mTitleProduct;
     @BindView(R.id.tv_price_unitary) TextView mPriceUnitary;
     @BindView(R.id.tv_price_whole_sale) TextView mPriceWholeSale;
+    @BindView(R.id.tv_promo) TextView mPromoLabel;
 
     private Context ctx;
     private List<Products> mListProducts;
@@ -53,6 +54,9 @@ public class ProductHolder extends RecyclerView.ViewHolder {
                 discount_price = products.getProduct().getSuggested_price()*Constant.DISCOUNT_PERCENT/100.0f;
                 mPriceWholeSale.setText("S/."+discount_price+"");
                 Constant.OFFER_PRICE = discount_price;
+
+                mPromoLabel.setVisibility(View.VISIBLE);
+                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), discount_price));
             }
         }else if(Constant.ACTIVE_AMOUNT){
             Log.d("MONTO",""+Constant.CATEGORIES_DISCOUNT_OFFER);
@@ -60,6 +64,8 @@ public class ProductHolder extends RecyclerView.ViewHolder {
                 discount_price = products.getProduct().getSuggested_price()-Constant.DISCOUNT_AMOUNT;
                 mPriceWholeSale.setText("S/."+discount_price+"");
                 Constant.OFFER_PRICE = discount_price;
+                mPromoLabel.setVisibility(View.VISIBLE);
+                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), discount_price));
             }
         }else{
             Log.d("NORMAL",""+Constant.CATEGORIES_DISCOUNT_OFFER);
@@ -67,6 +73,8 @@ public class ProductHolder extends RecyclerView.ViewHolder {
                 Log.d("NORMAL CON OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
                 mPriceWholeSale.setText("S/."+products.getProduct().getOnly_price()+"");
                 Constant.OFFER_PRICE = products.getProduct().getOnly_price();
+                mPromoLabel.setVisibility(View.VISIBLE);
+                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), products.getProduct().getOnly_price()));
             }else {
                 Log.d("NORMAL SIN OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
                 mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
@@ -107,6 +115,14 @@ public class ProductHolder extends RecyclerView.ViewHolder {
             }
         });
 
+    }
+
+    public String getOfferPerfecnt(float price, float discount_price) {
+
+        float result = 100.0f - (discount_price * 100 / price);
+        result = Math.round(result);
+
+        return "- "+result+"%";
     }
 
 }

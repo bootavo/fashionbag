@@ -168,12 +168,27 @@
                     tools:showIn="@layout/fragment_jewels">
                     <!-- app:layout_behavior="@string/appbar_scrolling_view_behavior" -->
 
+                    <ProgressBar
+                        android:id="@+id/pb_bags_offers"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:indeterminate="true"
+                        android:padding="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:foregroundTint="@color/colorPrimary"
+                        android:progressBackgroundTint="@color/colorPrimary"
+                        android:progressTint="@color/colorPrimary"
+                        android:secondaryProgressTint="@color/colorPrimary"
+                        android:indeterminateTint="@color/colorPrimary"/>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_bags"
                         android:layout_width="match_parent"
                         android:layout_height="270dp"
                         android:clipToPadding="false"
-                        android:scrollbars="vertical" />
+                        android:scrollbars="vertical"/>
 
                 </RelativeLayout>
 
@@ -204,12 +219,27 @@
                     tools:showIn="@layout/fragment_jewels">
                     <!-- app:layout_behavior="@string/appbar_scrolling_view_behavior" -->
 
+                    <ProgressBar
+                        android:id="@+id/pb_jewels_offers"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:indeterminate="true"
+                        android:padding="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:foregroundTint="@color/colorPrimary"
+                        android:progressBackgroundTint="@color/colorPrimary"
+                        android:progressTint="@color/colorPrimary"
+                        android:secondaryProgressTint="@color/colorPrimary"
+                        android:indeterminateTint="@color/colorPrimary"/>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_jewels"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
-                        android:scrollbars="vertical" />
+                        android:scrollbars="vertical"/>
 
                 </RelativeLayout>
 
