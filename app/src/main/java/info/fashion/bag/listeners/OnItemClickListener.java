@@ -1,4 +1,4 @@
-package info.fashion.bag.interfaces;
+package info.fashion.bag.listeners;
 
 /**
  * Created by bootavo on 9/12/2017.

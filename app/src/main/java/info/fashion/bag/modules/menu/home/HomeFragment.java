@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
-import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.Products;
@@ -35,8 +35,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
 import info.fashion.bag.modules.menu.catalogue.product_detail.ProductDetailActivity;
-import info.fashion.bag.utilities.JsonPretty;
+import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.NetworkHelper;
+import info.fashion.bag.utilities.SharedPreferencesHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    @BindView(R.id.ll_auth) LinearLayout llAuth;
     @BindView(R.id.btn_login) Button btnLogin;
     @BindView(R.id.btn_search) ImageButton btnSearch;
 
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.recycler_view_jewels) RecyclerView mRecyclerViewJewels;
 
     private String TAG = HomeFragment.class.getSimpleName();
+    private SharedPreferencesHelper mSP;
     private Context ctx = null;
     private View view = null;
 
@@ -84,6 +87,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         viewPager.setAdapter(viewPageAdapter);
         dotCounts=viewPageAdapter.getCount();
         dots = new ImageView[dotCounts];
+
+        //
+        mSP = new SharedPreferencesHelper(ctx);
+        if(mSP.getToken().equals("No definido")){
+            llAuth.setVisibility(View.VISIBLE);
+        }else {
+            llAuth.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -197,7 +208,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Call<JsonProducts> mCall = mInterface.getOffersBags();
             mCall.enqueue(new Callback<JsonProducts>() {
                 @Override
-                public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
+                public void onResponse(Call<JsonProducts> call, final Response<JsonProducts> response) {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
@@ -210,6 +221,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onItemClick(Object o, int position) {
                             Products products = (Products) o;
+                            Constant.PRODUCT_NAME = products.getProduct().getName();
                             Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
                             ctx.startActivity(mIntent);
                         }

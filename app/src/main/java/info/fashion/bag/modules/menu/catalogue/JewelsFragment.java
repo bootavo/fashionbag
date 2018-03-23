@@ -2,7 +2,6 @@ package info.fashion.bag.modules.menu.catalogue;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -12,7 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,7 @@ import android.widget.Toast;
 
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
-import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.Products;

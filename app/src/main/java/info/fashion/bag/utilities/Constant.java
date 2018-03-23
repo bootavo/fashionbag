@@ -12,7 +12,12 @@ public class Constant {
     public static int NOTIFICATION_ID = 0;
     public static int NOTIFICATION_ID_BIG_IMAGE = 0;
 
+    public static String PRODUCT_NAME = "";
+
     //UNIQUE DISCOUNT_OFFER
+    public static int ID_PRODUCT = 0;
+    public static float SUGGESTED_PRICE = 0.0f;
+    public static float OFFER_PRICE = 0.0f;
     public static boolean ACTIVE_PERCENT = false;
     public static boolean ACTIVE_AMOUNT = false;
     public static float DISCOUNT_PERCENT = 0.0f;

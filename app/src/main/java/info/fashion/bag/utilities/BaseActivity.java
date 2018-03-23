@@ -27,6 +27,16 @@ public class BaseActivity extends AppCompatActivity{
         );
         */
 
+        /*
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("fashionbag")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+        */
+
     }
 
     //Method better thet start activity

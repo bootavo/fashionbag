@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import info.fashion.bag.R;
-import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.models.Products;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.GlideApp;
@@ -52,25 +52,33 @@ public class ProductHolder extends RecyclerView.ViewHolder {
                 Log.d("Category: ", "ENTRO AL PRIMER IF DE PORCENTAJE®");
                 discount_price = products.getProduct().getSuggested_price()*Constant.DISCOUNT_PERCENT/100.0f;
                 mPriceWholeSale.setText("S/."+discount_price+"");
+                Constant.OFFER_PRICE = discount_price;
             }
         }else if(Constant.ACTIVE_AMOUNT){
             Log.d("MONTO",""+Constant.CATEGORIES_DISCOUNT_OFFER);
             if(Constant.CATEGORIES_DISCOUNT_OFFER.contains(products.getCategory().getId())){
                 discount_price = products.getProduct().getSuggested_price()-Constant.DISCOUNT_AMOUNT;
                 mPriceWholeSale.setText("S/."+discount_price+"");
+                Constant.OFFER_PRICE = discount_price;
             }
         }else{
             Log.d("NORMAL",""+Constant.CATEGORIES_DISCOUNT_OFFER);
             if(products.getProduct().getOnly_price()>0.0f){
                 Log.d("NORMAL CON OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
                 mPriceWholeSale.setText("S/."+products.getProduct().getOnly_price()+"");
+                Constant.OFFER_PRICE = products.getProduct().getOnly_price();
             }else {
                 Log.d("NORMAL SIN OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
                 mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
+                Constant.OFFER_PRICE = products.getProduct().getSale_price();
             }
         }
 
-        mPriceUnitary.setText("S/."+products.getProduct().getSale_price()+"");
+        Constant.ID_PRODUCT = products.getId();
+        Log.d("Holder", "id: "+Constant.ID_PRODUCT);
+        mPriceUnitary.setText("S/."+products.getProduct().getSuggested_price()+"");
+
+        Constant.SUGGESTED_PRICE = products.getProduct().getSuggested_price();
 
         GlideApp
                 .with(ctx)
@@ -91,7 +99,11 @@ public class ProductHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Holder", "click");
                 listener.onItemClick(products, mListProducts.indexOf(products));
+                Constant.ID_PRODUCT = products.getId();
+                Log.d("Holder", "id2: "+Constant.ID_PRODUCT);
+
             }
         });
 

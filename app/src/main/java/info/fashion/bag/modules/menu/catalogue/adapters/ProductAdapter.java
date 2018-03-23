@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import info.fashion.bag.R;
-import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.models.Products;
 
 import java.util.List;

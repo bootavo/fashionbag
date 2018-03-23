@@ -1,6 +1,7 @@
 package info.fashion.bag.modules.auth.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import info.fashion.bag.interfaces.UserInterface;
 import info.fashion.bag.models.JsonUser;
 import info.fashion.bag.models.Token;
 import info.fashion.bag.modules.auth.register.RegisterActivity;
+import info.fashion.bag.modules.menu.MainApp;
 import info.fashion.bag.utilities.BaseActivity;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
@@ -170,6 +172,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     mSP.saveString("phone_number", response.body().getResults().get(0).getPhone_number());
                     mSP.saveString("status", response.body().getResults().get(0).getStatus());
                     mSP.showAllSPData();
+                    nextActivity();
                 }
 
                 @Override
@@ -182,6 +185,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             mPD.dimissPD();
             Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void nextActivity(){
+        Intent mIntent = new Intent(this, MainApp.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(mIntent);
     }
 
     @Override

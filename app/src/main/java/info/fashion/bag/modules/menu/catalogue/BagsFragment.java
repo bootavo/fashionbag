@@ -27,7 +27,8 @@ import butterknife.ButterKnife;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.DiscountOfferInterface;
-import info.fashion.bag.interfaces.OnItemClickListener;
+import info.fashion.bag.interfaces.ProductsRealm;
+import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
 import info.fashion.bag.models.JsonProducts;
 import info.fashion.bag.models.JsonUniqueDiscountOffer;
@@ -96,8 +97,17 @@ public class BagsFragment extends Fragment{
     public void onResume() {
         super.onResume();
         Log.d(TAG, "----> onResume");
-        resetUniqueDiscountOffer();
-        verifyUniqueDiscounOffer();
+
+        //ProductsRealm productsRealm = new ProductsRealm(Realm.getDefaultInstance());
+        //List<Products> listBagsOffers = productsRealm.getBagsOffersRealm();
+
+        //if(listBagsOffers.size()>0){
+        //    localService(listBagsOffers);
+        //}else{
+            resetUniqueDiscountOffer();
+            verifyUniqueDiscounOffer();
+        //}
+
     }
 
     @Override
@@ -145,9 +155,19 @@ public class BagsFragment extends Fragment{
         });
     }
 
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    public void localService(List<Products> products){
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(new ProductAdapter(products, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object o, int position) {
+                Products products = (Products) o;
+                Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                ctx.startActivity(mIntent);
+            }
+        }, ctx));
     }
 
     public void service(){
@@ -159,9 +179,12 @@ public class BagsFragment extends Fragment{
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
                     Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
+                    //ProductsRealm productsRealm = new ProductsRealm(Realm.getDefaultInstance());
+                    //productsRealm.setListProducts(response.body().getResults());
+
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     mRecyclerView.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
                         @Override

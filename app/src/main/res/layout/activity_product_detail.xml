@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+            <!-- app:layout_scrollFlags="scroll|enterAlwaysCollapsed" -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -39,53 +39,220 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:showIn="@layout/fragment_jewels">
+            tools:showIn="@layout/fragment_jewels"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <Button
                     android:id="@+id/btn_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_btn_bordered_wa_main"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
                     android:text="Venta Telefónica"
                     android:textColor="@color/white"
                     android:textSize="@dimen/content"
-                    android:textStyle="normal"
-                    android:background="@color/colorAccent"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_marginRight="10dp"/>
+                    android:textStyle="normal" />
 
                 <Button
+                    android:id="@+id/btn_bag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Agregar a la Bolsa"
                     android:textColor="@color/white"
                     android:textSize="@dimen/content"
                     android:textStyle="normal"
-                    android:background="@color/colorPrimary"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:background="@drawable/bg_btn_bordered_w_main"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"/>
+
+            </RelativeLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                
+                <ImageView
+                    android:id="@+id/iv_picture_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_color"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/gray_divider"
+                    app:civ_border_overlay="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@color/white"/>
+                
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="normal"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_product_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoría"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal"/>
+
+                <TextView
+                    android:id="@+id/tv_product_sku"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Código SKU"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal"/>
+
+                <android.support.v7.widget.AppCompatRatingBar
+                    android:id="@+id/sr_specialist_rate"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:numStars="5"
+                    android:rating="0.0"
+                    android:stepSize="1.0"
+                    android:theme="@style/RatingBar" />
+                
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_price_unitary_text"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/tv_price_whole_sale_text"
+                    android:text="SUGERIDO"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/tv_price_unitary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_price_whole_sale_text"
+                    android:layout_toEndOf="@+id/tv_price_unitary_text"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal"
                     android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_price_whole_sale_text"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="OFERTA"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_price_whole_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_price_unitary"
+                    android:layout_toEndOf="@+id/tv_price_whole_sale_text"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"/>
+
+                <Button
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@drawable/ic_share_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/primary_text"
+                    android:text="COMPARTIR"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/content"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/subtitle"/>
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:text="Descripción del producto"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal"
+                    android:layout_marginTop="5dp"/>
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

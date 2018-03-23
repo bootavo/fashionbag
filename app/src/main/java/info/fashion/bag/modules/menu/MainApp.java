@@ -30,9 +30,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.R;
+import info.fashion.bag.utilities.BaseActivity;
 import info.fashion.bag.utilities.SharedPreferencesHelper;
 
-public class MainApp extends AppCompatActivity{
+public class MainApp extends BaseActivity{
 
     @BindView(R.id.bnve) BottomNavigationViewEx mBottomNavigationViewEx;
     @BindView(R.id.fab) FloatingActionButton mFloatingActionButton;

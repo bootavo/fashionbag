@@ -8,4 +8,6 @@
     <color name="secondary_text">#757575</color>
     <color name="third_text">#BDBDBD</color>
     <color name="fourth_text">#e7e7e7</color>
+
+    <color name="stars">#FFA000</color>
 </resources>
