@@ -120,6 +120,46 @@ public class User {
     private String status;
 
     @Expose
+    @SerializedName("is_majority_user")
+    private boolean is_majority_user;
+
+    @Expose
+    @SerializedName("is_majority_user_fake")
+    private boolean is_majority_user_fake;
+
+    @Expose
+    @SerializedName("is_recommended")
+    private boolean is_recommended;
+
+    @Expose
+    @SerializedName("monthly_goal")
+    private float monthly_goal;
+
+    @Expose
+    @SerializedName("first_commission_sale")
+    private float first_commission_sale;
+
+    @Expose
+    @SerializedName("next_commission_sale")
+    private float next_commission_sale;
+
+    @Expose
+    @SerializedName("first_commission_sale_recommended")
+    private float first_commission_sale_recommended;
+
+    @Expose
+    @SerializedName("associated_cutoff_date")
+    private float associated_cutoff_date;
+
+    @Expose
+    @SerializedName("first_commission_adviser_sale")
+    private float first_commission_adviser_sale;
+
+    @Expose
+    @SerializedName("next_commission_adviser_sale")
+    private float next_commission_adviser_sale;
+
+    @Expose
     @SerializedName("address")
     private String address;
 
@@ -347,6 +387,86 @@ public class User {
         this.address = address;
     }
 
+    public boolean isIs_majority_user() {
+        return is_majority_user;
+    }
+
+    public void setIs_majority_user(boolean is_majority_user) {
+        this.is_majority_user = is_majority_user;
+    }
+
+    public boolean isIs_majority_user_fake() {
+        return is_majority_user_fake;
+    }
+
+    public void setIs_majority_user_fake(boolean is_majority_user_fake) {
+        this.is_majority_user_fake = is_majority_user_fake;
+    }
+
+    public boolean isIs_recommended() {
+        return is_recommended;
+    }
+
+    public void setIs_recommended(boolean is_recommended) {
+        this.is_recommended = is_recommended;
+    }
+
+    public float getMonthly_goal() {
+        return monthly_goal;
+    }
+
+    public void setMonthly_goal(float monthly_goal) {
+        this.monthly_goal = monthly_goal;
+    }
+
+    public float getFirst_commission_sale() {
+        return first_commission_sale;
+    }
+
+    public void setFirst_commission_sale(float first_commission_sale) {
+        this.first_commission_sale = first_commission_sale;
+    }
+
+    public float getNext_commission_sale() {
+        return next_commission_sale;
+    }
+
+    public void setNext_commission_sale(float next_commission_sale) {
+        this.next_commission_sale = next_commission_sale;
+    }
+
+    public float getFirst_commission_sale_recommended() {
+        return first_commission_sale_recommended;
+    }
+
+    public void setFirst_commission_sale_recommended(float first_commission_sale_recommended) {
+        this.first_commission_sale_recommended = first_commission_sale_recommended;
+    }
+
+    public float getAssociated_cutoff_date() {
+        return associated_cutoff_date;
+    }
+
+    public void setAssociated_cutoff_date(float associated_cutoff_date) {
+        this.associated_cutoff_date = associated_cutoff_date;
+    }
+
+    public float getFirst_commission_adviser_sale() {
+        return first_commission_adviser_sale;
+    }
+
+    public void setFirst_commission_adviser_sale(float first_commission_adviser_sale) {
+        this.first_commission_adviser_sale = first_commission_adviser_sale;
+    }
+
+    public float getNext_commission_adviser_sale() {
+        return next_commission_adviser_sale;
+    }
+
+    public void setNext_commission_adviser_sale(float next_commission_adviser_sale) {
+        this.next_commission_adviser_sale = next_commission_adviser_sale;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -377,6 +497,16 @@ public class User {
                 ", client_type=" + client_type +
                 ", is_facebook_user=" + is_facebook_user +
                 ", status='" + status + '\'' +
+                ", is_majority_user=" + is_majority_user +
+                ", is_majority_user_fake=" + is_majority_user_fake +
+                ", is_recommended=" + is_recommended +
+                ", monthly_goal=" + monthly_goal +
+                ", first_commission_sale=" + first_commission_sale +
+                ", next_commission_sale=" + next_commission_sale +
+                ", first_commission_sale_recommended=" + first_commission_sale_recommended +
+                ", associated_cutoff_date=" + associated_cutoff_date +
+                ", first_commission_adviser_sale=" + first_commission_adviser_sale +
+                ", next_commission_adviser_sale=" + next_commission_adviser_sale +
                 ", address='" + address + '\'' +
                 '}';
     }

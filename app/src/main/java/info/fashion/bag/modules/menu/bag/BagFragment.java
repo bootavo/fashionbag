@@ -20,6 +20,8 @@ public class BagFragment extends Fragment {
     private Context ctx = null;
     private View view = null;
 
+    private int altura;
+
     public static BagFragment newInstance(){
         return new BagFragment();
     }

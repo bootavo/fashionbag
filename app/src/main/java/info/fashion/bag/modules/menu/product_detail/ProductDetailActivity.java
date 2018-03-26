@@ -26,8 +26,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.ColorsInterfaces;
+import info.fashion.bag.interfaces.UserInterface;
 import info.fashion.bag.interfaces.VariantsInterface;
 import info.fashion.bag.models.Color;
+import info.fashion.bag.models.JsonUser;
 import info.fashion.bag.models.Variant;
 import info.fashion.bag.utilities.BaseActivity;
 import info.fashion.bag.utilities.Constant;
@@ -262,6 +264,37 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }else{
             mPD.dimissPD();
             Toast.makeText(ctx, ctx.getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void verifyMajorityUser(){
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+            Call<JsonUser> mCall = mInterface.getUserData(mSP.getToken());
+            mCall.enqueue(new Callback<JsonUser>() {
+                @Override
+                public void onResponse(Call<JsonUser> call, Response<JsonUser> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+
+                    Constant.IS_MAJORITY_USER = response.body().getResults().get(0).isIs_majority_user();
+
+                    if(Constant.IS_MAJORITY_USER){
+
+                    }else {
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonUser> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
     }
 

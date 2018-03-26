@@ -14,6 +14,8 @@ public class Constant {
 
     public static String PRODUCT_NAME = "";
 
+    public static boolean IS_MAJORITY_USER = false;
+
     //UNIQUE DISCOUNT_OFFER
     public static int ID_PRODUCT = 0;
     public static float SUGGESTED_PRICE = 0.0f;
