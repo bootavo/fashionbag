@@ -20,20 +20,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.ColorsInterfaces;
+import info.fashion.bag.interfaces.SalesOrdersInterface;
 import info.fashion.bag.interfaces.UserInterface;
 import info.fashion.bag.interfaces.VariantsInterface;
 import info.fashion.bag.models.Color;
+import info.fashion.bag.models.JsonSalesOrders;
 import info.fashion.bag.models.JsonUser;
+import info.fashion.bag.models.SalesOrders;
 import info.fashion.bag.models.Variant;
+import info.fashion.bag.modules.auth.login.LoginActivity;
 import info.fashion.bag.utilities.BaseActivity;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.GlideApp;
+import info.fashion.bag.utilities.JsonHelper;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.ProgressDialogHelper;
@@ -129,10 +140,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.btn_bag:
                 if(mSP.getToken().equals("No definido")){
-                    showDialog();
+                    showDialogLogin();
                 }else{
-                    Toast.makeText(ctx, "El producto se ha agregado correctamente", Toast.LENGTH_SHORT).show();
-                    verifiySalesStore();
+                    verifyMajorityUser();
                 }
                 break;
             case R.id.btn_increase:
@@ -144,7 +154,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    public void showDialog(){
+    public void showDialogLogin(){
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(ctx);
@@ -156,6 +166,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ctx, "Yes", Toast.LENGTH_SHORT).show();
+                        next(LoginActivity.class, false);
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -165,6 +176,33 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 })
                 .setIcon(R.drawable.ic_user)
                 .show();
+    }
+
+    public void showDialogQuantity(){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(ctx);
+        } else {
+            builder = new AlertDialog.Builder(ctx);
+        }
+        builder.setTitle("No ah seleccionado la cantidad de productos")
+                .setMessage("Por favor, escoga la cantidad deseada")
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(R.drawable.ic_user)
+                .show();
+    }
+
+    public boolean verifyValidQuantity(){
+        if(Integer.parseInt(getQuantity()) > 0){
+
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void increase(){
@@ -268,26 +306,78 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void verifyMajorityUser(){
+        if(verifyValidQuantity()){
+            if(NetworkHelper.isNetworkAvailable(ctx)){
+                UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+                Call<JsonUser> mCall = mInterface.getUserData(mSP.getToken());
+                mCall.enqueue(new Callback<JsonUser>() {
+                    @Override
+                    public void onResponse(Call<JsonUser> call, Response<JsonUser> response) {
+                        mPD.dimissPD();
+                        Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+
+                        Constant.IS_MAJORITY_USER = response.body().getResults().get(0).isIs_majority_user();
+
+                        if(Constant.IS_MAJORITY_USER){
+                            Log.d(TAG, "-------> "+Constant.IS_MAJORITY_USER);
+                            Toast.makeText(ctx, "IS_MAJORITY_USER", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(ctx, "AUN NO IS_MAJORITY_USER", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "-------> "+Constant.IS_MAJORITY_USER);
+                        }
+                        verifiySalesStore();
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonUser> call, Throwable t) {
+                        Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                        mPD.dimissPD();
+                    }
+                });
+            }else{
+                mPD.dimissPD();
+                Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            showDialogQuantity();
+        }
+
+    }
+
+    public void verifiySalesStore(){
         if(NetworkHelper.isNetworkAvailable(ctx)){
-            UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
-            Call<JsonUser> mCall = mInterface.getUserData(mSP.getToken());
-            mCall.enqueue(new Callback<JsonUser>() {
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<JsonSalesOrders> mCall = mInterface.getSalesOrders(mSP.getToken());
+            mCall.enqueue(new Callback<JsonSalesOrders>() {
                 @Override
-                public void onResponse(Call<JsonUser> call, Response<JsonUser> response) {
+                public void onResponse(Call<JsonSalesOrders> call, Response<JsonSalesOrders> response) {
                     mPD.dimissPD();
                     Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
 
-                    Constant.IS_MAJORITY_USER = response.body().getResults().get(0).isIs_majority_user();
+                    Constant.RESERVA = "";
+                    Constant.SALES_ORDERS_ID = 0;
 
-                    if(Constant.IS_MAJORITY_USER){
-
-                    }else {
-
+                    for (int i=0; i<response.body().getResults().size(); i++){
+                        if(response.body().getResults().get(i).getStatus().equals("RESERVA")){
+                            Constant.RESERVA = "RESERVA";
+                            Constant.SALES_ORDERS_ID = response.body().getResults().get(i).getId();
+                            break;
+                        }
                     }
+
+                    if(Constant.RESERVA.equals("RESERVA")){
+                        Toast.makeText(ctx, "TIENE RESERVAS", Toast.LENGTH_SHORT).show();
+                        //CREAR sales-order-details y asociarlo al sales-order
+                        //createSalesOrderDetails();
+                    }else {
+                        Toast.makeText(ctx, "NO TIENE RESERVAS", Toast.LENGTH_SHORT).show();
+                        createSalesOrder();
+                    }
+
                 }
 
                 @Override
-                public void onFailure(Call<JsonUser> call, Throwable t) {
+                public void onFailure(Call<JsonSalesOrders> call, Throwable t) {
                     Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
                     mPD.dimissPD();
                 }
@@ -298,7 +388,56 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    public void verifiySalesStore(){
+    public void createSalesOrder(){
+
+        final JSONObject jsonSettings = new JSONObject();
+        final JSONObject jsonSalesOrder = new JSONObject();
+        Map<String, Object> requestBody = new HashMap<>();
+
+        try {
+            jsonSettings.put("voucher_type", "BOLETA");
+
+            jsonSalesOrder.put("client", mSP.getId());
+            jsonSalesOrder.put("shipping_method", "PICKUP");
+            jsonSalesOrder.put("location", 1);
+            jsonSalesOrder.put("mailing", false);
+            jsonSalesOrder.put("settings", jsonSettings);
+
+            requestBody = JsonHelper.toMap(jsonSalesOrder);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<SalesOrders> mCall = mInterface.createSalesOrders(mSP.getToken(), requestBody);
+            mCall.enqueue(new Callback<SalesOrders>() {
+                @Override
+                public void onResponse(Call<SalesOrders> call, Response<SalesOrders> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+
+                    if(response.body().getDetail() != null){
+                        Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Constant.RESERVA = "";
+                        Constant.SALES_ORDERS_ID = 0;
+                        Toast.makeText(ctx, "Se creo el Sales Orders", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<SalesOrders> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
 
     }
 

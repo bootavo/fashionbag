@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ import retrofit2.Response;
 public class BagsFragment extends Fragment{
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+
+    @BindView(R.id.pb_products_offers) ProgressBar mPBProducts;
 
     private String TAG = BagsFragment.class.getSimpleName();
     private Context ctx = null;
@@ -178,6 +181,8 @@ public class BagsFragment extends Fragment{
 
                     //ProductsRealm productsRealm = new ProductsRealm(Realm.getDefaultInstance());
                     //productsRealm.setListProducts(response.body().getResults());
+
+                    mPBProducts.setVisibility(View.GONE);
 
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     mRecyclerView.setLayoutManager(mLayoutManager);

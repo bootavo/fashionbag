@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import info.fashion.bag.R;
@@ -40,6 +41,8 @@ import retrofit2.Response;
 public class JewelsFragment extends Fragment{
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+
+    @BindView(R.id.pb_products_offers) ProgressBar mPBProducts;
 
     private String TAG = JewelsFragment.class.getSimpleName();
     private Context ctx = null;
@@ -136,6 +139,8 @@ public class JewelsFragment extends Fragment{
                 @Override
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+
+                    mPBProducts.setVisibility(View.GONE);
 
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     mRecyclerView.setLayoutManager(mLayoutManager);

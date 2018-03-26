@@ -15,6 +15,8 @@ public class Constant {
     public static String PRODUCT_NAME = "";
 
     public static boolean IS_MAJORITY_USER = false;
+    public static String RESERVA = "";
+    public static int SALES_ORDERS_ID = 0;
 
     //UNIQUE DISCOUNT_OFFER
     public static int ID_PRODUCT = 0;

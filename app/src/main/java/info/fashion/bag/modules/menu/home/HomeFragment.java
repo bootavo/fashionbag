@@ -1,5 +1,6 @@
 package info.fashion.bag.modules.menu.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import info.fashion.bag.R;
@@ -54,6 +56,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.recycler_view_bags) RecyclerView mRecyclerViewBags;
     @BindView(R.id.recycler_view_jewels) RecyclerView mRecyclerViewJewels;
+
+    @BindView(R.id.pb_bags_offers) ProgressBar mPBBags;
+    @BindView(R.id.pb_jewels_offers) ProgressBar mPBJewels;
 
     private String TAG = HomeFragment.class.getSimpleName();
     private SharedPreferencesHelper mSP;
@@ -212,6 +217,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+
+                    mPBBags.setVisibility(View.GONE);
+
                     LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
                     mRecyclerViewBags.setLayoutManager(horizontalLayoutManagaer);
                     //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10,ctx), true));
@@ -250,6 +258,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+
+                    mPBJewels.setVisibility(View.GONE);
 
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
