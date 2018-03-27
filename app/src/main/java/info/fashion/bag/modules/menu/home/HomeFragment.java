@@ -229,8 +229,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onItemClick(Object o, int position) {
                             Products products = (Products) o;
-                            Constant.PRODUCT_NAME = products.getProduct().getName();
                             Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            Constant.SALE_PRICE = 0.0f;
+                            Constant.SALE_PRICE = response.body().getResults().get(position).getProduct().getSale_price();
                             ctx.startActivity(mIntent);
                         }
                     }, ctx));

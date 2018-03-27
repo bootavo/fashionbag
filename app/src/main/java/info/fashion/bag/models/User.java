@@ -163,6 +163,10 @@ public class User {
     @SerializedName("address")
     private String address;
 
+    @Expose
+    @SerializedName("detail")
+    private String detail;
+
     public int getId() {
         return id;
     }
@@ -467,6 +471,14 @@ public class User {
         this.next_commission_adviser_sale = next_commission_adviser_sale;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -508,6 +520,7 @@ public class User {
                 ", first_commission_adviser_sale=" + first_commission_adviser_sale +
                 ", next_commission_adviser_sale=" + next_commission_adviser_sale +
                 ", address='" + address + '\'' +
+                ", detail='" + detail + '\'' +
                 '}';
     }
 }

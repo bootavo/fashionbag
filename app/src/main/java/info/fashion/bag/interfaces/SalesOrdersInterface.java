@@ -5,6 +5,7 @@ import java.util.Map;
 import info.fashion.bag.models.JsonSalesOrders;
 import info.fashion.bag.models.JsonUser;
 import info.fashion.bag.models.SalesOrders;
+import info.fashion.bag.models.SalesOrdersDatails;
 import info.fashion.bag.models.Token;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,6 +29,13 @@ public interface SalesOrdersInterface {
     @POST("sales-orders/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<SalesOrders> createSalesOrders(
+            @Header("Authorization") String authorization,
+            @Body Map<String, Object> body
+    );
+
+    @POST("sales-order-details/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<SalesOrdersDatails> createSalesOrdersDetails(
             @Header("Authorization") String authorization,
             @Body Map<String, Object> body
     );

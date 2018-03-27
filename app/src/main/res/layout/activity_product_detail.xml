@@ -70,8 +70,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/bg_btn_bordered_wa_main"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:text="Venta Telefónica"
                     android:textColor="@color/white"
                     android:textSize="@dimen/content"
@@ -87,8 +87,8 @@
                     android:textStyle="normal"
                     android:background="@drawable/bg_btn_bordered_w_main"
                     android:layout_alignParentRight="true"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"/>
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"/>
 
             </RelativeLayout>
             
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
-                        android:text="0"
+                        android:text="1"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
@@ -277,7 +277,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:paddingBottom="40dp">
 
                 <TextView
                     android:layout_width="match_parent"

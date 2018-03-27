@@ -39,6 +39,8 @@ import info.fashion.bag.models.Color;
 import info.fashion.bag.models.JsonSalesOrders;
 import info.fashion.bag.models.JsonUser;
 import info.fashion.bag.models.SalesOrders;
+import info.fashion.bag.models.SalesOrdersDatails;
+import info.fashion.bag.models.User;
 import info.fashion.bag.models.Variant;
 import info.fashion.bag.modules.auth.login.LoginActivity;
 import info.fashion.bag.utilities.BaseActivity;
@@ -275,6 +277,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void service(){
+        Log.d(TAG, "***************** service *****************");
         mPD.showPD();
         if(NetworkHelper.isNetworkAvailable(ctx)){
             VariantsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(VariantsInterface.class);
@@ -306,6 +309,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void verifyMajorityUser(){
+        Log.d(TAG, "***************** verifyMajorityUser *****************");
         if(verifyValidQuantity()){
             if(NetworkHelper.isNetworkAvailable(ctx)){
                 UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
@@ -320,10 +324,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
                         if(Constant.IS_MAJORITY_USER){
                             Log.d(TAG, "-------> "+Constant.IS_MAJORITY_USER);
-                            Toast.makeText(ctx, "IS_MAJORITY_USER", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "-------> IS_MAJORITY_USER");
                         }else {
-                            Toast.makeText(ctx, "AUN NO IS_MAJORITY_USER", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "-------> "+Constant.IS_MAJORITY_USER);
+                            Log.d(TAG, "-------> NOT IS_MAJORITY_USER");
                         }
                         verifiySalesStore();
                     }
@@ -345,6 +349,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void verifiySalesStore(){
+        Log.d(TAG, "***************** verifiySalesStore *****************");
         if(NetworkHelper.isNetworkAvailable(ctx)){
             SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
             Call<JsonSalesOrders> mCall = mInterface.getSalesOrders(mSP.getToken());
@@ -361,16 +366,19 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                         if(response.body().getResults().get(i).getStatus().equals("RESERVA")){
                             Constant.RESERVA = "RESERVA";
                             Constant.SALES_ORDERS_ID = response.body().getResults().get(i).getId();
+                            Log.d(TAG, "------> SALES ORDER ID: "+Constant.SALES_ORDERS_ID);
+
+                            Constant.DIRECTOR_AMMOUNT = 0.0f;
+                            Constant.DIRECTOR_AMMOUNT = response.body().getResults().get(i).getDirector_mount();
                             break;
                         }
                     }
 
                     if(Constant.RESERVA.equals("RESERVA")){
-                        Toast.makeText(ctx, "TIENE RESERVAS", Toast.LENGTH_SHORT).show();
-                        //CREAR sales-order-details y asociarlo al sales-order
-                        //createSalesOrderDetails();
+                        Log.d(TAG, "-------> TIENE RESERVAS");
+                        updateDirectorAmmout();
                     }else {
-                        Toast.makeText(ctx, "NO TIENE RESERVAS", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "NO TIENE RESERVAS");
                         createSalesOrder();
                     }
 
@@ -389,7 +397,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void createSalesOrder(){
-
+        Log.d(TAG, "***************** createSalesOrder *****************");
         final JSONObject jsonSettings = new JSONObject();
         final JSONObject jsonSalesOrder = new JSONObject();
         Map<String, Object> requestBody = new HashMap<>();
@@ -418,12 +426,15 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     mPD.dimissPD();
                     Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
 
+                    Constant.SALES_ORDERS_ID = 0;
+
                     if(response.body().getDetail() != null){
+                        Log.d(TAG, "-------> NO SE PUDO CREAR EL SALES ORDERS");
                         Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
                     }else {
-                        Constant.RESERVA = "";
-                        Constant.SALES_ORDERS_ID = 0;
-                        Toast.makeText(ctx, "Se creo el Sales Orders", Toast.LENGTH_SHORT).show();
+                        Constant.SALES_ORDERS_ID = response.body().getId();
+                        updateDirectorAmmout();
+                        Log.d(TAG, "-------> SE CREO EL SALES ORDERS");
                     }
 
                 }
@@ -437,6 +448,107 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         }else{
             mPD.dimissPD();
             Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void createSalesOrderDetails(){
+        Log.d(TAG, "***************** createSalesOrderDetails *****************");
+        final JSONObject jsonSalesOrderDetails = new JSONObject();
+        Map<String, Object> requestBody = new HashMap<>();
+
+        try {
+            jsonSalesOrderDetails.put("variant", Constant.ID_PRODUCT);
+            jsonSalesOrderDetails.put("sales_order", Constant.SALES_ORDERS_ID);
+            jsonSalesOrderDetails.put("units", getQuantity());
+            jsonSalesOrderDetails.put("position", 1);
+
+            requestBody = JsonHelper.toMap(jsonSalesOrderDetails);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<SalesOrdersDatails> mCall = mInterface.createSalesOrdersDetails(mSP.getToken(), requestBody);
+            mCall.enqueue(new Callback<SalesOrdersDatails>() {
+                @Override
+                public void onResponse(Call<SalesOrdersDatails> call, Response<SalesOrdersDatails> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response order_details: "+JsonPretty.getPrettyJson(response));
+
+                    //if(response.body().getDetail() != null){
+                        Constant.SALES_ORDERS_ID = response.body().getId();
+                        updateDirectorAmmout();
+                        Log.d(TAG, "-------> SE CREO EL SALES ORDERS DETAILS");
+                    //}else {
+                    //    Log.d(TAG, "-------> NO SE PUDO CREAR EL SALES ORDERS DETAILS");
+                    //    Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
+                    //}
+                }
+
+                @Override
+                public void onFailure(Call<SalesOrdersDatails> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void updateDirectorAmmout(){
+        Log.d(TAG, "***************** updateDirectorAmmout *****************");
+        float total_mount = 0.0f;
+        total_mount = Constant.DIRECTOR_AMMOUNT + (Constant.SALE_PRICE * Integer.parseInt(getQuantity()));
+
+        if (total_mount >= 3000){
+            if(NetworkHelper.isNetworkAvailable(ctx)){
+
+                final JSONObject jsonUSers = new JSONObject();
+                Map<String, Object> requestBody = new HashMap<>();
+
+                try {
+                    jsonUSers.put("is_majority_user_fake", true);
+                    requestBody = JsonHelper.toMap(jsonUSers);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+                Call<User> mCall = mInterface.updateUser(mSP.getToken(), mSP.getId(), requestBody);
+                mCall.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        mPD.dimissPD();
+                        Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+
+                        if(response.body().getDetail() != null){
+                            Log.d(TAG, "-------> NO SE PUDO ACTALIZAR EL USUARIO");
+                            Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
+                        }else {
+                            Log.d(TAG, "-------> SE PUDO ACTUALIZAR EL USUARIO");
+                            createSalesOrderDetails();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                        mPD.dimissPD();
+                    }
+                });
+            }else{
+                mPD.dimissPD();
+                Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            createSalesOrderDetails();
         }
 
     }

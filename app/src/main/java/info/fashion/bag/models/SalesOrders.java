@@ -22,6 +22,10 @@ public class SalesOrders {
     private String status;
 
     @Expose
+    @SerializedName("director_mount")
+    private float director_mount;
+
+    @Expose
     @SerializedName("detail")
     private String detail;
 
@@ -57,12 +61,21 @@ public class SalesOrders {
         this.detail = detail;
     }
 
+    public float getDirector_mount() {
+        return director_mount;
+    }
+
+    public void setDirector_mount(float director_mount) {
+        this.director_mount = director_mount;
+    }
+
     @Override
     public String toString() {
         return "SalesOrders{" +
                 "id=" + id +
                 ", user=" + user +
                 ", status='" + status + '\'' +
+                ", director_mount=" + director_mount +
                 ", detail='" + detail + '\'' +
                 '}';
     }

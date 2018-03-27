@@ -18,6 +18,9 @@ public class Constant {
     public static String RESERVA = "";
     public static int SALES_ORDERS_ID = 0;
 
+    public static float SALE_PRICE = 0.0f;
+    public static float DIRECTOR_AMMOUNT = 0.0f;
+
     //UNIQUE DISCOUNT_OFFER
     public static int ID_PRODUCT = 0;
     public static float SUGGESTED_PRICE = 0.0f;
