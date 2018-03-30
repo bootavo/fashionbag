@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by gtufinof on 3/16/18.
+ * Created by gtufinof on 3/30/18.
  */
 
-public class ProductPromotion {
+public class Promotion {
 
     @Expose
     @SerializedName("id")
@@ -34,7 +34,7 @@ public class ProductPromotion {
     private boolean is_active;
 
     @Expose
-    @SerializedName("modified")
+    @SerializedName("variation")
     private int variation;
 
     public int getId() {
@@ -95,7 +95,7 @@ public class ProductPromotion {
 
     @Override
     public String toString() {
-        return "ProductPromotion{" +
+        return "Promotion{" +
                 "id=" + id +
                 ", created='" + created + '\'' +
                 ", modified='" + modified + '\'' +
@@ -105,5 +105,4 @@ public class ProductPromotion {
                 ", variation=" + variation +
                 '}';
     }
-
 }

@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -31,13 +32,20 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
+import info.fashion.bag.interfaces.BusinessRulesInterface;
 import info.fashion.bag.interfaces.ColorsInterfaces;
+import info.fashion.bag.interfaces.PromotionInterface;
 import info.fashion.bag.interfaces.SalesOrdersInterface;
 import info.fashion.bag.interfaces.UserInterface;
 import info.fashion.bag.interfaces.VariantsInterface;
 import info.fashion.bag.models.Color;
+import info.fashion.bag.models.JsonBusinessRules;
+import info.fashion.bag.models.JsonPromotion;
 import info.fashion.bag.models.JsonSalesOrders;
+import info.fashion.bag.models.JsonSalesOrdersDetails;
 import info.fashion.bag.models.JsonUser;
+import info.fashion.bag.models.Products;
+import info.fashion.bag.models.Promotion;
 import info.fashion.bag.models.SalesOrders;
 import info.fashion.bag.models.SalesOrdersDatails;
 import info.fashion.bag.models.User;
@@ -85,6 +93,14 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     private SharedPreferencesHelper mSP;
     private ProgressDialogHelper mPD;
     private Context ctx = this;
+
+    private float business_rules_director_mount = 450.0f;
+    private List<SalesOrdersDatails> listSalesOrderDetails;
+
+    float total_mount = 0.0f;
+
+    private List<Promotion> listPromotion;
+    private int promotion_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +216,6 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
     public boolean verifyValidQuantity(){
         if(Integer.parseInt(getQuantity()) > 0){
-
             return true;
         }else {
             return false;
@@ -229,7 +244,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public boolean isNegative(int number){
-        if(number < 0){
+        if(number < 1){
             return true;
         }else {
             return false;
@@ -245,9 +260,12 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         super.onStart();
         setTitle(null);
         service();
+        businessRules();
+        promotion();
     }
 
     public void getProductColor(int id){
+        Log.d(TAG, "***************** GET PRODUCT COLOR *****************");
         Log.d(TAG, "color id: "+id);
         if(NetworkHelper.isNetworkAvailable(ctx)){
             ColorsInterfaces mInterface = ApiRetrofitClient.getRetrofitClient().create(ColorsInterfaces.class);
@@ -277,7 +295,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void service(){
-        Log.d(TAG, "***************** service *****************");
+        Log.d(TAG, "***************** SERVICE *****************");
         mPD.showPD();
         if(NetworkHelper.isNetworkAvailable(ctx)){
             VariantsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(VariantsInterface.class);
@@ -289,6 +307,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
                     Variant variant = new Variant();
                     variant.setName(Constant.PRODUCT_NAME);
+                    Constant.ID_PRODUCT = response.body().getId();
                     variant.setColor(response.body().getColor());
                     variant.setSku(response.body().getSku());
                     variant.setImage_url(response.body().getImage_url());
@@ -309,7 +328,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void verifyMajorityUser(){
-        Log.d(TAG, "***************** verifyMajorityUser *****************");
+        Log.d(TAG, "***************** VERIFIY MAJORITY USER *****************");
         if(verifyValidQuantity()){
             if(NetworkHelper.isNetworkAvailable(ctx)){
                 UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
@@ -349,7 +368,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void verifiySalesStore(){
-        Log.d(TAG, "***************** verifiySalesStore *****************");
+        Log.d(TAG, "***************** VERIFY SALES STORE *****************");
         if(NetworkHelper.isNetworkAvailable(ctx)){
             SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
             Call<JsonSalesOrders> mCall = mInterface.getSalesOrders(mSP.getToken());
@@ -376,6 +395,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
                     if(Constant.RESERVA.equals("RESERVA")){
                         Log.d(TAG, "-------> TIENE RESERVAS");
+                        getOrderDetails();
                         updateDirectorAmmout();
                     }else {
                         Log.d(TAG, "NO TIENE RESERVAS");
@@ -397,7 +417,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void createSalesOrder(){
-        Log.d(TAG, "***************** createSalesOrder *****************");
+        Log.d(TAG, "***************** CREATE SALES ORDER *****************");
         final JSONObject jsonSettings = new JSONObject();
         final JSONObject jsonSalesOrder = new JSONObject();
         Map<String, Object> requestBody = new HashMap<>();
@@ -453,14 +473,14 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void createSalesOrderDetails(){
-        Log.d(TAG, "***************** createSalesOrderDetails *****************");
+        Log.d(TAG, "***************** CREATE SALES ORDER DETAILS *****************");
         final JSONObject jsonSalesOrderDetails = new JSONObject();
         Map<String, Object> requestBody = new HashMap<>();
 
         try {
             jsonSalesOrderDetails.put("variant", Constant.ID_PRODUCT);
             jsonSalesOrderDetails.put("sales_order", Constant.SALES_ORDERS_ID);
-            jsonSalesOrderDetails.put("units", getQuantity());
+            jsonSalesOrderDetails.put("units", Integer.parseInt(getQuantity()));
             jsonSalesOrderDetails.put("position", 1);
 
             requestBody = JsonHelper.toMap(jsonSalesOrderDetails);
@@ -468,6 +488,10 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        Log.d(TAG, "--------> Json SalesOrderDetails");
+        Log.d(TAG, JsonPretty.getPrettyJson(jsonSalesOrderDetails));
+        Log.d(TAG, "--------> Json SalesOrderDetails");
 
         if(NetworkHelper.isNetworkAvailable(ctx)){
             SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
@@ -478,14 +502,37 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     mPD.dimissPD();
                     Log.d(TAG, "Retrofit Response order_details: "+JsonPretty.getPrettyJson(response));
 
-                    //if(response.body().getDetail() != null){
-                        Constant.SALES_ORDERS_ID = response.body().getId();
-                        updateDirectorAmmout();
-                        Log.d(TAG, "-------> SE CREO EL SALES ORDERS DETAILS");
-                    //}else {
-                    //    Log.d(TAG, "-------> NO SE PUDO CREAR EL SALES ORDERS DETAILS");
-                    //    Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
-                    //}
+                    Constant.SALES_ORDERS_DETAIL_ID = response.body().getId();
+                    //updateDirectorAmmout();
+                    Log.d(TAG, "-------> SE CREO EL SALES ORDERS DETAILS");
+
+                    //verify amount in promotion
+                    for (int i=0; i<listPromotion.size(); i++){
+                        if (total_mount >= listPromotion.get(i).getStart_amount() && total_mount < listPromotion.get(i).getEnd_amount()){
+                            Log.d(TAG, "-------> TIENE PROMOCIÓN");
+                            promotion_id = listPromotion.get(i).getVariation();
+
+                            int old_promotion_id = 0;
+
+                            for(int j=0; j<listSalesOrderDetails.size(); j++){
+                                if(listSalesOrderDetails.get(j).isIs_promotion()) {
+                                    Log.d(TAG, "-------> TIENE PROMOCIÓN");
+                                    old_promotion_id = listSalesOrderDetails.get(j).getId();
+                                    addPromotion();
+                                    break;
+                                }
+                            }
+
+                            if(old_promotion_id != 0){
+                                deleteOldPromotion(old_promotion_id);
+                            }else {
+                                addPromotion();
+                            }
+
+                        }else{
+                            Log.d(TAG, "-------> NO TIENE PROMOCIÓN "+i);
+                        }
+                    }
                 }
 
                 @Override
@@ -501,12 +548,80 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    public void addPromotion(){
+        Log.d(TAG, "***************** ADD PROMOTION *****************");
+        final JSONObject jsonSalesOrderDetails = new JSONObject();
+        Map<String, Object> requestBody = new HashMap<>();
+
+        try {
+            jsonSalesOrderDetails.put("variant", promotion_id);
+            jsonSalesOrderDetails.put("sales_order", Constant.SALES_ORDERS_ID);
+            jsonSalesOrderDetails.put("units", Integer.parseInt(getQuantity()));
+            jsonSalesOrderDetails.put("is_promotion", true);
+            jsonSalesOrderDetails.put("position", 1);
+
+            requestBody = JsonHelper.toMap(jsonSalesOrderDetails);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "--------> Json Promotion");
+        Log.d(TAG, JsonPretty.getPrettyJson(jsonSalesOrderDetails));
+        Log.d(TAG, "--------> Json Promotion");
+
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<SalesOrdersDatails> mCall = mInterface.createSalesOrdersDetails(mSP.getToken(), requestBody);
+            mCall.enqueue(new Callback<SalesOrdersDatails>() {
+                @Override
+                public void onResponse(Call<SalesOrdersDatails> call, Response<SalesOrdersDatails> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "-------> SE CREO LA PROMOCIÓN");
+                }
+
+                @Override
+                public void onFailure(Call<SalesOrdersDatails> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteOldPromotion(int id){
+        Log.d(TAG, "***************** DELETE OLD PROMOTION *****************");
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            PromotionInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(PromotionInterface.class);
+            Call<Promotion> mCall = mInterface.deletePromotion(mSP.getToken(), id);
+            mCall.enqueue(new Callback<Promotion>() {
+                @Override
+                public void onResponse(Call<Promotion> call, Response<Promotion> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "-------> SE ELIMINO LA PROMOCIÓN");
+                    addPromotion();
+                }
+
+                @Override
+                public void onFailure(Call<Promotion> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void updateDirectorAmmout(){
-        Log.d(TAG, "***************** updateDirectorAmmout *****************");
-        float total_mount = 0.0f;
+        Log.d(TAG, "***************** UPDATE DIRECTOR AMOUNT *****************");
         total_mount = Constant.DIRECTOR_AMMOUNT + (Constant.SALE_PRICE * Integer.parseInt(getQuantity()));
 
-        if (total_mount >= 3000){
+        if (total_mount >= business_rules_director_mount){
             if(NetworkHelper.isNetworkAvailable(ctx)){
 
                 final JSONObject jsonUSers = new JSONObject();
@@ -532,7 +647,25 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                             Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
                         }else {
                             Log.d(TAG, "-------> SE PUDO ACTUALIZAR EL USUARIO");
-                            createSalesOrderDetails();
+
+                            boolean product_repeat = false;
+
+                            for (int i=0; i<listSalesOrderDetails.size(); i++){
+                                if(listSalesOrderDetails.get(i).getId() == Constant.ID_PRODUCT){
+                                    Log.d(TAG, "-------> EL PRODUCTO ES REPETIDO");
+                                    product_repeat = true;
+                                    break;
+                                }
+                            }
+
+                            if(product_repeat){
+                                Log.d(TAG, "-------> ACTUALIZAR CANTIDAD DEL PRODUCTO");
+                                updateQuantityOfSalesOrderDetail(Constant.ID_PRODUCT);
+                            }else{
+                                Log.d(TAG, "-------> CREAR SALES ORDER DETAIL");
+                                createSalesOrderDetails();
+                            }
+
                         }
 
                     }
@@ -549,6 +682,50 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             }
         }else {
             createSalesOrderDetails();
+        }
+
+    }
+
+    public void updateQuantityOfSalesOrderDetail(int id){
+
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+
+            final JSONObject jsonUSers = new JSONObject();
+            Map<String, Object> requestBody = new HashMap<>();
+
+            try {
+                jsonUSers.put("units", getQuantity());
+                requestBody = JsonHelper.toMap(jsonUSers);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<SalesOrdersDatails> mCall = mInterface.updateSalesOrderDetail(mSP.getToken(), id, requestBody);
+            mCall.enqueue(new Callback<SalesOrdersDatails>() {
+                @Override
+                public void onResponse(Call<SalesOrdersDatails> call, Response<SalesOrdersDatails> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response update quantity of product: "+JsonPretty.getPrettyJson(response));
+
+                    if(response.body().getDetail() != null){
+                        Log.d(TAG, "-------> NO SE PUDO ACTALIZAR LA CANTIDAD DEL PRODUCTO");
+                        Toast.makeText(ctx, response.body().getDetail(), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Log.d(TAG, "-------> SE PUDO ACTUALIZAR LA CANTIDAD DEL PRODUCTO");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<SalesOrdersDatails> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -600,6 +777,86 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 finish();
             }
         });
+    }
+
+    public void promotion(){
+        Log.d(TAG, "***************** PROMOTIONS *****************");
+        mPD.showPD();
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            PromotionInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(PromotionInterface.class);
+            Call<JsonPromotion> mCall = mInterface.getPromotions(mSP.getToken());
+            mCall.enqueue(new Callback<JsonPromotion>() {
+                @Override
+                public void onResponse(Call<JsonPromotion> call, Response<JsonPromotion> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response Promotion: "+ JsonPretty.getPrettyJson(response));
+                    listPromotion = response.body().getResults();
+                }
+
+                @Override
+                public void onFailure(Call<JsonPromotion> call, Throwable t) {
+                    mPD.dimissPD();
+                    Toast.makeText(ctx, ctx.getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, ctx.getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getOrderDetails(){
+        Log.d(TAG, "***************** GET SALES ORDER DETAILS *****************");
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            SalesOrdersInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(SalesOrdersInterface.class);
+            Call<JsonSalesOrdersDetails> mCall = mInterface.getSalesOrdersDetails(mSP.getToken());
+            mCall.enqueue(new Callback<JsonSalesOrdersDetails>() {
+                @Override
+                public void onResponse(Call<JsonSalesOrdersDetails> call, Response<JsonSalesOrdersDetails> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response sales_order_details: "+JsonPretty.getPrettyJson(response));
+
+                    listSalesOrderDetails = response.body().getResults();
+
+                }
+
+                @Override
+                public void onFailure(Call<JsonSalesOrdersDetails> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void businessRules(){
+        Log.d(TAG, "***************** BUSINESS RULES *****************");
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            BusinessRulesInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(BusinessRulesInterface.class);
+            Call<JsonBusinessRules> mCall = mInterface.getBusinessRules(mSP.getToken());
+            mCall.enqueue(new Callback<JsonBusinessRules>() {
+                @Override
+                public void onResponse(Call<JsonBusinessRules> call, Response<JsonBusinessRules> response) {
+                    mPD.dimissPD();
+                    Log.d(TAG, "Retrofit Response business_rules: "+JsonPretty.getPrettyJson(response));
+
+                    business_rules_director_mount = response.body().getResults().get(0).getDirector_mount();
+
+                }
+
+                @Override
+                public void onFailure(Call<JsonBusinessRules> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

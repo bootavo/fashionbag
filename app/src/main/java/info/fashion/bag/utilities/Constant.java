@@ -17,6 +17,7 @@ public class Constant {
     public static boolean IS_MAJORITY_USER = false;
     public static String RESERVA = "";
     public static int SALES_ORDERS_ID = 0;
+    public static int SALES_ORDERS_DETAIL_ID = 0;
 
     public static float SALE_PRICE = 0.0f;
     public static float DIRECTOR_AMMOUNT = 0.0f;

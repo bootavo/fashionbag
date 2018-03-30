@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by gtufinof on 3/16/18.
+ * Created by admin on 26/03/18.
  */
 
-public class JsonProductPromotion {
+public class JsonPromotion {
 
     @Expose
     @SerializedName("count")
@@ -25,7 +25,11 @@ public class JsonProductPromotion {
 
     @Expose
     @SerializedName("results")
-    private List<ProductPromotion> results;
+    private List<Promotion> results;
+
+    @Expose
+    @SerializedName("detail")
+    private String detail;
 
     public int getCount() {
         return count;
@@ -51,21 +55,30 @@ public class JsonProductPromotion {
         this.previous = previous;
     }
 
-    public List<ProductPromotion> getResults() {
+    public List<Promotion> getResults() {
         return results;
     }
 
-    public void setResults(List<ProductPromotion> results) {
+    public void setResults(List<Promotion> results) {
         this.results = results;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     @Override
     public String toString() {
-        return "JsonProductPromotion{" +
+        return "JsonSalesOrders{" +
                 "count=" + count +
                 ", next='" + next + '\'' +
                 ", previous='" + previous + '\'' +
                 ", results=" + results +
+                ", detail='" + detail + '\'' +
                 '}';
     }
 }
