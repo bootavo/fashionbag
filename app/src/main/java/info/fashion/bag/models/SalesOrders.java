@@ -29,6 +29,14 @@ public class SalesOrders {
     @SerializedName("detail")
     private String detail;
 
+    @Expose
+    @SerializedName("total_cost")
+    private float total_cost;
+
+    @Expose
+    @SerializedName("subtotal_cost")
+    private float subtotal_cost;
+
     public int getId() {
         return id;
     }
@@ -69,6 +77,22 @@ public class SalesOrders {
         this.director_mount = director_mount;
     }
 
+    public float getTotal_cost() {
+        return total_cost;
+    }
+
+    public void setTotal_cost(float total_cost) {
+        this.total_cost = total_cost;
+    }
+
+    public float getSubtotal_cost() {
+        return subtotal_cost;
+    }
+
+    public void setSubtotal_cost(float subtotal_cost) {
+        this.subtotal_cost = subtotal_cost;
+    }
+
     @Override
     public String toString() {
         return "SalesOrders{" +
@@ -77,6 +101,8 @@ public class SalesOrders {
                 ", status='" + status + '\'' +
                 ", director_mount=" + director_mount +
                 ", detail='" + detail + '\'' +
+                ", total_cost=" + total_cost +
+                ", subtotal_cost=" + subtotal_cost +
                 '}';
     }
 }

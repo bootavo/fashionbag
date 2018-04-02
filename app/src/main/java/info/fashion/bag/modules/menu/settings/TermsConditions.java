@@ -24,8 +24,13 @@ public class TermsConditions extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_conditions);
         initButterKnife();
+        init();
         eventUI();
 
+    }
+
+    public void init(){
+        setTitle(null);
         setSupportActionBar(mToolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -186,16 +191,9 @@ public class TermsConditions extends BaseActivity{
                 "</body>";
 
         mWebView.loadData(customHtml, "text/html; charset=utf-8", "UTF-8");
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setTitle(null);
-    }
-
-    private void initButterKnife() {
+    public void initButterKnife(){
         ButterKnife.bind(this);
     }
 

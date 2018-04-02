@@ -20,6 +20,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by gtufinof on 3/12/18.
@@ -50,10 +51,20 @@ public interface SalesOrdersInterface {
             @Header("Authorization") String authorization);
 
     @Headers("Content-Type: application/json")
-    @PATCH("sales-order-details//{id}/")
+    @PATCH("sales-order-details/{id}/")
     Call<SalesOrdersDatails> updateSalesOrderDetail(
             @Header("Authorization") String authorization,
             @Path("id") int id,
             @Body Map<String, Object> body);
+
+    @GET("sales-order-details/{id}")
+    Call<JsonSalesOrders> getSaleOrderReserve(
+            @Header("Authorization") String authorization,
+            @Query("sales-orders") int sales_orders);
+
+    @GET("sales-order-details/")
+    Call<JsonSalesOrdersDetails> getReserve(
+            @Header("Authorization") String authorization,
+            @Query("sale_order") int sale_order);
 
 }

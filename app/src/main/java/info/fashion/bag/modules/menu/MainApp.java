@@ -12,12 +12,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import info.fashion.bag.modules.menu.bag.BagFragment;
+import info.fashion.bag.modules.menu.reserve.ReserveActivity;
 import info.fashion.bag.modules.menu.catalogue.CatalogFragment;
 import info.fashion.bag.modules.menu.home.HomeFragment;
 import info.fashion.bag.modules.menu.maps.MapFragment;
@@ -75,8 +74,8 @@ public class MainApp extends BaseActivity{
         CatalogFragment catalogFragment = new CatalogFragment();
         fragments.add(catalogFragment);
 
-        BagFragment bagFragment = new BagFragment();
-        fragments.add(bagFragment);
+        //ReserveActivity reserveActivity = new ReserveActivity();
+        //fragments.add(reserveActivity);
 
         MapFragment mapFragment = new MapFragment();
         fragments.add(mapFragment);
@@ -143,13 +142,15 @@ public class MainApp extends BaseActivity{
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //next(SpecialistActivity.class, false);
+                next(ReserveActivity.class, false);
+                /*
                 mBottomNavigationViewEx.setItemTextColor(getResources().getColorStateList(R.color.selector_item_primary_color));
                 mBottomNavigationViewEx.setIconTintList(mBottomNavigationViewEx.getCurrentItem(), getResources().getColorStateList(R.color.selector_item_primary_color));
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.content, fragments.get(2));
                 transaction.commit();
+                */
             }
         });
 

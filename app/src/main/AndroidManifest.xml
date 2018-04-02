@@ -95,6 +95,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme" />
 
+        <activity
+            android:name=".modules.menu.saerch_product.SearchProducts"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+
+        <activity
+            android:name=".modules.menu.reserve.ReserveActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

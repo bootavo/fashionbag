@@ -1,5 +1,8 @@
 package info.fashion.bag.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import info.fashion.bag.models.Products;
 
 import java.util.List;
@@ -10,9 +13,20 @@ import java.util.List;
 
 public class JsonProducts {
 
+    @Expose
+    @SerializedName("count")
     private int count;
+
+    @Expose
+    @SerializedName("next")
     private String next;
+
+    @Expose
+    @SerializedName("previous")
     private String previous;
+
+    @Expose
+    @SerializedName("results")
     private List<Products> results;
 
     public int getCount() {

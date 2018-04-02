@@ -1,0 +1,251 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="270dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="@dimen/card_album_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_picture_reserve"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/picture_bag"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal|center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_promo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/bg_btn_bordered_w_main"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:text="-30%"
+                        android:textColor="@color/white"
+                        android:visibility="invisible"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_reserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:paddingLeft="@dimen/album_title_padding"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:paddingTop="@dimen/album_title_padding"
+                        android:text="Cartera 123"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/album_title" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_brand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/tv_title_reserve">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/songs_count_padding_bottom"
+                            android:paddingLeft="@dimen/album_title_padding"
+                            android:paddingRight="@dimen/album_title_padding"
+                            android:textSize="@dimen/songs_count"
+                            android:text="Marca"/>
+
+                        <TextView
+                            android:id="@+id/tv_brand"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/songs_count_padding_bottom"
+                            android:paddingRight="@dimen/album_title_padding"
+                            android:gravity="right"
+                            android:textSize="@dimen/album_title"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold"
+                            android:text="Faba"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/ll_brand">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/songs_count_padding_bottom"
+                            android:paddingLeft="@dimen/album_title_padding"
+                            android:paddingRight="@dimen/album_title_padding"
+                            android:textSize="@dimen/songs_count"
+                            android:text="Color"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/civ_color"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                card_view:civ_border_width="2dp"
+                                card_view:civ_border_color="@color/gray_divider"
+                                card_view:civ_border_overlay="true"
+                                android:src="@color/white"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/album_title_padding"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_price_unitary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/ll_color">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/songs_count_padding_bottom"
+                            android:paddingLeft="@dimen/album_title_padding"
+                            android:paddingRight="@dimen/album_title_padding"
+                            android:textSize="@dimen/songs_count"
+                            android:text="Precio"/>
+
+                        <TextView
+                            android:id="@+id/tv_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/songs_count_padding_bottom"
+                            android:paddingRight="@dimen/album_title_padding"
+                            android:gravity="right"
+                            android:textSize="@dimen/album_title"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            android:text="S/.25.00"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/ll_price_unitary">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_btn_bordered_wo_main">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Cantidad"
+                                android:textColor="@color/primary_text"
+                                android:textSize="@dimen/content"
+                                android:textStyle="normal"
+                                android:layout_centerVertical="true"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_alignParentRight="true">
+
+                                <Button
+                                    android:id="@+id/btn_decrease"
+                                    android:text="-"
+                                    style="@style/QuantityPickerButtonStyle"/>
+
+                                <TextView
+                                    android:id="@+id/tv_quantity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="8dp"
+                                    android:paddingRight="8dp"
+                                    android:text="1"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/btn_increase"
+                                    android:text="+"
+                                    style="@style/QuantityPickerButtonStyle"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/ll_quantity">
+
+                        <Button
+                            android:id="@+id/btn_delete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="eliminar"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

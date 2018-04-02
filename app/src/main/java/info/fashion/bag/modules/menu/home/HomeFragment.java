@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
 import info.fashion.bag.modules.menu.product_detail.ProductDetailActivity;
+import info.fashion.bag.modules.menu.saerch_product.SearchProducts;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.SharedPreferencesHelper;
@@ -52,6 +54,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.ll_auth) LinearLayout llAuth;
     @BindView(R.id.btn_login) Button btnLogin;
+
+    @BindView(R.id.et_search) EditText mSearch;
     @BindView(R.id.btn_search) ImageButton btnSearch;
 
     @BindView(R.id.recycler_view_bags) RecyclerView mRecyclerViewBags;
@@ -104,6 +108,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public String getSearch(){
+        return mSearch.getText().toString();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -126,9 +134,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 ctx.startActivity(intent);
                 break;
             case R.id.btn_search:
-                Toast.makeText(ctx, "Buscando", Toast.LENGTH_SHORT).show();
+                verifySearch();
                 break;
         }
+    }
+
+    public void verifySearch(){
+        if(getSearch() == null || getSearch().equals("")){
+            Toast.makeText(ctx, "Ingrese el nombre de algún producto", Toast.LENGTH_SHORT).show();
+        }else{
+            nextActivity();
+        }
+    }
+
+    public void nextActivity(){
+        Intent mIntent = new Intent(ctx, SearchProducts.class);
+        mIntent.putExtra("product_name", getSearch());
+        startActivity(mIntent);
     }
 
     public class myTimerTask extends TimerTask {
@@ -257,7 +279,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Call<JsonProducts> mCall = mInterface.getOfferJewels();
             mCall.enqueue(new Callback<JsonProducts>() {
                 @Override
-                public void onResponse(Call<JsonProducts> call, Response<JsonProducts> response) {
+                public void onResponse(Call<JsonProducts> call, final Response<JsonProducts> response) {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     mPBJewels.setVisibility(View.GONE);
@@ -273,6 +295,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         public void onItemClick(Object o, int position) {
                             Products products = (Products) o;
                             Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            Constant.SALE_PRICE = 0.0f;
+                            Constant.SALE_PRICE = response.body().getResults().get(position).getProduct().getSale_price();
                             ctx.startActivity(mIntent);
                         }
                     }, ctx));
