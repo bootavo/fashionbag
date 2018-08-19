@@ -88,22 +88,6 @@ public class ProductHolder extends RecyclerView.ViewHolder {
 
         Constant.SUGGESTED_PRICE = products.getProduct().getSuggested_price();
 
-        GlideApp
-                .with(ctx)
-                //.asBitmap()
-                .load(products.getThumbnail_url())
-                .into(mPictureProduct);
-                /*
-                .into(new SimpleTarget<Bitmap>(500,500) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-                        mPictureProduct.setImageBitmap(bitmap);
-                        //blogs.setBitmap(bitmap);
-                        //BitmapHelper.getInstance().setBitmap(bitmap);
-                    }
-                });
-                */
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
