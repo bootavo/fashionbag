@@ -7,6 +7,25 @@ import java.util.List;
 
 public class Constant {
 
+    public static String BASE_URL = "https://tarjeticstore.cfapps.io/api/";
+    //public static String BASE_URL = "http://192.168.0.9:8080/api/";
+
+    public static String ORDER_KIND_PAY_COINS = "FICHAS";
+    public static String ORDER_KIND_PAY_CASH = "EFECTIVO";
+
+    public static String ORDER_PAY_EFFECTIVE = "EFECTIVO";
+    public static String ORDER_PAY_CREDIT_CARD = "TARJETA";
+
+    public static String ORDER_PENDANT = "PENDIENTE";
+    public static String ORDER_CANCEL = "CANCELADO";
+    public static String ORDER_DONE = "ATENDIDO";
+
+    public static String REGISTER_APP = "APP";
+    public static String REGISTER_WEBPP = "WEB";
+    public static String REGISTER_SHARE_APP = "SHARE_APP";
+
+    public static float COINS_MULTIPLIER = 5;
+
     public static String TOKEN_FORMAT = "Token ";
 
     public static int NOTIFICATION_ID = 0;

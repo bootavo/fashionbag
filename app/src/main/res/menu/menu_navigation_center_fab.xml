@@ -16,9 +16,9 @@
         android:title="" />
 
     <item
-        android:id="@+id/i_map"
+        android:id="@+id/i_order"
         android:icon="@drawable/ic_map"
-        android:title="@string/map" />
+        android:title="@string/order" />
     <item
         android:id="@+id/i_settings"
         android:icon="@drawable/ic_user"

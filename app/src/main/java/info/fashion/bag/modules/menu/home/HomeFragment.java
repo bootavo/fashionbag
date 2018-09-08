@@ -1,6 +1,5 @@
 package info.fashion.bag.modules.menu.home;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,10 +24,13 @@ import android.widget.Toast;
 
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
+import info.fashion.bag.interfaces.PromotionInterface;
 import info.fashion.bag.listeners.OnItemClickListener;
 import info.fashion.bag.interfaces.ProductsInterface;
-import info.fashion.bag.models.JsonProducts;
-import info.fashion.bag.models.Products;
+import info.fashion.bag.models.JsonRequest;
+import info.fashion.bag.models.Product;
+import info.fashion.bag.models.Promotion;
+import info.fashion.bag.models.User;
 import info.fashion.bag.modules.auth.login.LoginActivity;
 
 import java.util.Timer;
@@ -37,11 +39,11 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
+import info.fashion.bag.modules.menu.catalogue.adapters.PromotionAdapter;
 import info.fashion.bag.modules.menu.product_detail.ProductDetailActivity;
-import info.fashion.bag.modules.menu.saerch_product.SearchProducts;
-import info.fashion.bag.utilities.Constant;
+import info.fashion.bag.modules.menu.home.saerch_product.SearchProducts;
 import info.fashion.bag.utilities.NetworkHelper;
-import info.fashion.bag.utilities.SharedPreferencesHelper;
+import info.fashion.bag.utilities.PreferencesHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +67,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.pb_jewels_offers) ProgressBar mPBJewels;
 
     private String TAG = HomeFragment.class.getSimpleName();
-    private SharedPreferencesHelper mSP;
     private Context ctx = null;
     private View view = null;
 
@@ -97,13 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         dotCounts=viewPageAdapter.getCount();
         dots = new ImageView[dotCounts];
 
-        //
-        mSP = new SharedPreferencesHelper(ctx);
-        if(mSP.getToken().equals("No definido")){
-            llAuth.setVisibility(View.VISIBLE);
-        }else {
-            llAuth.setVisibility(View.GONE);
-        }
+        verifyUserLogin();
 
         return view;
     }
@@ -217,8 +212,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "----> onStart");
-        callOfferBags();
-        callOfferJewels();
+        callPromocions();
+        callProducts();
     }
 
     @Override
@@ -229,74 +224,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         timer.purge();
     }
 
-    public void callOfferBags(){
+    public void callPromocions(){
         if(NetworkHelper.isNetworkAvailable(ctx)){
-            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
-            Call<JsonProducts> mCall = mInterface.getOffersBags();
-            mCall.enqueue(new Callback<JsonProducts>() {
+            PromotionInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(PromotionInterface.class);
+            Call<JsonRequest> mCall = mInterface.getPromotiones();
+            mCall.enqueue(new Callback<JsonRequest>() {
                 @Override
-                public void onResponse(Call<JsonProducts> call, final Response<JsonProducts> response) {
+                public void onResponse(Call<JsonRequest> call, final Response<JsonRequest> response) {
                     //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
-
-                    //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
 
                     mPBBags.setVisibility(View.GONE);
 
-                    LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
-                    mRecyclerViewBags.setLayoutManager(horizontalLayoutManagaer);
-                    //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10,ctx), true));
-                    mRecyclerViewBags.setItemAnimator(new DefaultItemAnimator());
-                    mRecyclerViewBags.setHasFixedSize(true);
-                    mRecyclerViewBags.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Object o, int position) {
-                            Products products = (Products) o;
-                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
-                            Constant.SALE_PRICE = 0.0f;
-                            Constant.SALE_PRICE = response.body().getResults().get(position).getProduct().getSale_price();
-                            ctx.startActivity(mIntent);
-                        }
-                    }, ctx));
-
-                    //mRecyclerViewBags.setHasFixedSize(true);
-                    //mRecyclerViewBags.getLayoutManager().setMeasurementCacheEnabled(false);
-                    //mRecyclerView.setNestedScrollingEnabled(false);
-                }
-
-                @Override
-                public void onFailure(Call<JsonProducts> call, Throwable t) {
-                    Toast.makeText(ctx, ctx.getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
-            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void callOfferJewels(){
-        if(NetworkHelper.isNetworkAvailable(ctx)){
-            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
-            Call<JsonProducts> mCall = mInterface.getOfferJewels();
-            mCall.enqueue(new Callback<JsonProducts>() {
-                @Override
-                public void onResponse(Call<JsonProducts> call, final Response<JsonProducts> response) {
-                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
-
-                    mPBJewels.setVisibility(View.GONE);
-
                     //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
-                    mRecyclerViewJewels.setLayoutManager(horizontalLayoutManagaer);
+                    mRecyclerViewBags.setLayoutManager(horizontalLayoutManagaer);
                     //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-                    mRecyclerViewJewels.setItemAnimator(new DefaultItemAnimator());
-                    mRecyclerViewJewels.setHasFixedSize(true);
-                    mRecyclerViewJewels.setAdapter(new ProductAdapter(response.body().getResults(), new OnItemClickListener() {
+                    mRecyclerViewBags.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerViewBags.setHasFixedSize(true);
+                    mRecyclerViewBags.setAdapter(new PromotionAdapter(response.body().getResults().getPromotions(), new OnItemClickListener() {
                         @Override
                         public void onItemClick(Object o, int position) {
-                            Products products = (Products) o;
+                            Promotion promotion = (Promotion) o;
                             Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
-                            Constant.SALE_PRICE = 0.0f;
-                            Constant.SALE_PRICE = response.body().getResults().get(position).getProduct().getSale_price();
+                            mIntent.putExtra("product_type", "S");
+                            mIntent.putExtra("id_generic_pp", promotion.getId_promocion());
                             ctx.startActivity(mIntent);
                         }
                     }, ctx));
@@ -307,7 +258,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void onFailure(Call<JsonProducts> call, Throwable t) {
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void callProducts(){
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
+            Call<JsonRequest> mCall = mInterface.getProducts();
+            mCall.enqueue(new Callback<JsonRequest>() {
+                @Override
+                public void onResponse(Call<JsonRequest> call, final Response<JsonRequest> response) {
+                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+
+                    mPBJewels.setVisibility(View.GONE);
+
+                    //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+                    LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
+                    mRecyclerViewJewels.setLayoutManager(horizontalLayoutManagaer);
+                    //mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+                    mRecyclerViewJewels.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerViewJewels.setHasFixedSize(true);
+                    mRecyclerViewJewels.setAdapter(new ProductAdapter(response.body().getResults().getProducts(), new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            Product product = (Product) o;
+                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            mIntent.putExtra("product_type", "P");
+                            mIntent.putExtra("id_generic_pp", product.getId_producto());
+                            ctx.startActivity(mIntent);
+                        }
+                    }, ctx));
+
+                    //mRecyclerViewJewels.setHasFixedSize(true);
+                    //mRecyclerViewJewels.getLayoutManager().setMeasurementCacheEnabled(false);
+                    //mRecyclerView.setNestedScrollingEnabled(false);
+                }
+
+                @Override
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
                     Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -319,6 +313,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        verifyUserLogin();
         Log.d(TAG, "----> onResume");
     }
 
@@ -332,6 +327,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "----> onDestroy");
+    }
+
+    public void verifyUserLogin(){
+        User user = PreferencesHelper.getMyUserPref(ctx);
+        if(user == null){
+            llAuth.setVisibility(View.VISIBLE);
+        }else {
+            llAuth.setVisibility(View.GONE);
+        }
     }
 
 }

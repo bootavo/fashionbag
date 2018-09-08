@@ -3,8 +3,6 @@ package info.fashion.bag.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
  * Created by gtufinof on 3/12/18.
  */
@@ -12,311 +10,103 @@ import java.util.List;
 public class User {
 
     @Expose
-    @SerializedName("id")
-    private int id;
+    @SerializedName("id_persona")
+    private int id_persona;
 
     @Expose
-    @SerializedName("token")
-    private String token;
+    @SerializedName("id_usuario")
+    private int id_usuario;
 
     @Expose
-    @SerializedName("last_sale")
-    private String last_sale;
+    @SerializedName("nombres")
+    private String nombres;
 
     @Expose
-    @SerializedName("is_director")
-    private boolean is_director;
+    @SerializedName("apellidos")
+    private String apellidos;
 
     @Expose
-    @SerializedName("has_director")
-    private boolean has_director;
-
-    @Expose
-    @SerializedName("last_login")
-    private String last_login;
-
-    @Expose
-    @SerializedName("is_superuser")
-    private boolean is_superuser;
-
-    @Expose
-    @SerializedName("created")
-    private String created;
-
-    @Expose
-    @SerializedName("modified")
-    private String modified;
-
-    @Expose
-    @SerializedName("reservation_days")
-    private int reservation_days;
-
-    @Expose
-    @SerializedName("deactivate_account_days")
-    private String deactivate_account_days;
-
-    @Expose
-    @SerializedName("min_sales_units")
-    private int min_sales_units;
-
-    @Expose
-    @SerializedName("min_mount_jewels")
-    private int min_mount_jewels;
-
-    @Expose
-    @SerializedName("min_shoes_units")
-    private int min_shoes_units;
-
-    @Expose
-    @SerializedName("weekly_goal")
-    private float weekly_goal;
-
-    @Expose
-    @SerializedName("email")
-    private String email;
-
-    @Expose
-    @SerializedName("first_name")
-    private String first_name;
-
-    @Expose
-    @SerializedName("last_name")
-    private String last_name;
-
-    @Expose
-    @SerializedName("profile_picture")
-    private String profile_picture;
+    @SerializedName("direccion")
+    private String direccion;
 
     @Expose
     @SerializedName("dni")
     private String dni;
 
     @Expose
-    @SerializedName("phone_number")
-    private String phone_number;
+    @SerializedName("correo")
+    private String correo;
 
     @Expose
-    @SerializedName("mobile_phone")
-    private String mobile_phone;
+    @SerializedName("telefono_contacto")
+    private String telefono_contacto;
 
     @Expose
-    @SerializedName("is_active")
-    private boolean is_active;
+    @SerializedName("usuario")
+    private String usuario;
 
     @Expose
-    @SerializedName("groups")
-    private List<Integer> groups;
+    @SerializedName("clave")
+    private String clave;
 
     @Expose
-    @SerializedName("client_type")
-    private int client_type;
+    @SerializedName("estado")
+    private String estado;
 
     @Expose
-    @SerializedName("is_facebook_user")
-    private boolean is_facebook_user;
+    @SerializedName("pedidos_cancelados")
+    private int pedidos_cancelados;
 
     @Expose
-    @SerializedName("status")
-    private String status;
+    @SerializedName("id_rol")
+    private int id_rol;
 
     @Expose
-    @SerializedName("is_majority_user")
-    private boolean is_majority_user;
+    @SerializedName("total_fichas")
+    private int total_fichas;
 
     @Expose
-    @SerializedName("is_majority_user_fake")
-    private boolean is_majority_user_fake;
+    @SerializedName("imagen")
+    private String imagen;
 
-    @Expose
-    @SerializedName("is_recommended")
-    private boolean is_recommended;
-
-    @Expose
-    @SerializedName("monthly_goal")
-    private float monthly_goal;
-
-    @Expose
-    @SerializedName("first_commission_sale")
-    private float first_commission_sale;
-
-    @Expose
-    @SerializedName("next_commission_sale")
-    private float next_commission_sale;
-
-    @Expose
-    @SerializedName("first_commission_sale_recommended")
-    private float first_commission_sale_recommended;
-
-    @Expose
-    @SerializedName("associated_cutoff_date")
-    private float associated_cutoff_date;
-
-    @Expose
-    @SerializedName("first_commission_adviser_sale")
-    private float first_commission_adviser_sale;
-
-    @Expose
-    @SerializedName("next_commission_adviser_sale")
-    private float next_commission_adviser_sale;
-
-    @Expose
-    @SerializedName("address")
-    private String address;
-
-    @Expose
-    @SerializedName("detail")
-    private String detail;
-
-    public int getId() {
-        return id;
+    public int getId_persona() {
+        return id_persona;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_persona(int id_persona) {
+        this.id_persona = id_persona;
     }
 
-    public String getToken() {
-        return token;
+    public int getId_usuario() {
+        return id_usuario;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public String getLast_sale() {
-        return last_sale;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setLast_sale(String last_sale) {
-        this.last_sale = last_sale;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public boolean isIs_director() {
-        return is_director;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setIs_director(boolean is_director) {
-        this.is_director = is_director;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public boolean isHas_director() {
-        return has_director;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setHas_director(boolean has_director) {
-        this.has_director = has_director;
-    }
-
-    public String getLast_login() {
-        return last_login;
-    }
-
-    public void setLast_login(String last_login) {
-        this.last_login = last_login;
-    }
-
-    public boolean isIs_superuser() {
-        return is_superuser;
-    }
-
-    public void setIs_superuser(boolean is_superuser) {
-        this.is_superuser = is_superuser;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
-    }
-
-    public int getReservation_days() {
-        return reservation_days;
-    }
-
-    public void setReservation_days(int reservation_days) {
-        this.reservation_days = reservation_days;
-    }
-
-    public String getDeactivate_account_days() {
-        return deactivate_account_days;
-    }
-
-    public void setDeactivate_account_days(String deactivate_account_days) {
-        this.deactivate_account_days = deactivate_account_days;
-    }
-
-    public int getMin_sales_units() {
-        return min_sales_units;
-    }
-
-    public void setMin_sales_units(int min_sales_units) {
-        this.min_sales_units = min_sales_units;
-    }
-
-    public int getMin_mount_jewels() {
-        return min_mount_jewels;
-    }
-
-    public void setMin_mount_jewels(int min_mount_jewels) {
-        this.min_mount_jewels = min_mount_jewels;
-    }
-
-    public int getMin_shoes_units() {
-        return min_shoes_units;
-    }
-
-    public void setMin_shoes_units(int min_shoes_units) {
-        this.min_shoes_units = min_shoes_units;
-    }
-
-    public float getWeekly_goal() {
-        return weekly_goal;
-    }
-
-    public void setWeekly_goal(float weekly_goal) {
-        this.weekly_goal = weekly_goal;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getProfile_picture() {
-        return profile_picture;
-    }
-
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getDni() {
@@ -327,200 +117,96 @@ public class User {
         this.dni = dni;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getMobile_phone() {
-        return mobile_phone;
+    public String getTelefono_contacto() {
+        return telefono_contacto;
     }
 
-    public void setMobile_phone(String mobile_phone) {
-        this.mobile_phone = mobile_phone;
+    public void setTelefono_contacto(String telefono_contacto) {
+        this.telefono_contacto = telefono_contacto;
     }
 
-    public boolean isIs_active() {
-        return is_active;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setIs_active(boolean is_active) {
-        this.is_active = is_active;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public List<Integer> getGroups() {
-        return groups;
+    public String getClave() {
+        return clave;
     }
 
-    public void setGroups(List<Integer> groups) {
-        this.groups = groups;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
-    public int getClient_type() {
-        return client_type;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setClient_type(int client_type) {
-        this.client_type = client_type;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public boolean isIs_facebook_user() {
-        return is_facebook_user;
+    public int getPedidos_cancelados() {
+        return pedidos_cancelados;
     }
 
-    public void setIs_facebook_user(boolean is_facebook_user) {
-        this.is_facebook_user = is_facebook_user;
+    public void setPedidos_cancelados(int pedidos_cancelados) {
+        this.pedidos_cancelados = pedidos_cancelados;
     }
 
-    public String getStatus() {
-        return status;
+    public int getId_rol() {
+        return id_rol;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setId_rol(int id_rol) {
+        this.id_rol = id_rol;
     }
 
-    public String getAddress() {
-        return address;
+    public int getTotal_fichas() {
+        return total_fichas;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTotal_fichas(int total_fichas) {
+        this.total_fichas = total_fichas;
     }
 
-    public boolean isIs_majority_user() {
-        return is_majority_user;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setIs_majority_user(boolean is_majority_user) {
-        this.is_majority_user = is_majority_user;
-    }
-
-    public boolean isIs_majority_user_fake() {
-        return is_majority_user_fake;
-    }
-
-    public void setIs_majority_user_fake(boolean is_majority_user_fake) {
-        this.is_majority_user_fake = is_majority_user_fake;
-    }
-
-    public boolean isIs_recommended() {
-        return is_recommended;
-    }
-
-    public void setIs_recommended(boolean is_recommended) {
-        this.is_recommended = is_recommended;
-    }
-
-    public float getMonthly_goal() {
-        return monthly_goal;
-    }
-
-    public void setMonthly_goal(float monthly_goal) {
-        this.monthly_goal = monthly_goal;
-    }
-
-    public float getFirst_commission_sale() {
-        return first_commission_sale;
-    }
-
-    public void setFirst_commission_sale(float first_commission_sale) {
-        this.first_commission_sale = first_commission_sale;
-    }
-
-    public float getNext_commission_sale() {
-        return next_commission_sale;
-    }
-
-    public void setNext_commission_sale(float next_commission_sale) {
-        this.next_commission_sale = next_commission_sale;
-    }
-
-    public float getFirst_commission_sale_recommended() {
-        return first_commission_sale_recommended;
-    }
-
-    public void setFirst_commission_sale_recommended(float first_commission_sale_recommended) {
-        this.first_commission_sale_recommended = first_commission_sale_recommended;
-    }
-
-    public float getAssociated_cutoff_date() {
-        return associated_cutoff_date;
-    }
-
-    public void setAssociated_cutoff_date(float associated_cutoff_date) {
-        this.associated_cutoff_date = associated_cutoff_date;
-    }
-
-    public float getFirst_commission_adviser_sale() {
-        return first_commission_adviser_sale;
-    }
-
-    public void setFirst_commission_adviser_sale(float first_commission_adviser_sale) {
-        this.first_commission_adviser_sale = first_commission_adviser_sale;
-    }
-
-    public float getNext_commission_adviser_sale() {
-        return next_commission_adviser_sale;
-    }
-
-    public void setNext_commission_adviser_sale(float next_commission_adviser_sale) {
-        this.next_commission_adviser_sale = next_commission_adviser_sale;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", token='" + token + '\'' +
-                ", last_sale='" + last_sale + '\'' +
-                ", is_director=" + is_director +
-                ", has_director=" + has_director +
-                ", last_login='" + last_login + '\'' +
-                ", is_superuser=" + is_superuser +
-                ", created='" + created + '\'' +
-                ", modified='" + modified + '\'' +
-                ", reservation_days=" + reservation_days +
-                ", deactivate_account_days='" + deactivate_account_days + '\'' +
-                ", min_sales_units=" + min_sales_units +
-                ", min_mount_jewels=" + min_mount_jewels +
-                ", min_shoes_units=" + min_shoes_units +
-                ", weekly_goal=" + weekly_goal +
-                ", email='" + email + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", profile_picture='" + profile_picture + '\'' +
+                "id_persona=" + id_persona +
+                ", id_usuario=" + id_usuario +
+                ", nombres='" + nombres + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", direccion='" + direccion + '\'' +
                 ", dni='" + dni + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", mobile_phone='" + mobile_phone + '\'' +
-                ", is_active=" + is_active +
-                ", groups=" + groups +
-                ", client_type=" + client_type +
-                ", is_facebook_user=" + is_facebook_user +
-                ", status='" + status + '\'' +
-                ", is_majority_user=" + is_majority_user +
-                ", is_majority_user_fake=" + is_majority_user_fake +
-                ", is_recommended=" + is_recommended +
-                ", monthly_goal=" + monthly_goal +
-                ", first_commission_sale=" + first_commission_sale +
-                ", next_commission_sale=" + next_commission_sale +
-                ", first_commission_sale_recommended=" + first_commission_sale_recommended +
-                ", associated_cutoff_date=" + associated_cutoff_date +
-                ", first_commission_adviser_sale=" + first_commission_adviser_sale +
-                ", next_commission_adviser_sale=" + next_commission_adviser_sale +
-                ", address='" + address + '\'' +
-                ", detail='" + detail + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono_contacto='" + telefono_contacto + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", clave='" + clave + '\'' +
+                ", estado='" + estado + '\'' +
+                ", pedidos_cancelados=" + pedidos_cancelados +
+                ", id_rol=" + id_rol +
+                ", total_fichas=" + total_fichas +
+                ", imagen='" + imagen + '\'' +
                 '}';
     }
 }

@@ -1,20 +1,11 @@
 package info.fashion.bag.interfaces;
 
-import java.util.Map;
+import info.fashion.bag.models.JsonRequest;
 
-import info.fashion.bag.models.JsonPromotion;
-import info.fashion.bag.models.JsonSalesOrders;
-import info.fashion.bag.models.Promotion;
-import info.fashion.bag.models.SalesOrders;
-import info.fashion.bag.models.SalesOrdersDatails;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by gtufinof on 3/12/18.
@@ -22,13 +13,16 @@ import retrofit2.http.Path;
 
 public interface PromotionInterface {
 
-    @GET("promotion/")
-    Call<JsonPromotion> getPromotions(
-            @Header("Authorization") String authorization);
+    //@DELETE("promotion/{id}")
+    //Call<Promotion> deletePromotion(
+    //        @Path("id") int id);
 
-    @DELETE("promotion/{id}")
-    Call<Promotion> deletePromotion(
-            @Header("Authorization") String authorization,
-            @Path("id") int id);
+    @GET("promotion/{id_promotion}")
+    Call<JsonRequest> getPromotionById(
+            @Path("id_promotion") int id_promotion
+    );
+
+    @GET("promotion")
+    Call<JsonRequest> getPromotiones();
 
 }

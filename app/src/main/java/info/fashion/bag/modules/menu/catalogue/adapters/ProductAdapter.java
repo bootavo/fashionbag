@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import info.fashion.bag.R;
 import info.fashion.bag.listeners.OnItemClickListener;
-import info.fashion.bag.models.Products;
+import info.fashion.bag.models.Product;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
 
-    private List<Products> mListProducts;
+    private List<Product> mListProducts;
     private OnItemClickListener listener;
     private Context ctx;
 
-    public ProductAdapter(List<Products> mListProducts, OnItemClickListener listener, Context ctx) {
+    public ProductAdapter(List<Product> mListProducts, OnItemClickListener listener, Context ctx) {
         this.mListProducts = mListProducts;
         this.listener = listener;
         this.ctx = ctx;

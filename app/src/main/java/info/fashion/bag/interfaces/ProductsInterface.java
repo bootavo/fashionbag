@@ -1,9 +1,10 @@
 package info.fashion.bag.interfaces;
 
-import info.fashion.bag.models.JsonProducts;
+import info.fashion.bag.models.JsonRequest;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -12,18 +13,25 @@ import retrofit2.http.Query;
 
 public interface ProductsInterface {
 
-    @GET("catalog/?product__is_offer=True&ordering=-created")
-    Call<JsonProducts> getGeneralProducts();
-
     @GET("catalog/?product__is_offer=True&product__product_type__category=1")
-    Call<JsonProducts> getOffersBags();
+    Call<JsonRequest> getOffersBags();
 
     @GET("catalog/?product__is_offer=True&product__product_type__category=2")
-    Call<JsonProducts> getOfferJewels();
+    Call<JsonRequest> getOfferJewels();
 
-    @GET("catalog/")
-    Call<JsonProducts> getSearchResult(
-            @Query("search") String search
+
+
+    @GET("product_filter/{filter}")
+    Call<JsonRequest> getProductByFilter(
+            @Path("filter") String filter
     );
+
+    @GET("product/{id_producto}")
+    Call<JsonRequest> getProductById(
+            @Path("id_producto") int id_producto
+    );
+
+    @GET("product")
+    Call<JsonRequest> getProducts();
 
 }

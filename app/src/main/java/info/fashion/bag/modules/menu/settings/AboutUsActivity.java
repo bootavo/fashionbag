@@ -25,7 +25,7 @@ import info.fashion.bag.utilities.BaseActivity;
 public class AboutUsActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.tv_aboutus) TextView mAboutUs;
+    //@BindView(R.id.tv_aboutus) TextView mAboutUs;
     @BindView(R.id.fab_share) FloatingActionButton btnShare;
 
     @Override
@@ -67,9 +67,9 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
                 "</body>";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mAboutUs.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
+            //mAboutUs.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
         } else {
-            mAboutUs.setText(Html.fromHtml(text));
+            //mAboutUs.setText(Html.fromHtml(text));
         }
 
     }
@@ -77,7 +77,7 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onStart() {
         super.onStart();
-        setTitle("Acerca de FashionBag");
+        setTitle("Tarjetic");
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
                         //intent.setType("*/*");
                         intent.putExtra(Intent.EXTRA_SUBJECT, "FashionBag");
                         intent.putExtra(Intent.EXTRA_STREAM, bs.toByteArray());
-                        String sAux = "\nDescarga Ahora FashionBag y aprovecha nuestras ofertas\n\n";
+                        String sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas\n\n";
                         //sAux = sAux + "https://play.google.com/store/apps/details?id="+ getActivity().getPackageName() +"\n\n";
                         sAux = sAux + "https://call.midocvirtual.com/device.html"+"\n\n";
                         intent.putExtra(Intent.EXTRA_TEXT, sAux);

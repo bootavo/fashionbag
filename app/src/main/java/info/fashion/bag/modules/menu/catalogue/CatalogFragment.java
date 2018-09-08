@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import info.fashion.bag.R;
+import info.fashion.bag.interfaces.PromotionInterface;
 
 /**
  * Created by gtufinof on 3/12/18.
@@ -85,8 +86,8 @@ public class CatalogFragment extends Fragment {
     }
 
     public void setupViewPager(ViewPager mViewPager){
-        mSectionPageAdapter.addFragment(BagsFragment.newInstance(), "CARTERAS");
-        mSectionPageAdapter.addFragment(JewelsFragment.newInstance(), "JOYAS");
+        mSectionPageAdapter.addFragment(PromotionFragment.newInstance(), "PROMOCIONES");
+        mSectionPageAdapter.addFragment(ProductFragment.newInstance(), "PRODUCTOS");
         //mSectionPageAdapter.addFragment(new SettingsFragment(), "TODOS");
         mViewPager.setAdapter(mSectionPageAdapter);
     }

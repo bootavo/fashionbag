@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/cover_bags_offers"
+                    android:src="@drawable/tajetic_2"
                     app:layout_collapseMode="parallax" />
 
                 <View
@@ -56,14 +56,14 @@
                         android:id="@+id/love_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="OFERTAS EN CARTERAS"
+                        android:text="PROMOS TARJETIC"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_title" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Encuentra el mejor precio"
+                        android:text="Encuentra el mejor combo!"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
 

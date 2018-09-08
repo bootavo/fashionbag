@@ -15,11 +15,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import info.fashion.bag.models.User;
+import info.fashion.bag.modules.menu.orders.OrderFragment;
 import info.fashion.bag.modules.menu.reserve.ReserveActivity;
 import info.fashion.bag.modules.menu.catalogue.CatalogFragment;
 import info.fashion.bag.modules.menu.home.HomeFragment;
-import info.fashion.bag.modules.menu.maps.MapFragment;
+import info.fashion.bag.modules.menu.orders.MapFragment;
 import info.fashion.bag.modules.menu.settings.SettingsFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -30,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.R;
 import info.fashion.bag.utilities.BaseActivity;
-import info.fashion.bag.utilities.SharedPreferencesHelper;
+import info.fashion.bag.utilities.PreferencesHelper;
 
 public class MainApp extends BaseActivity{
 
@@ -38,7 +41,6 @@ public class MainApp extends BaseActivity{
     @BindView(R.id.fab) FloatingActionButton mFloatingActionButton;
 
     private static final String TAG = MainApp.class.getSimpleName();
-    private SharedPreferencesHelper mSP;
     private Context ctx = MainApp.this;
 
     private List<Fragment> fragments;
@@ -87,7 +89,6 @@ public class MainApp extends BaseActivity{
     }
 
     public void init(){
-        mSP = new SharedPreferencesHelper(ctx);
         getDataPatientService();
     }
 
@@ -103,9 +104,7 @@ public class MainApp extends BaseActivity{
     }
 
     private void initEvent(){
-
         mBottomNavigationViewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -124,9 +123,14 @@ public class MainApp extends BaseActivity{
                         fragmentManager.popBackStack(null, 0);
                         transaction.commit();
                         return true;
-                    case R.id.i_map:
-                        transaction.replace(R.id.content, MapFragment.newInstance());
-                        transaction.commit();
+                    case R.id.i_order:
+                        User user = PreferencesHelper.getMyUserPref(ctx);
+                        if (user != null){
+                            transaction.replace(R.id.content, OrderFragment.newInstance());
+                            transaction.commit();
+                        }else{
+                            Toast.makeText(ctx, "Debe iniciar sesión ", Toast.LENGTH_SHORT).show();
+                        }
                         return true;
                     case R.id.i_settings:
                         transaction.replace(R.id.content, SettingsFragment.newInstance());
@@ -142,7 +146,12 @@ public class MainApp extends BaseActivity{
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next(ReserveActivity.class, false);
+                User user = PreferencesHelper.getMyUserPref(ctx);
+                if (user != null){
+                    next(ReserveActivity.class, false);
+                }else{
+                    Toast.makeText(ctx, "Debe iniciar sesión ", Toast.LENGTH_SHORT).show();
+                }
                 /*
                 mBottomNavigationViewEx.setItemTextColor(getResources().getColorStateList(R.color.selector_item_primary_color));
                 mBottomNavigationViewEx.setIconTintList(mBottomNavigationViewEx.getCurrentItem(), getResources().getColorStateList(R.color.selector_item_primary_color));

@@ -79,6 +79,7 @@
                     android:background="@drawable/ic_search"
                     android:layout_marginLeft="10dp"
                     android:layout_alignParentRight="true"
+                    android:tint="@color/colorPrimary"
                     />
 
             </RelativeLayout>
@@ -118,14 +119,15 @@
                     android:layout_height="wrap_content"
                     android:text="Ingresa con tu cuenta ahora"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/subtitle"
+                    android:textSize="@dimen/content"
                     android:gravity="center_horizontal"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Y mantente informado en todo momento"
+                    android:text="Y descubre el mundo Tarjetic"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/content"
                     android:gravity="center_horizontal"
@@ -134,7 +136,7 @@
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:text="ACCEDER"
                     android:background="@drawable/bg_btn_bordered_w_main"
@@ -147,16 +149,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ofertas en carteras"
+                    android:text="Promociones"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/subtitle"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"/>
 
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -171,7 +175,7 @@
                     <ProgressBar
                         android:id="@+id/pb_bags_offers"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"
+                        android:layout_height="230dp"
                         android:indeterminate="true"
                         android:padding="40dp"
                         android:layout_centerHorizontal="true"
@@ -186,7 +190,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_bags"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"
+                        android:layout_height="230dp"
                         android:clipToPadding="false"
                         android:scrollbars="vertical"/>
 
@@ -198,16 +202,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:layout_marginTop="0dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ofertas en joyas"
+                    android:text="Productos"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/subtitle"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"/>
 
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"

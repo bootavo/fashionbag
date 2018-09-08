@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fourth_text"
+    android:background="@color/third_text"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -38,22 +38,67 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="11dp"
                 android:gravity="center"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/white"
                 android:textSize="@dimen/title"
-                android:textStyle="normal"
+                android:textStyle="bold"
                 android:layout_marginTop="15dp"/>
 
+            <LinearLayout
+                android:id="@+id/ll_coins"
+                android:layout_below="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/coins"
+                        android:layout_gravity="right"
+                        android:scaleType="fitCenter"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_coins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="180 Fichas"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/subtitle"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="3dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/v_1"
-                android:layout_below="@+id/tv_name"
+                android:layout_below="@+id/ll_coins"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:backgroundTint="@color/secondary_text"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="10dp"/>
 
             <RelativeLayout
-                android:id="@+id/rl_name"
+                android:id="@+id/rl_about_midoc"
                 android:layout_below="@+id/v_1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_cells"
@@ -63,13 +108,13 @@
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <TextView
-                    android:id="@+id/btn_profile"
+                    android:id="@+id/btn_about_midoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center_vertical"
                     android:layout_centerVertical="true"
                     android:paddingLeft="20dp"
-                    android:text="Mi perfil"
+                    android:text="Acerca de Tarjetic Store"
                     android:textAllCaps="false"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/content"
@@ -87,13 +132,13 @@
 
             <View
                 android:id="@+id/v_20"
-                android:layout_below="@+id/rl_name"
+                android:layout_below="@+id/rl_about_midoc"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:backgroundTint="@color/secondary_text"/>
 
             <RelativeLayout
-                android:id="@+id/rl_weight"
+                android:id="@+id/rl_change_coins"
                 android:layout_below="@+id/v_20"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_cells"
@@ -103,13 +148,13 @@
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <TextView
-                    android:id="@+id/btn_weight"
+                    android:id="@+id/btn_change_coins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center_vertical"
                     android:layout_centerVertical="true"
                     android:paddingLeft="20dp"
-                    android:text="Mis reservas"
+                    android:text="Canjear fichas"
                     android:textAllCaps="false"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/content"
@@ -127,13 +172,13 @@
 
             <View
                 android:id="@+id/v_2"
-                android:layout_below="@+id/rl_weight"
+                android:layout_below="@+id/rl_change_coins"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:backgroundTint="@color/secondary_text"/>
 
             <RelativeLayout
-                android:id="@+id/rl_gender"
+                android:id="@+id/rl_call"
                 android:layout_below="@+id/v_2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_cells"
@@ -143,13 +188,13 @@
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <TextView
-                    android:id="@+id/btn_subscriptions"
+                    android:id="@+id/btn_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center_vertical"
                     android:layout_centerVertical="true"
                     android:paddingLeft="20dp"
-                    android:text="Contactar con FashionBag"
+                    android:text="Llamar a Tarjetic"
                     android:textAllCaps="false"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/content"
@@ -167,7 +212,7 @@
 
             <View
                 android:id="@+id/v_3"
-                android:layout_below="@+id/rl_gender"
+                android:layout_below="@+id/rl_call"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:backgroundTint="@color/secondary_text"/>
@@ -317,49 +362,8 @@
                 android:layout_marginTop="20dp"/>
 
             <RelativeLayout
-                android:id="@+id/rl_about_midoc"
-                android:layout_below="@+id/v_9"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_cells"
-                android:background="@color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/btn_about_midoc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="20dp"
-                    android:text="Acerca de FashionBag"
-                    android:textAllCaps="false"
-                    android:textColor="@color/primary_text"
-                    android:textSize="@dimen/content"
-                    android:textStyle="normal" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-
-            </RelativeLayout>
-
-            <View
-                android:id="@+id/v_10"
-                android:layout_below="@+id/rl_about_midoc"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:backgroundTint="@color/secondary_text"/>
-
-            <RelativeLayout
                 android:id="@+id/rl_contact_us"
-                android:layout_below="@+id/v_10"
+                android:layout_below="@+id/v_9"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/white"
@@ -389,6 +393,56 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v_11"
+                android:layout_below="@+id/rl_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:backgroundTint="@color/secondary_text"/>
+
+            <View
+                android:id="@+id/v_12"
+                android:layout_below="@+id/v_11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:backgroundTint="@color/secondary_text"
+                android:layout_marginTop="20dp"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_end_session"
+                android:layout_below="@+id/v_12"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_cells"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/btn_end_session"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
+                    android:text="Cerrar Sesion"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/content"
+                    android:textStyle="normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                    android:tint="@color/white"/>
 
             </RelativeLayout>
 

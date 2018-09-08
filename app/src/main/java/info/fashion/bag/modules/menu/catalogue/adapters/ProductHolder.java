@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import info.fashion.bag.R;
 import info.fashion.bag.listeners.OnItemClickListener;
-import info.fashion.bag.models.Products;
+import info.fashion.bag.models.Product;
 import info.fashion.bag.utilities.Constant;
 import info.fashion.bag.utilities.GlideApp;
 
@@ -25,75 +25,40 @@ import butterknife.ButterKnife;
 
 public class ProductHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.iv_picture_product) ImageView mPictureProduct;
-    @BindView(R.id.tv_title_product) TextView mTitleProduct;
-    @BindView(R.id.tv_price_unitary) TextView mPriceUnitary;
-    @BindView(R.id.tv_price_whole_sale) TextView mPriceWholeSale;
-    @BindView(R.id.tv_promo) TextView mPromoLabel;
+    @BindView(R.id.iv_picture_product) ImageView mPicture;
+    @BindView(R.id.tv_title_product) TextView mTitle;
+    @BindView(R.id.tv_price) TextView mPrice;
+    @BindView(R.id.tv_coins) TextView mCoins;
+    //@BindView(R.id.tv_promo) TextView mPromoLabel;
 
     private Context ctx;
-    private List<Products> mListProducts;
+    private List<Product> mList;
 
-    public ProductHolder(View itemView, List<Products> mListProducts, Context ctx) {
+    public ProductHolder(View itemView, List<Product> mList, Context ctx) {
         super(itemView);
         this.ctx = ctx;
-        this.mListProducts = mListProducts;
+        this.mList = mList;
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(@NonNull final Products products, @NonNull final OnItemClickListener listener){
+    public void bind(@NonNull final Product product, @NonNull final OnItemClickListener listener){
 
-        mTitleProduct.setText(products.getProduct().getName());
+        mTitle.setText(product.getNombre());
+        mPrice.setText("S/."+product.getPrecio()+"");
+        mCoins.setText(product.getPrecio_fichas()+"");
 
-        float discount_price = 0.0f;
-        if(Constant.ACTIVE_PERCENT){
-            Log.d("PORCENTAJE",""+Constant.CATEGORIES_DISCOUNT_OFFER);
-            Log.d("CATEGORIE", ""+products.getCategory());
-            if(Constant.CATEGORIES_DISCOUNT_OFFER.contains(products.getCategory().getId())){
-                Log.d("Category: ", "ENTRO AL PRIMER IF DE PORCENTAJE®");
-                discount_price = products.getProduct().getSuggested_price()*Constant.DISCOUNT_PERCENT/100.0f;
-                mPriceWholeSale.setText("S/."+discount_price+"");
-                Constant.OFFER_PRICE = discount_price;
-
-                mPromoLabel.setVisibility(View.VISIBLE);
-                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), discount_price));
-            }
-        }else if(Constant.ACTIVE_AMOUNT){
-            Log.d("MONTO",""+Constant.CATEGORIES_DISCOUNT_OFFER);
-            if(Constant.CATEGORIES_DISCOUNT_OFFER.contains(products.getCategory().getId())){
-                discount_price = products.getProduct().getSuggested_price()-Constant.DISCOUNT_AMOUNT;
-                mPriceWholeSale.setText("S/."+discount_price+"");
-                Constant.OFFER_PRICE = discount_price;
-                mPromoLabel.setVisibility(View.VISIBLE);
-                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), discount_price));
-            }
+        if(product.getImagen() == null || product.getImagen().equals("")){
+            GlideApp.with(ctx).load(R.drawable.empty_product).into(mPicture);
         }else{
-            Log.d("NORMAL",""+Constant.CATEGORIES_DISCOUNT_OFFER);
-            if(products.getProduct().getOnly_price()>0.0f){
-                Log.d("NORMAL CON OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
-                mPriceWholeSale.setText("S/."+products.getProduct().getOnly_price()+"");
-                Constant.OFFER_PRICE = products.getProduct().getOnly_price();
-                mPromoLabel.setVisibility(View.VISIBLE);
-                mPromoLabel.setText(getOfferPerfecnt(products.getProduct().getSuggested_price(), products.getProduct().getOnly_price()));
-            }else {
-                Log.d("NORMAL SIN OFERTA",""+Constant.CATEGORIES_DISCOUNT_OFFER);
-                mPriceWholeSale.setText("S/."+products.getProduct().getSale_price()+"");
-                Constant.OFFER_PRICE = products.getProduct().getSale_price();
-            }
+            GlideApp.with(ctx).load(product.getImagen()).into(mPicture);
         }
-
-        Constant.ID_PRODUCT = products.getId();
-        Log.d("Holder", "id: "+Constant.ID_PRODUCT);
-        mPriceUnitary.setText("S/."+products.getProduct().getSuggested_price()+"");
-
-        Constant.SUGGESTED_PRICE = products.getProduct().getSuggested_price();
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("Holder", "click");
-                listener.onItemClick(products, mListProducts.indexOf(products));
-                Constant.ID_PRODUCT = products.getId();
+                listener.onItemClick(product, mList.indexOf(product));
+                Constant.ID_PRODUCT = product.getId_producto();
                 Log.d("Holder", "id2: "+Constant.ID_PRODUCT);
 
             }

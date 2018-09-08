@@ -1,0 +1,252 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="@dimen/card_album_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:text="Old Times"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical|center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_bordered_w_main"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Pendiente"
+                    android:textColor="@color/white"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:padding="@dimen/album_title_padding">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_picture_reserve"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/delivery"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        card_view:civ_border_color="@color/stars"
+                        card_view:civ_border_overlay="false"
+                        card_view:civ_border_width="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ll_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingLeft="@dimen/album_title_padding"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:textSize="@dimen/small"
+                                android:text="Fecha"/>
+
+                            <TextView
+                                android:id="@+id/tv_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:gravity="right"
+                                android:textSize="@dimen/small"
+                                android:textColor="@color/colorAccent"
+                                android:textStyle="bold"
+                                android:text="2018-08-31"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_quantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/ll_category">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingLeft="@dimen/album_title_padding"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:textSize="@dimen/small"
+                                android:text="Rencompenza en Fichas"/>
+
+                            <TextView
+                                android:id="@+id/tv_coins_gain"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:gravity="right"
+                                android:textSize="@dimen/small"
+                                android:textColor="@color/colorAccent"
+                                android:textStyle="bold"
+                                android:text="10"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_price_unitary"
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/ll_quantity">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingLeft="@dimen/album_title_padding"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:textSize="@dimen/small"
+                                android:text="Cantidad de Productos"/>
+
+                            <TextView
+                                android:id="@+id/tv_quantity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:gravity="right"
+                                android:textSize="@dimen/small"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold"
+                                android:text="3"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_total_coins"
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/ll_price_unitary">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingLeft="@dimen/album_title_padding"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:textSize="@dimen/small"
+                                android:text="Costo Total Fichas"/>
+
+                            <TextView
+                                android:id="@+id/tv_total_coins"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:gravity="right"
+                                android:textSize="@dimen/small"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold"
+                                android:text="150 Fichas"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_sub_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/ll_total_coins">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingLeft="@dimen/album_title_padding"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:textSize="@dimen/small"
+                                android:text="Costo Total Soles"/>
+
+                            <TextView
+                                android:id="@+id/tv_total_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                                android:paddingRight="@dimen/album_title_padding"
+                                android:gravity="right"
+                                android:textSize="@dimen/small"
+                                android:textColor="@color/colorPrimary"
+                                android:textStyle="bold"
+                                android:text="S/.150.00"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

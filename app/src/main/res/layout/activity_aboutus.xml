@@ -47,78 +47,207 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
-            android:layout_margin="8dp"
-
-            >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
-                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 >
 
-                <TextView
-                    android:padding="12dp"
-                    android:textSize="20sp"
-                    android:layout_marginTop="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="FashionBag!"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <!--
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:padding="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_person_black_24dp"
-                        android:layout_weight="1"
-                        android:tint="@color/black"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                    android:layout_height="50dp"
+                    android:background="@color/black"
+                    android:gravity="center">
+
                     <TextView
-                        android:layout_gravity="center_vertical"
-                        android:padding="12dp"
-                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ACERCA DE TARJETIC DELIVERY"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:text="ATENCIÓN NUTRICIONISTA EN DONDE TE ENCUENTRES !"
-                        android:layout_width="0dp"
-                        android:layout_weight="9"
-                        android:layout_height="wrap_content" />
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+
                 </LinearLayout>
-                -->
 
-                <TextView
-                    android:id="@+id/tv_aboutus"
-                    android:padding="12dp"
-                    android:textSize="13sp"
-                    android:lineSpacingMultiplier="1.5"
-                    android:layout_marginTop="12dp"
-                    android:text="Nuestro modelo de negocio Fashion Bag ha sido creado para dar independencia económica a la mujer peruana y emprender su negocio propio. Estando en su hogar, en su trabajo o disfrutando en familia, pueden estar vendiendo carteras a través de herramientas digitales tan fáciles de usar como el WhatsApp o Facebook. Nuestro gran mensaje es que las mujeres pueden hacer grandes cosas y estamos aquí para demostrarlo, somos líderes y nunca dejaremos de luchar por sus sueños”"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:alpha="1"
+                    android:backgroundTint="#8b9392"
+                    android:backgroundTintMode="multiply"
+                    android:background="@drawable/inicio1">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:padding="20dp"
+                        android:text="Tarjetic inició como un proyecto en la Universidad de San Martín de Porres, al ver el gustoq ue ocasiono la idea en el publico  se opto por potenciarla y asi volvernos una empresa diferente, vendiendo productos a través de tarjetas virtuales"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/black"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TARJETIC DELIVERY"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:alpha="1"
+                    android:backgroundTint="#8b9392"
+                    android:backgroundTintMode="multiply"
+                    android:background="@drawable/inicio2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="50dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:padding="20dp"
+                        android:text="UNETE AL MUNDO TARJETIC"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/black"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ALGUNOS TRAGOS"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:alpha="1"
+                    android:backgroundTint="#8b9392"
+                    android:backgroundTintMode="multiply"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:background="@drawable/inicio3">
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/old_times"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="0dp"
+                            app:civ_border_color="#EEEEEE"
+                            app:civ_border_width="4dp"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="10"
+                            app:civ_shadow_color="#8BC34A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:padding="20dp"
+                            android:text="OLD TIMES"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/cartavio_black"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="0dp"
+                            app:civ_border_color="#EEEEEE"
+                            app:civ_border_width="4dp"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="10"
+                            app:civ_shadow_color="#8BC34A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:padding="20dp"
+                            android:text="RON CARTAVIO BLACK"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/russkaya"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="0dp"
+                            app:civ_border_color="#EEEEEE"
+                            app:civ_border_width="4dp"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="10"
+                            app:civ_shadow_color="#8BC34A"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:padding="20dp"
+                            android:text="RUSSKAYA"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
 
             </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
 
     </android.support.v4.widget.NestedScrollView>
 

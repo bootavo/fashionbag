@@ -11,7 +11,6 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -51,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/fashiobag_logo"
                 android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"/>
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,12 +60,24 @@
                 android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_picture"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    app:civ_border_width="4dp"
+                    app:civ_border_color="@color/third_text"
+                    app:civ_border_overlay="false"
+                    android:src="@drawable/ic_user"
+                    android:layout_gravity="center_horizontal|center_vertical"/>
+
                 <EditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="email"
-                    android:textSize="@dimen/subtitle"
+                    android:textSize="@dimen/content"
                     android:textColorHint="@color/third_text"
                     android:textColor="@color/primary_text"
                     android:gravity="center_horizontal"
@@ -77,11 +89,26 @@
                     android:inputType="textEmailAddress"/>
 
                 <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="contraseña"
+                    android:textSize="@dimen/content"
+                    android:textColorHint="@color/third_text"
+                    android:textColor="@color/primary_text"
+                    android:gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:inputType="textPassword"/>
+
+                <EditText
                     android:id="@+id/et_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="nombres"
-                    android:textSize="@dimen/subtitle"
+                    android:textSize="@dimen/content"
                     android:textColorHint="@color/third_text"
                     android:textColor="@color/primary_text"
                     android:gravity="center_horizontal"
@@ -95,8 +122,8 @@
                     android:id="@+id/et_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Apellidos"
-                    android:textSize="@dimen/subtitle"
+                    android:hint="apellidos"
+                    android:textSize="@dimen/content"
                     android:textColorHint="@color/third_text"
                     android:textColor="@color/primary_text"
                     android:gravity="center_horizontal"
@@ -111,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="dni"
-                    android:textSize="@dimen/subtitle"
+                    android:textSize="@dimen/content"
                     android:textColorHint="@color/third_text"
                     android:textColor="@color/primary_text"
                     android:gravity="center_horizontal"
@@ -119,39 +146,9 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/colorPrimary"
-                    android:digits="0123456789."
+                    android:digits="0123456789"
+                    android:maxLength="8"
                     android:inputType="phone"/>
-
-                <EditText
-                    android:id="@+id/et_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="número de teléfono"
-                    android:textSize="@dimen/subtitle"
-                    android:textColorHint="@color/third_text"
-                    android:textColor="@color/primary_text"
-                    android:gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:digits="0123456789."
-                    android:inputType="phone"/>
-
-                <EditText
-                    android:id="@+id/et_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="contraseña"
-                    android:textSize="@dimen/subtitle"
-                    android:textColorHint="@color/third_text"
-                    android:textColor="@color/primary_text"
-                    android:gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:inputType="textPassword"/>
 
                 <Button
                     android:id="@+id/btn_register"

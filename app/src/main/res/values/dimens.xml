@@ -9,6 +9,8 @@
     <dimen name="subtitle">16dp</dimen>
     <dimen name="content">14dp</dimen>
 
+    <dimen name="small">12dp</dimen>
+
     <dimen name="banner">150dp</dimen>
 
     <!-- Card Productos -->

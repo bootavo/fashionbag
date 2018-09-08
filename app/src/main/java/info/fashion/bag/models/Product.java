@@ -3,106 +3,147 @@ package info.fashion.bag.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by gtufinof on 3/12/18.
  */
 
-public class Product {
+public class Product implements Serializable{
 
     @Expose
-    @SerializedName("product_type")
-    private ProductType product_type;
+    @SerializedName("id_producto")
+    private int id_producto;
 
     @Expose
-    @SerializedName("name")
-    private String name;
+    @SerializedName("id_categoria")
+    private int id_categoria;
 
     @Expose
-    @SerializedName("only_price")
-    private float only_price;
+    @SerializedName("nombre")
+    private String nombre;
 
     @Expose
-    @SerializedName("business_unit")
-    private String business_unit;
+    @SerializedName("descripcion")
+    private String descripcion;
 
     @Expose
-    @SerializedName("sale_price")
-    private float sale_price;
+    @SerializedName("precio")
+    private float precio;
 
     @Expose
-    @SerializedName("suggested_price")
-    private float suggested_price;
+    @SerializedName("precio_fichas")
+    private int precio_fichas;
 
     @Expose
-    @SerializedName("brand")
-    private Brand brand;
+    @SerializedName("estado")
+    private String estado;
 
-    public ProductType getProduct_type() {
-        return product_type;
+    @Expose
+    @SerializedName("stock")
+    private int stock;
+
+    @Expose
+    @SerializedName("imagen")
+    private String imagen;
+
+    @Expose
+    @SerializedName("categoria")
+    private String categoria;
+
+    public int getId_producto() {
+        return id_producto;
     }
 
-    public void setProduct_type(ProductType product_type) {
-        this.product_type = product_type;
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
-    public String getName() {
-        return name;
+    public int getId_categoria() {
+        return id_categoria;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId_categoria(int id_categoria) {
+        this.id_categoria = id_categoria;
     }
 
-    public float getOnly_price() {
-        return only_price;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setOnly_price(float only_price) {
-        this.only_price = only_price;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getBusiness_unit() {
-        return business_unit;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setBusiness_unit(String business_unit) {
-        this.business_unit = business_unit;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public float getSale_price() {
-        return sale_price;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setSale_price(float sale_price) {
-        this.sale_price = sale_price;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
-    public float getSuggested_price() {
-        return suggested_price;
+    public int getPrecio_fichas() {
+        return precio_fichas;
     }
 
-    public void setSuggested_price(float suggested_price) {
-        this.suggested_price = suggested_price;
+    public void setPrecio_fichas(int precio_fichas) {
+        this.precio_fichas = precio_fichas;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "product_type=" + product_type +
-                ", name='" + name + '\'' +
-                ", only_price=" + only_price +
-                ", business_unit='" + business_unit + '\'' +
-                ", sale_price=" + sale_price +
-                ", suggested_price=" + suggested_price +
-                ", brand=" + brand +
+                "id_producto=" + id_producto +
+                ", id_categoria=" + id_categoria +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", precio_fichas=" + precio_fichas +
+                ", estado='" + estado + '\'' +
+                ", stock=" + stock +
+                ", imagen='" + imagen + '\'' +
+                ", categoria='" + categoria + '\'' +
                 '}';
     }
 }
