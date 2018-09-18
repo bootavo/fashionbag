@@ -42,6 +42,7 @@ import info.fashion.bag.modules.menu.catalogue.adapters.ProductAdapter;
 import info.fashion.bag.modules.menu.catalogue.adapters.PromotionAdapter;
 import info.fashion.bag.modules.menu.product_detail.ProductDetailActivity;
 import info.fashion.bag.modules.menu.home.saerch_product.SearchProducts;
+import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.PreferencesHelper;
 import retrofit2.Call;
@@ -231,7 +232,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mCall.enqueue(new Callback<JsonRequest>() {
                 @Override
                 public void onResponse(Call<JsonRequest> call, final Response<JsonRequest> response) {
-                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+                    Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
                     mPBBags.setVisibility(View.GONE);
 
@@ -250,7 +251,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             mIntent.putExtra("id_generic_pp", promotion.getId_promocion());
                             ctx.startActivity(mIntent);
                         }
-                    }, ctx));
+                    }, ctx, 1));
 
                     //mRecyclerViewJewels.setHasFixedSize(true);
                     //mRecyclerViewJewels.getLayoutManager().setMeasurementCacheEnabled(false);
@@ -293,7 +294,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             mIntent.putExtra("id_generic_pp", product.getId_producto());
                             ctx.startActivity(mIntent);
                         }
-                    }, ctx));
+                    }, ctx, 1));
 
                     //mRecyclerViewJewels.setHasFixedSize(true);
                     //mRecyclerViewJewels.getLayoutManager().setMeasurementCacheEnabled(false);

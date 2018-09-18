@@ -1,8 +1,11 @@
 package info.fashion.bag.interfaces;
 
 import info.fashion.bag.models.JsonRequest;
+import info.fashion.bag.models.Order;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -14,6 +17,10 @@ public interface OrderInterface {
     @GET("order_user/{id_usuario}")
     Call<JsonRequest> getOrdersByUsuario(
             @Path("id_usuario") Integer id_usuario);
+
+    @POST("order")
+    Call<JsonRequest> registerOrder(
+            @Body Order order);
 
     /*
     @GET("sales-orders/")

@@ -31,8 +31,8 @@ public class OkHttpApiClient {
                                     return chain.proceed(request);
                                 }
                             })
-                    .readTimeout(5, TimeUnit.SECONDS)
-                    .connectTimeout(5, TimeUnit.SECONDS).build();
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .connectTimeout(10, TimeUnit.SECONDS).build();
         }
         return okHttpClient;
     }

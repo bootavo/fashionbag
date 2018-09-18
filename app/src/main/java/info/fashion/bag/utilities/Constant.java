@@ -15,6 +15,9 @@ public class Constant {
 
     public static String ORDER_PAY_EFFECTIVE = "EFECTIVO";
     public static String ORDER_PAY_CREDIT_CARD = "TARJETA";
+    public static String ORDER_PAY_COINS = "FICHAS";
+    public static String ORDER_PAY_CREDIT_CARD_COINS = "TARJETA/FICHAS";
+    public static String ORDER_PAY_EFFECTIVE_COINS = "EFECTIVO/FICHAS";
 
     public static String ORDER_PENDANT = "PENDIENTE";
     public static String ORDER_CANCEL = "CANCELADO";

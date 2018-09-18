@@ -12,4 +12,8 @@
     <color name="stars">#FFA000</color>
 
     <color name="red">#FF5252</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="blackMatte">#4A4A4A</color>
 </resources>

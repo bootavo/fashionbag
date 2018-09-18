@@ -13,17 +13,14 @@ import retrofit2.http.Query;
 
 public interface ProductsInterface {
 
-    @GET("catalog/?product__is_offer=True&product__product_type__category=1")
-    Call<JsonRequest> getOffersBags();
-
-    @GET("catalog/?product__is_offer=True&product__product_type__category=2")
-    Call<JsonRequest> getOfferJewels();
-
-
-
     @GET("product_filter/{filter}")
     Call<JsonRequest> getProductByFilter(
             @Path("filter") String filter
+    );
+
+    @GET("product_filter_category/{id_categoria}")
+    Call<JsonRequest> getProductByCategory(
+            @Path("id_categoria") int id_categoria
     );
 
     @GET("product/{id_producto}")
@@ -33,5 +30,6 @@ public interface ProductsInterface {
 
     @GET("product")
     Call<JsonRequest> getProducts();
+
 
 }

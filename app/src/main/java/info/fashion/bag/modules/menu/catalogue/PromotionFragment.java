@@ -176,7 +176,7 @@ public class PromotionFragment extends Fragment{
                             mIntent.putExtra("id_generic_pp", promotion.getId_promocion());
                             ctx.startActivity(mIntent);
                         }
-                    }, ctx));
+                    }, ctx, 12));
 
                     //mRecyclerView.setHasFixedSize(true);
                     //mRecyclerView.setNestedScrollingEnabled(false);

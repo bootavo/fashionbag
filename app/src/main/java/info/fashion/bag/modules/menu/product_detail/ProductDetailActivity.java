@@ -126,7 +126,12 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         mStock.setText(product.getStock()+" en Stock");
         mDescription.setText(product.getDescripcion()+".");
         mPrice.setText("S/."+product.getPrecio()+"");
-        mCoins.setText(product.getPrecio_fichas()+"");
+
+        if(product.getPrecio_fichas() == 0){
+            mCoins.setText("No aplica");
+        }else{
+            mCoins.setText(product.getPrecio_fichas()+"");
+        }
 
         GlideApp
                 .with(ctx)
@@ -215,22 +220,27 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             builder = new AlertDialog.Builder(ctx);
         }
         builder.setTitle("TIPO DE COMPRA")
-                .setMessage("¿Escoga el tipo de pago(efectivo o fichas) para guardar el producto en su carrito de compras.")
-                .setPositiveButton("CON FICHAS", new DialogInterface.OnClickListener() {
+                .setMessage("¿Como desea adquirir este producto?.");
+
+                if (total_coins > 0){
+                    builder.setPositiveButton("CON FICHAS", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Toast.makeText(ctx, "CON FICHAS", Toast.LENGTH_SHORT).show();
+                            kind_buy = ORDER_KIND_PAY_COINS;
+                            verifyShoppingCar();
+                        }
+                    });
+                }
+
+                builder.setNegativeButton("CON EFECTIVO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(ctx, "CON FICHAS", Toast.LENGTH_SHORT).show();
-                        kind_buy = ORDER_KIND_PAY_COINS;
-                        verifyShoppingCar();
-                    }
-                })
-                .setNegativeButton("CON EFECTIVO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(ctx, "CON EFECTIVO", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ctx, "CON EFECTIVO", Toast.LENGTH_SHORT).show();
                         kind_buy = ORDER_KIND_PAY_CASH;
                         verifyShoppingCar();
                     }
-                })
-                .setIcon(R.mipmap.ic_launcher)
+                });
+
+                builder.setIcon(R.mipmap.ic_launcher)
                 .show();
     }
 
@@ -302,6 +312,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             if (current_quantity <= stock) {
                 return false;
             }else {
+                Toast.makeText(ctx, "Has llegado al limite del stock", Toast.LENGTH_SHORT).show();
                 return true;
             }
         }else {
@@ -391,7 +402,6 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
     public void verifyShoppingCar(){
         mPD.showPD();
-
         //Verificar tipo de compra
         User user = PreferencesHelper.getMyUserPref(ctx);
         if (kind_buy.equals(Constant.ORDER_KIND_PAY_COINS)){
@@ -408,16 +418,16 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             mCall.enqueue(new Callback<JsonRequest>() {
                 @Override
                 public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
-                    mPD.dimissPD();
                     Log.d(TAG, "Retrofit Response verifyShoppingCar: "+JsonPretty.getPrettyJson(response));
 
                     if(response.body().getResults().getShopping_car() != null){
                         if(response.body().getResults().getShopping_car().size() > 0){
+                            //mPD.dimissPD();
                             Log.d(TAG, "-------> TIENE CARRITO DE COMPRAS");
                             int id_carrito_compra = response.body().getResults().getShopping_car().get(0).getId_carrito_compra();
                             addItemsToShoppingCar(id_carrito_compra);
                         }else {
-                            mPD.dimissPD();
+                            //mPD.dimissPD();
                             Log.d(TAG, "NO TIENE CARRITO DE COMPRAS");
                             createShoppingCar();
                         }
@@ -443,7 +453,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     public void addItemsToShoppingCar(int id_carrito_compra){
-        mPD.showPD();
+        //mPD.showPD();
         if(NetworkHelper.isNetworkAvailable(ctx)){
             User user = PreferencesHelper.getMyUserPref(ctx);
 
@@ -513,16 +523,16 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             mCall.enqueue(new Callback<JsonRequest>() {
                 @Override
                 public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
-                    mPD.dimissPD();
+                    //mPD.dimissPD();
                     Log.d(TAG, "Retrofit Response createShoppingCar: "+JsonPretty.getPrettyJson(response));
 
                     if(response.body().getStatus().getCode() == 200){
                         Log.d(TAG, "-------> SE CREO EL CARRITO DE COMPRAS");
-                        Toast.makeText(ctx, "SE CREO EL CARRITO DE COMPRAS", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ctx, "SE CREO EL CARRITO DE COMPRAS", Toast.LENGTH_SHORT).show();
                         verifyShoppingCar();
                     }else {
                         Log.d(TAG, "NO SE CREO EL CARRITO DE COMPRAS");
-                        Toast.makeText(ctx, "NO SE CREO EL CARRITO DE COMPRAS", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ctx, "NO SE CREO EL CARRITO DE COMPRAS", Toast.LENGTH_SHORT).show();
                     }
 
                 }

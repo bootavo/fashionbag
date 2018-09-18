@@ -22,7 +22,6 @@ import info.fashion.bag.modules.menu.orders.OrderFragment;
 import info.fashion.bag.modules.menu.reserve.ReserveActivity;
 import info.fashion.bag.modules.menu.catalogue.CatalogFragment;
 import info.fashion.bag.modules.menu.home.HomeFragment;
-import info.fashion.bag.modules.menu.orders.MapFragment;
 import info.fashion.bag.modules.menu.settings.SettingsFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -79,8 +78,8 @@ public class MainApp extends BaseActivity{
         //ReserveActivity reserveActivity = new ReserveActivity();
         //fragments.add(reserveActivity);
 
-        MapFragment mapFragment = new MapFragment();
-        fragments.add(mapFragment);
+        OrderFragment orderFragment = new OrderFragment();
+        fragments.add(orderFragment);
 
         SettingsFragment settingsFragment = new SettingsFragment();
         fragments.add(settingsFragment);

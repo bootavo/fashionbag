@@ -52,6 +52,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Nullable @BindView(R.id.rl_share_us) RelativeLayout btnShareUs;
     @Nullable @BindView(R.id.rl_about_midoc) RelativeLayout btnAboutUs;
     @Nullable @BindView(R.id.rl_terms_conditions) RelativeLayout btnTermsConditions;
+    @Nullable @BindView(R.id.rl_change_password) RelativeLayout btnChangePassword;
     @Nullable @BindView(R.id.rl_call) RelativeLayout btnCall;
     @Nullable @BindView(R.id.rl_change_coins) RelativeLayout btnChangeCoins;
     @Nullable @BindView(R.id.rl_end_session) RelativeLayout btnEndSession;
@@ -114,15 +115,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        callService();
         if(state == 1){
-            getPatientData();
             btnShareUs.setOnClickListener(this);
             btnAboutUs.setOnClickListener(this);
             btnTermsConditions.setOnClickListener(this);
+            btnChangePassword.setOnClickListener(this);
             btnCall.setOnClickListener(this);
             btnChangeCoins.setOnClickListener(this);
             btnEndSession.setOnClickListener(this);
+            getPatientData();
+
         }else{
             btnLogin.setOnClickListener(this);
             btnRegister.setOnClickListener(this);
@@ -158,18 +160,24 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_terms_conditions:
                 startActivity(new Intent(ctx, TermsConditions.class));
                 break;
+            case R.id.rl_change_password:
+                startActivity(new Intent(ctx, ChangePasswordActivity.class));
+                break;
             case R.id.rl_share_us:
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher); // your bitmapG
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
 
                 try {
+                    User user = PreferencesHelper.getMyUserPref(ctx);
+
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     //intent.setType("*/*");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "FashionBag");
                     intent.putExtra(Intent.EXTRA_STREAM, bs.toByteArray());
-                    String sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n";
+                    String sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
+                            "Ingresa ahora el siguiente código:"+ user.getCodigo_app() +"y obten fichas gratis";
                     //sAux = sAux + "https://play.google.com/store/apps/details?id="+ getActivity().getPackageName() +"\n\n";
                     sAux = sAux + "https://call.midocvirtual.com/device.html"+"\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
@@ -178,6 +186,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     e.getMessage();
                     e.toString();
                 }
+                break;
+            case R.id.rl_change_coins:
+                Intent mIntent = new Intent(ctx, ClaimCoinsActivity.class);
+                startActivity(mIntent);
                 break;
             case R.id.rl_call:
                 permissions();

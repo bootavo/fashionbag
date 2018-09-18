@@ -132,8 +132,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
                         mPD.dimissPD();
                         Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
-                        PreferencesHelper.setMyUserPref(ctx, response.body().getResults().getUser());
-                        nextActivity();
+                        if (response.body().getStatus().getCode() == 200){
+                            PreferencesHelper.setMyUserPref(ctx, response.body().getResults().getUser());
+                            nextActivity();
+                        }else{
+                            Toast.makeText(ctx, "Credenciales incorrectas, intentelo nuevamente", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override

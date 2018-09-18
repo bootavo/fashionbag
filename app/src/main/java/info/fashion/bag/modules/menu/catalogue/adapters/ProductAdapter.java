@@ -21,16 +21,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
     private List<Product> mListProducts;
     private OnItemClickListener listener;
     private Context ctx;
+    private int type;
 
-    public ProductAdapter(List<Product> mListProducts, OnItemClickListener listener, Context ctx) {
+    public ProductAdapter(List<Product> mListProducts, OnItemClickListener listener, Context ctx, int type) {
         this.mListProducts = mListProducts;
         this.listener = listener;
         this.ctx = ctx;
+        this.type = type;
     }
 
     @Override
     public ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products, parent, false);
+        View v = null;
+        if(type == 1){
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products_home, parent, false);
+        }else {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products, parent, false);
+        }
         return new ProductHolder(v, mListProducts, ctx);
     }
 

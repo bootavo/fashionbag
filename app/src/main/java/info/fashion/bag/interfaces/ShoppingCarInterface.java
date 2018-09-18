@@ -5,6 +5,7 @@ import info.fashion.bag.models.ShoppingCar;
 import info.fashion.bag.models.ShoppingCarItem;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -28,5 +29,11 @@ public interface ShoppingCarInterface {
     @POST("shopping_car_items/{product_type}")
     Call<JsonRequest> addItemsToShoppingCar(
             @Path("product_type") String product_type, @Body ShoppingCarItem shoppingCarItem);
+
+
+    @DELETE("shopping_car_items/{id_carrito_compra_producto}")
+    Call<JsonRequest> deleteProduct(
+            @Path("id_carrito_compra_producto") Integer id_carrito_compra_producto
+    );
 
 }

@@ -266,7 +266,8 @@
                     android:drawableTint="@color/primary_text"
                     android:text="COMPARTIR"
                     android:textColor="@color/primary_text"
-                    android:textSize="@dimen/content"/>
+                    android:textSize="@dimen/content"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
 

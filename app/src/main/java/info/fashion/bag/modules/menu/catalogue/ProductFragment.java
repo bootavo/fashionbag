@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.listeners.OnItemClickListener;
@@ -44,9 +47,21 @@ public class ProductFragment extends Fragment{
 
     @BindView(R.id.pb_products_offers) ProgressBar mPBProducts;
 
+    @BindView(R.id.menu) FloatingActionMenu fab;
+    @BindView(R.id.menu_item_all) FloatingActionButton fabAll;
+    @BindView(R.id.menu_item_whisky) FloatingActionButton fabWhisky;
+    @BindView(R.id.menu_item_vodka) FloatingActionButton fabVodka;
+    @BindView(R.id.menu_item_ron) FloatingActionButton fabRon;
+    @BindView(R.id.menu_item_beer) FloatingActionButton fabBeer;
+    @BindView(R.id.menu_item_complements) FloatingActionButton fabComplements;
+
+    private int mMaxProgress = 100;
+
     private String TAG = ProductFragment.class.getSimpleName();
     private Context ctx = null;
     private View view = null;
+
+    private boolean flagDecoration = false;
 
     public static ProductFragment newInstance(){
         return new ProductFragment();
@@ -63,6 +78,48 @@ public class ProductFragment extends Fragment{
         //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         initCollapsingToolbar();
+
+        fabAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                service();
+            }
+        });
+
+        fabWhisky.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serviceByCategory(1);
+            }
+        });
+
+        fabVodka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serviceByCategory(2);
+            }
+        });
+
+        fabRon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serviceByCategory(3);
+            }
+        });
+
+        fabBeer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serviceByCategory(4);
+            }
+        });
+
+        fabComplements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serviceByCategory(5);
+            }
+        });
 
         return view;
     }
@@ -144,7 +201,12 @@ public class ProductFragment extends Fragment{
 
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
                     mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
+
+                    if(!flagDecoration){
+                        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
+                        flagDecoration = true;
+                    }
+
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     mRecyclerView.setAdapter(new ProductAdapter(response.body().getResults().getProducts(), new OnItemClickListener() {
                         @Override
@@ -155,7 +217,50 @@ public class ProductFragment extends Fragment{
                             mIntent.putExtra("id_generic_pp", product.getId_producto());
                             ctx.startActivity(mIntent);
                         }
-                    }, ctx));
+                    }, ctx, 12));
+
+                    //mRecyclerView.setHasFixedSize(true);
+                    //mRecyclerView.setNestedScrollingEnabled(false);
+                }
+
+                @Override
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
+                    Toast.makeText(ctx, ctx.getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(ctx, ctx.getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void serviceByCategory(int id_categoria){
+        if(NetworkHelper.isNetworkAvailable(ctx)){
+            ProductsInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(ProductsInterface.class);
+            Call<JsonRequest> mCall = mInterface.getProductByCategory(id_categoria);
+            mCall.enqueue(new Callback<JsonRequest>() {
+                @Override
+                public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
+                    //Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
+
+                    mPBProducts.setVisibility(View.GONE);
+
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 2);
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    if(!flagDecoration){
+                        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, ctx), true));
+                        flagDecoration = true;
+                    }
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerView.setAdapter(new ProductAdapter(response.body().getResults().getProducts(), new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object o, int position) {
+                            Product product = (Product) o;
+                            Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                            mIntent.putExtra("product_type", "P");
+                            mIntent.putExtra("id_generic_pp", product.getId_producto());
+                            ctx.startActivity(mIntent);
+                        }
+                    }, ctx, 12));
 
                     //mRecyclerView.setHasFixedSize(true);
                     //mRecyclerView.setNestedScrollingEnabled(false);

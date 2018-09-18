@@ -25,7 +25,7 @@
 
             <ImageView
                 app:layout_collapseMode="parallax"
-                android:src="@drawable/slider1"
+                android:src="@drawable/tarjetic_1"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"

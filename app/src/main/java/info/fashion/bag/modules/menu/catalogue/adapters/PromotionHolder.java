@@ -42,7 +42,13 @@ public class PromotionHolder extends RecyclerView.ViewHolder{
 
         mTitle.setText(promotion.getNombre());
         mPrice.setText("S/."+promotion.getPrecio()+"");
-        mCoins.setText(promotion.getPrecio_fichas()+"");
+
+        if(promotion.getPrecio_fichas() == 0){
+            mCoins.setText("No aplica");
+        }else{
+            mCoins.setText(promotion.getPrecio_fichas()+"");
+        }
+
 
         if(promotion.getImagen() == null || promotion.getImagen().equals("")){
             GlideApp.with(ctx).load(R.drawable.empty_product).into(mPicture);

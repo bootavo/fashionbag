@@ -20,6 +20,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -36,7 +37,7 @@ public interface UserInterface {
 
     @Multipart
     @POST("user/")
-    Call<Token> createUser2(
+    Call<JsonRequest> createUser2(
             @Part("nombres") RequestBody nombres,
             @Part("apellidos") RequestBody apellidos,
             @Part("usuario") RequestBody usuario,
@@ -46,12 +47,12 @@ public interface UserInterface {
             @Part("telefono_contacto") RequestBody telefono_contacto,
             @Part("correo") RequestBody correo,
             @Part("id_rol") RequestBody id_rol,
-            @Part("tipo_registro") RequestBody tipo_registro
-            );
+            @Part("tipo_registro") RequestBody tipo_registro,
+            @Part("codigo_app") RequestBody codigo_app);
 
     @Multipart
     @POST("user/")
-    Call<Token> createUser(
+    Call<JsonRequest> createUser(
             @Part MultipartBody.Part imagen,
             @Part("nombres") RequestBody nombres,
             @Part("apellidos") RequestBody apellidos,
@@ -62,14 +63,26 @@ public interface UserInterface {
             @Part("telefono_contacto") RequestBody telefono_contacto,
             @Part("correo") RequestBody correo,
             @Part("id_rol") RequestBody id_rol,
-            @Part("tipo_registro") RequestBody tipo_registro
+            @Part("tipo_registro") RequestBody tipo_registro,
+            @Part("codigo_app") RequestBody codigo_app
     );
 
     @Headers("Content-Type: application/json")
     @PATCH("users/{id}/")
-    Call<User> updateUser(
+    Call<JsonRequest> updateUser(
             @Header("Authorization") String authorization,
             @Path("id") int id,
             @Body Map<String, Object> body);
+
+    @PUT("change_password/{id_usuario}")
+    Call<JsonRequest> changePassword(
+            @Path("id_usuario") int id_usuario,
+            @Body User user
+    );
+
+    @GET("user_by_code/{codigo}")
+    Call<JsonRequest> getUserbyPromoCode(
+            @Path("codigo") String codigo
+    );
 
 }

@@ -45,7 +45,13 @@ public class ProductHolder extends RecyclerView.ViewHolder {
 
         mTitle.setText(product.getNombre());
         mPrice.setText("S/."+product.getPrecio()+"");
-        mCoins.setText(product.getPrecio_fichas()+"");
+
+        if(product.getPrecio_fichas() == 0){
+            mCoins.setText("No aplica");
+        }else {
+            mCoins.setText(product.getPrecio_fichas()+"");
+        }
+
 
         if(product.getImagen() == null || product.getImagen().equals("")){
             GlideApp.with(ctx).load(R.drawable.empty_product).into(mPicture);

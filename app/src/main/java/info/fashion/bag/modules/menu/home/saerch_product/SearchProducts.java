@@ -141,7 +141,7 @@ public class SearchProducts extends BaseActivity implements View.OnClickListener
                                 mIntent.putExtra("id_generic_pp", product.getId_producto());
                                 ctx.startActivity(mIntent);
                             }
-                        }, ctx));
+                        }, ctx, 12));
                     }
                     //mRecyclerView.setHasFixedSize(true);
                     //mRecyclerView.setNestedScrollingEnabled(false);

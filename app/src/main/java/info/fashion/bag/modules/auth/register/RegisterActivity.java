@@ -21,10 +21,17 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,15 +39,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.UserInterface;
-import info.fashion.bag.models.Token;
+import info.fashion.bag.models.JsonRequest;
 import info.fashion.bag.utilities.Constant;
-import info.fashion.bag.utilities.ImagePicker;
 import info.fashion.bag.utilities.JsonPretty;
 import info.fashion.bag.utilities.NetworkHelper;
 import info.fashion.bag.utilities.ProgressDialogHelper;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import pl.aprilapps.easyphotopicker.DefaultCallback;
+import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +69,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @BindView(R.id.btn_register) Button btnRegister;
 
+    @BindView(R.id.sw_friend_code) Switch mSwitchFriendCode;
+    @BindView(R.id.et_friend_code) EditText mFriendCode;
+
     private String TAG = RegisterActivity.class.getSimpleName();
     private ProgressDialogHelper mPD;
     private Context ctx = this;
@@ -68,6 +79,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private static final String AUTHORITY="info.fashion.bag";
     private static final int PICK_IMAGE_ID = 100;
     private Uri fileUri = null;
+    private int state_friend_code = 0;
+
+    private static final String PHOTOS_KEY = "easy_image_photos_list";
+    private ArrayList<File> photos = new ArrayList<>();
+
+    public static final int REQUEST_CODE_CAMERA = 0012;
+    public static final int REQUEST_CODE_GALLERY = 0013;
+
+    public File imageFull = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +120,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mDni.setText("48269083");
         mEmail.setText("tavo.tf@gmail.com");
 
+        mSwitchFriendCode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    state_friend_code = 1;
+                    mFriendCode.setVisibility(View.VISIBLE);
+                }else{
+                    state_friend_code = 0;
+                    mFriendCode.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     public void initEventUI(){
@@ -129,6 +162,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public String getPassword(){
         return mPassword.getText().toString().trim();
+    }
+
+    public String getFriendCode(){
+        return mFriendCode.getText().toString();
     }
 
     public boolean verifyRegister(){
@@ -163,13 +200,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return false;
         }
 
+        if (state_friend_code == 1){
+            if (getFriendCode().equals("")){
+                mFriendCode.setError("Debe ingresar el código de amigo");
+                return false;
+            }
+        }
+
         return true;
 
     }
 
     public void openGallery(){
-        Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
-        startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+//        EasyImage.openChooserWithGallery(RegisterActivity.this, "Selecciona", 0);
+        EasyImage.openGallery(RegisterActivity.this, REQUEST_CODE_GALLERY);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(PHOTOS_KEY, photos);
     }
 
     public void permissions(){
@@ -188,97 +238,171 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case PICK_IMAGE_ID:
-                Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                if(bitmap != null){
-                    bitmap.recycle();
-                    mPicture.setImageBitmap(bitmap);
-                    fileUri = data.getData();
-                    //service();
-                }else {
-                    mPicture.setImageResource(R.drawable.ic_user);
+//        Bitmap bitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
+//        if(bitmap != null){
+////            bitmap.recycle();
+//            mPicture.setImageBitmap(bitmap);
+//            fileUri = data.getData();
+//            Log.d(TAG, "NO NULLLLLLLL ----------->");
+//            //service();
+//        }else {
+//            mPicture.setImageResource(R.drawable.ic_user);
+//        }
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+            @Override
+            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
+                switch (type){
+                    case REQUEST_CODE_CAMERA:
+                        Glide.with(RegisterActivity.this)
+                                .load(imageFile)
+                                .into(mPicture);
+                        break;
+                    case REQUEST_CODE_GALLERY:
+                        Glide.with(RegisterActivity.this)
+                                .load(imageFile)
+                                .into(mPicture);
+                        break;
                 }
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
-        }
+                fileUri = data.getData();
+            }
+        });
 
+    }
+
+    private void onPhotosReturned(List<File> returnedPhotos) {
+        photos.addAll(returnedPhotos);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Clear any configuration that was done!
+        EasyImage.clearConfiguration(this);
+        super.onDestroy();
     }
 
     public void service(){
         mPD.showPD();
-        if(verifyRegister()){
-            if(NetworkHelper.isNetworkAvailable(this)){
-                //Create Data
-                RequestBody nombres = RequestBody.create(MediaType.parse("text/plain"), getFirstName());
-                RequestBody apellidos = RequestBody.create(MediaType.parse("text/plain"), getLastName());
-                RequestBody usuario = RequestBody.create(MediaType.parse("text/plain"), getEmail());
-                RequestBody clave = RequestBody.create(MediaType.parse("text/plain"), getPassword());
-                RequestBody direccion = RequestBody.create(MediaType.parse("text/plain"), "Direccion");
-                RequestBody dni = RequestBody.create(MediaType.parse("text/plain"), getDni());
-                RequestBody telefono_contacto = RequestBody.create(MediaType.parse("text/plain"), "Telefono");
-                RequestBody correo = RequestBody.create(MediaType.parse("text/plain"), getEmail());
-                RequestBody id_rol = RequestBody.create(MediaType.parse("text/plain"), "3");
-                RequestBody tipo_registro = RequestBody.create(MediaType.parse("text/plain"), Constant.REGISTER_APP);
+        if(NetworkHelper.isNetworkAvailable(this)){
+            //Create Data
+            RequestBody nombres = RequestBody.create(MediaType.parse("text/plain"), getFirstName());
+            RequestBody apellidos = RequestBody.create(MediaType.parse("text/plain"), getLastName());
+            RequestBody usuario = RequestBody.create(MediaType.parse("text/plain"), getEmail());
+            RequestBody clave = RequestBody.create(MediaType.parse("text/plain"), getPassword());
+            RequestBody direccion = RequestBody.create(MediaType.parse("text/plain"), "Direccion");
+            RequestBody dni = RequestBody.create(MediaType.parse("text/plain"), getDni());
+            RequestBody telefono_contacto = RequestBody.create(MediaType.parse("text/plain"), "Telefono");
+            RequestBody correo = RequestBody.create(MediaType.parse("text/plain"), getEmail());
+            RequestBody id_rol = RequestBody.create(MediaType.parse("text/plain"), "3");
+            RequestBody tipo_registro = RequestBody.create(MediaType.parse("text/plain"), Constant.REGISTER_APP);
 
-                UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
-                Call<Token> mCall = null;
-                if(fileUri != null){
-                    File file = new File(getRealPathFromUri(fileUri));
-                    RequestBody requestFile = RequestBody.create(
-                            MediaType.parse(getApplicationContext().getContentResolver().getType(fileUri)),
-                            file);
-                    MultipartBody.Part body =
-                            MultipartBody.Part.createFormData("imagen", file.getName(), requestFile);
+            RequestBody codigo_app = RequestBody.create(MediaType.parse("text/plain"), Constant.REGISTER_SHARE_APP);
 
-                    mCall = mInterface.createUser(body,
-                            nombres,
-                            apellidos,
-                            usuario,
-                            clave,
-                            direccion,
-                            dni,
-                            telefono_contacto,
-                            correo,
-                            id_rol,
-                            tipo_registro);
-                }else {
-                    mCall = mInterface.createUser2(nombres,
-                            apellidos,
-                            usuario,
-                            clave,
-                            direccion,
-                            dni,
-                            telefono_contacto,
-                            correo,
-                            id_rol,
-                            tipo_registro);
+            UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+            Call<JsonRequest> mCall = null;
+            if(fileUri != null){
+                File file = new File(getRealPathFromUri(fileUri));
+                RequestBody requestFile = RequestBody.create(
+                        MediaType.parse(getApplicationContext().getContentResolver().getType(fileUri)),
+                        file);
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("imagen", file.getName(), requestFile);
+
+                mCall = mInterface.createUser(body,
+                        nombres,
+                        apellidos,
+                        usuario,
+                        clave,
+                        direccion,
+                        dni,
+                        telefono_contacto,
+                        correo,
+                        id_rol,
+                        tipo_registro,
+                        codigo_app);
+            }else {
+                mCall = mInterface.createUser2(nombres,
+                        apellidos,
+                        usuario,
+                        clave,
+                        direccion,
+                        dni,
+                        telefono_contacto,
+                        correo,
+                        id_rol,
+                        tipo_registro,
+                        codigo_app);
+            }
+
+            Log.d(TAG, "------> email: "+getEmail());
+            Log.d(TAG, "------> pass : "+ getPassword());
+            mCall.enqueue(new Callback<JsonRequest>() {
+                @Override
+                public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
+                    Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+                    if (response.body().getStatus().getCode() == 200){
+                        Toast.makeText(ctx, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                        mPD.dimissPD();
+                        finish();
+                    }else{
+                        Toast.makeText(ctx, "No se ha podido registrar, intentelo nuevamente", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                Log.d(TAG, "------> email: "+getEmail());
-                Log.d(TAG, "------> pass : "+ getPassword());
-                mCall.enqueue(new Callback<Token>() {
-                    @Override
-                    public void onResponse(Call<Token> call, Response<Token> response) {
-                        Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
-                    }
-
-                    @Override
-                    public void onFailure(Call<Token> call, Throwable t) {
-                        Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
-                        mPD.dimissPD();
-                    }
-                });
-            }else{
-                mPD.dimissPD();
-                Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
         }else{
             mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void controlService(){
+        Log.d(TAG, "state_friend_code: "+state_friend_code);
+        if(verifyRegister()){
+            if (state_friend_code == 1){
+                Log.d(TAG, "1");
+                getUserByPromoCode();
+            }else{
+                service();
+            }
+        }
+    }
+
+    public void getUserByPromoCode(){
+        Log.d(TAG, "getUserByPromoCode");
+        mPD.showPD();
+        if(NetworkHelper.isNetworkAvailable(this)){
+            UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+            Call<JsonRequest> mCall = mInterface.getUserbyPromoCode(getFriendCode());
+
+            mCall.enqueue(new Callback<JsonRequest>() {
+                @Override
+                public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
+                    Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+                    mPD.dimissPD();
+                    if (response.body().getStatus().getCode() == 200){
+                        Toast.makeText(ctx, "Código correcto", Toast.LENGTH_SHORT).show();
+                        service();
+                    }else{
+                        Toast.makeText(ctx, "Código de amigo incorrecto", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -319,8 +443,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_register:
-                service();
-                Toast.makeText(ctx, "Registrando", Toast.LENGTH_SHORT).show();
+                controlService();
                 break;
             case R.id.iv_picture:
                 permissions();

@@ -106,11 +106,13 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/rl_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:gravity="center_horizontal|center_vertical"
-        android:background="#50000000">
+        android:background="#50000000"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,36 +122,20 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:layout_gravity="center_vertical">
 
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/bg_btn_bordered_w_main"
-                    android:textSize="@dimen/content"
-                    android:textColor="@color/white"
-                    android:text="Pagar Efectivo"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center_vertical">
-
-                <Button
+                    android:id="@+id/btn_confirm_order"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/bg_btn_bordered_wa_main"
                     android:textSize="@dimen/content"
                     android:textColor="@color/white"
-                    android:text="Pagar Fichas"
+                    android:text="Registrar Pedido"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:enabled="false"/>
 
             </LinearLayout>
 

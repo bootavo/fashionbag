@@ -17,16 +17,23 @@ public class PromotionAdapter extends RecyclerView.Adapter<PromotionHolder>{
     private List<Promotion> mList;
     private OnItemClickListener listener;
     private Context ctx;
+    private int type;
 
-    public PromotionAdapter(List<Promotion> mList, OnItemClickListener listener, Context ctx) {
+    public PromotionAdapter(List<Promotion> mList, OnItemClickListener listener, Context ctx, int type) {
         this.mList = mList;
         this.listener = listener;
         this.ctx = ctx;
+        this.type = type;
     }
 
     @Override
     public PromotionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products, parent, false);
+        View v = null;
+        if(type == 1){
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products_home, parent, false);
+        }else {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_products, parent, false);
+        }
         return new PromotionHolder(v, mList, ctx);
     }
 

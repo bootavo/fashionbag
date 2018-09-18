@@ -39,6 +39,10 @@ public class Results {
     @SerializedName("orders")
     private List<Order> orders;
 
+    @Expose
+    @SerializedName("codigo")
+    private TarjeticCode codigo;
+
     public List<Product> getProducts() {
         return products;
     }
@@ -103,6 +107,14 @@ public class Results {
         this.promotion = promotion;
     }
 
+    public TarjeticCode getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(TarjeticCode codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public String toString() {
         return "Results{" +
@@ -114,6 +126,7 @@ public class Results {
                 ", product=" + product +
                 ", promotion=" + promotion +
                 ", orders=" + orders +
+                ", codigo=" + codigo +
                 '}';
     }
 }

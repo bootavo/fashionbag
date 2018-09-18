@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorPrimary">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_arrow_back_white"
+                        android:text="Volver"
+                        android:textSize="@dimen/content"
+                        android:textColor="@color/secondary_text"
+                        android:textStyle="normal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:layout_alignParentLeft="true"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Registro de Pedido"
+                        android:textSize="@dimen/title"
+                        android:textColor="@color/white"
+                        android:textStyle="normal"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal|center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/tv_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Siguiente"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="@dimen/subtitle"
+                        android:textStyle="normal"
+                        android:layout_marginRight="16dp"
+                        android:layout_alignParentRight="true"
+                        android:visibility="invisible"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:gravity="center_vertical"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:paddingTop="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha de Pedido: 2018-08-01"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:textSize="@dimen/subtitle"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_text"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"/>
+
+                    <!-- FailureReportInterfaceport -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/black"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center"
+                                    android:text="Detalle del Pedido"
+                                    android:textColor="@color/white"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="4"
+                                    android:background="@color/fourth_text">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text="Precio: "
+                                            android:textColor="@color/primary_text"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"/>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text="Fichas"
+                                            android:textColor="@color/primary_text"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tv_cash"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text=""
+                                            android:textColor="@color/primary_text"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_coins"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text=""
+                                            android:textColor="@color/primary_text"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"
+                                            android:textStyle="bold"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+                        <!-- Driver -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <EditText
+                                android:id="@+id/et_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textSize="@dimen/subtitle"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:hint="Dirección"
+                                android:lines="3"
+                                android:maxLines="3"/>
+
+                        </LinearLayout>
+
+                        <!-- Tract -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp">
+
+                            <EditText
+                                android:id="@+id/et_contact_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textSize="@dimen/subtitle"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:hint="Télefono de contacto"
+                                android:digits="0123456789"
+                                android:maxLength="9"
+                                android:inputType="phone"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/rl_pay_cash"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:text="Pago con efectivo"
+                                android:textSize="@dimen/subtitle"
+                                android:textStyle="normal"
+                                android:textColor="@color/primary_text"
+                                android:paddingLeft="32dp"/>
+
+                            <Switch
+                                android:id="@+id/sw_pay_cash"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:theme="@style/SCBSwitch"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/rl_pay_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:text="Pago con tarjeta"
+                                android:textSize="@dimen/subtitle"
+                                android:textStyle="normal"
+                                android:textColor="@color/primary_text"
+                                android:paddingLeft="32dp"/>
+
+                            <Switch
+                                android:id="@+id/sw_pay_card"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:theme="@style/SCBSwitch"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/rl_pay_coins"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:text="Pago en fichas"
+                                android:textSize="@dimen/subtitle"
+                                android:textStyle="normal"
+                                android:textColor="@color/primary_text"
+                                android:paddingLeft="32dp"/>
+
+                            <Switch
+                                android:id="@+id/sw_pay_coins"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:theme="@style/SCBSwitch"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/creditcards"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"/>
+
+                        </LinearLayout>
+
+                        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                            android:id="@+id/btn_register_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_marginBottom="40dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/bg_btn_bordered_w_main"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:text="Registrar Pedido"
+                            android:textColor="@color/white"
+                            android:theme="@style/BluePrimaryButton"
+                            app:finalCornerAngle="100dp"
+                            app:initialCornerAngle="100dp"
+                            app:spinning_bar_color="@color/colorPrimaryDark"
+                            app:spinning_bar_padding="3dp"
+                            app:spinning_bar_width="3dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"/>
+
+                    </LinearLayout>
+                    <!-- -->
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/toolbar_dropshadow"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

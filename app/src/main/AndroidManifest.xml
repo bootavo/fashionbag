@@ -11,8 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- PERMISOS call -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- PERMISOS Internet -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -113,6 +112,30 @@
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
 
+        <activity
+            android:name=".modules.menu.reserve.register_order.OrderRegisterOne"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+
+        <activity
+            android:name=".modules.menu.settings.ClaimCoinsActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+
+        <activity
+            android:name=".modules.menu.settings.ChangePasswordActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -121,16 +144,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="info.fashion.bag"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

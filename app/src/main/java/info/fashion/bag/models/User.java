@@ -69,6 +69,10 @@ public class User {
     @SerializedName("imagen")
     private String imagen;
 
+    @Expose
+    @SerializedName("codigo_app")
+    private String codigo_app;
+
     public int getId_persona() {
         return id_persona;
     }
@@ -189,6 +193,14 @@ public class User {
         this.imagen = imagen;
     }
 
+    public String getCodigo_app() {
+        return codigo_app;
+    }
+
+    public void setCodigo_app(String codigo_app) {
+        this.codigo_app = codigo_app;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -207,6 +219,7 @@ public class User {
                 ", id_rol=" + id_rol +
                 ", total_fichas=" + total_fichas +
                 ", imagen='" + imagen + '\'' +
+                ", codigo_app='" + codigo_app + '\'' +
                 '}';
     }
 }
