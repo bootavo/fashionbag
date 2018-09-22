@@ -61,7 +61,7 @@ public class OrderHolder extends RecyclerView.ViewHolder {
         mDate.setText(order.getFecha());
 
         if(order.getPago_efectivo() != 0){
-            float coins = (order.getPago_efectivo()/Constant.COINS_MULTIPLIER);
+            int coins = (Constant.getCoinsByOrderDone(order.getPago_efectivo()));
             mCoinsGain.setText(""+coins);
             mTotalMoney.setText("S/."+order.getPago_efectivo());
         }else{

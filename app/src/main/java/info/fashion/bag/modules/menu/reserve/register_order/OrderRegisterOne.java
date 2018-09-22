@@ -5,11 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,9 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +30,7 @@ import info.fashion.bag.R;
 import info.fashion.bag.apis.ApiRetrofitClient;
 import info.fashion.bag.interfaces.OrderInterface;
 import info.fashion.bag.interfaces.ShoppingCarInterface;
+import info.fashion.bag.models.Districts;
 import info.fashion.bag.models.JsonRequest;
 import info.fashion.bag.models.Order;
 import info.fashion.bag.models.User;
@@ -44,12 +50,14 @@ public class OrderRegisterOne extends BaseActivity {
     @BindView(R.id.tv_date) TextView mDate;
     @BindView(R.id.et_address) EditText mAddress;
     @BindView(R.id.et_contact_phone) EditText mContactPhone;
+    @BindView(R.id.et_total_price) EditText mPaymentPrice;
 
     @BindView(R.id.btn_register_order) Button btnRegister;
     @BindView(R.id.iv_back) ImageView btnBack;
 
     @BindView(R.id.tv_cash) TextView mCash;
     @BindView(R.id.tv_coins) TextView mCoins;
+    @BindView(R.id.tv_retrieve_coins) TextView mRetrieveCoins;
 
     @BindView(R.id.rl_pay_cash) LinearLayout mLLPayCash;
     @BindView(R.id.sw_pay_cash) Switch mSWitchCash;
@@ -59,6 +67,8 @@ public class OrderRegisterOne extends BaseActivity {
 
     @BindView(R.id.rl_pay_coins) LinearLayout mLLPayCoins;
     @BindView(R.id.sw_pay_coins) Switch mSWitchCoins;
+
+    @BindView(R.id.spinner_district) Spinner spinner;
 
     private String TAG = OrderRegisterOne.class.getSimpleName();
     public static Activity activity;
@@ -74,6 +84,9 @@ public class OrderRegisterOne extends BaseActivity {
     private int state_coins = 0;
 
     String date = "";
+    String time = "";
+    int district_id = 0;
+    String district = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +104,23 @@ public class OrderRegisterOne extends BaseActivity {
         mPD = new ProgressDialogHelper(ctx);
 
         activity = this;
+
+        final List<Districts> listDistricts = Districts.getDistricts();
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(ctx, listDistricts);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(context, "ID_BANCO: "+bancoEntities.get(position).getId(), Toast.LENGTH_SHORT).show();
+                district_id = listDistricts.get(position).getDistrict_id();
+                district = listDistricts.get(position).getDistrict();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                district_id = listDistricts.get(0).getDistrict_id();
+            }
+        });
     }
 
     public void init(){
@@ -102,6 +132,7 @@ public class OrderRegisterOne extends BaseActivity {
     public void setDetail(){
 
         mCash.setText("S/."+cash);
+        mRetrieveCoins.setText(""+Constant.getCoinsByOrderDone(cash));
         if (coins == 0){
             mCoins.setText("No Aplica");
         }else {
@@ -115,6 +146,15 @@ public class OrderRegisterOne extends BaseActivity {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         date = df.format(Calendar.getInstance().getTime());
+
+        Locale locale = new Locale("es", "pe");
+        SimpleDateFormat format = new SimpleDateFormat("HH", locale);
+        String hour = format.format(new Date());
+
+        SimpleDateFormat format2 = new SimpleDateFormat("mm", locale);
+        String minutes = format2.format(new Date());
+
+        time = " - "+hour+":"+minutes;
 
         mDate.setText("Fecha del Pedido: "+date);
     }
@@ -211,8 +251,9 @@ public class OrderRegisterOne extends BaseActivity {
                 order.setPago_efectivo(cash);
                 order.setCantidad(cantidad);
                 order.setTipo_pago(getPaymentType());
-                order.setFecha(date);
-                order.setDireccion(getAddress());
+                order.setFecha(date+time);
+                order.setDireccion(getDistrict()+" - "+getAddress());
+                order.setMonto_total(getPaymentPrice());
                 order.setTelefono_contacto(getContactPhone());
 
                 OrderInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(OrderInterface.class);
@@ -279,6 +320,19 @@ public class OrderRegisterOne extends BaseActivity {
         return mContactPhone.getText().toString();
     }
 
+    public String getDistrict(){
+        return district;
+    }
+
+    public float getPaymentPrice() {
+        String aux = "";
+        if (mPaymentPrice.getText().toString() != null){
+            return Float.parseFloat(mPaymentPrice.getText().toString());
+        }else{
+            return 0;
+        }
+    }
+
     public boolean verifyFields(){
         if(getAddress().equals("")){
             mAddress.setError("Debe ingresar una dirección");
@@ -310,16 +364,20 @@ public class OrderRegisterOne extends BaseActivity {
             return false;
         }
 
-        if(coins > 0 && cash > 0){
+        if (getPaymentPrice() <= 0) {
+            return false;
+        }
 
-            if (state_cash == 0) {
-                return false;
-            }else if(state_cash == 1){
+        if (district_id <= 0) {
+            return false;
+        }
+
+        if(coins > 0 || cash > 0){
+
+            if (state_cash == 1 || state_card == 1) {
                 return true;
-            }else if (state_card == 0){
+            }else if(state_cash == 0 || state_card == 0){
                 return false;
-            }else if (state_card == 1){
-                return true;
             }
 
         }else if (cash == 0){

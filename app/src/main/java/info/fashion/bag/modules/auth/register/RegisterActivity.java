@@ -6,10 +6,10 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,7 +27,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ import info.fashion.bag.utilities.ProgressDialogHelper;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,8 +84,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public static final int REQUEST_CODE_CAMERA = 0012;
     public static final int REQUEST_CODE_GALLERY = 0013;
-
-    public File imageFull = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -212,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void openGallery(){
-//        EasyImage.openChooserWithGallery(RegisterActivity.this, "Selecciona", 0);
+        //EasyImage.openChooserWithGallery(RegisterActivity.this, "Selecciona", 0);
         EasyImage.openGallery(RegisterActivity.this, REQUEST_CODE_GALLERY);
     }
 
@@ -250,22 +246,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //        }else {
 //            mPicture.setImageResource(R.drawable.ic_user);
 //        }
-        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new EasyImage.Callbacks() {
             @Override
-            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-                switch (type){
-                    case REQUEST_CODE_CAMERA:
-                        Glide.with(RegisterActivity.this)
-                                .load(imageFile)
-                                .into(mPicture);
-                        break;
-                    case REQUEST_CODE_GALLERY:
-                        Glide.with(RegisterActivity.this)
-                                .load(imageFile)
-                                .into(mPicture);
-                        break;
+            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
+                if(source.name().equals("CAMERA")){
+                    File file = new File(Environment.getExternalStorageDirectory().getPath(), imageFiles.get(0).getName());
+                    fileUri = Uri.fromFile(file);
+                    Glide.with(RegisterActivity.this)
+                            .load(file)
+                            .into(mPicture);
+
+                }else{
+                    Glide.with(RegisterActivity.this)
+                            .load(imageFiles.get(0))
+                            .into(mPicture);
+                    fileUri = data.getData();
                 }
-                fileUri = data.getData();
+            }
+
+            @Override
+            public void onCanceled(EasyImage.ImageSource source, int type) {
+                if (source == EasyImage.ImageSource.CAMERA) {
+                    File photoFile = EasyImage.lastlyTakenButCanceledPhoto(RegisterActivity.this);
+                    if (photoFile != null) photoFile.delete();
+                }
             }
         });
 
@@ -273,6 +283,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void onPhotosReturned(List<File> returnedPhotos) {
         photos.addAll(returnedPhotos);
+
     }
 
     @Override
@@ -295,9 +306,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             RequestBody telefono_contacto = RequestBody.create(MediaType.parse("text/plain"), "Telefono");
             RequestBody correo = RequestBody.create(MediaType.parse("text/plain"), getEmail());
             RequestBody id_rol = RequestBody.create(MediaType.parse("text/plain"), "3");
-            RequestBody tipo_registro = RequestBody.create(MediaType.parse("text/plain"), Constant.REGISTER_APP);
 
-            RequestBody codigo_app = RequestBody.create(MediaType.parse("text/plain"), Constant.REGISTER_SHARE_APP);
+            String type_register = Constant.REGISTER_APP;
+            if(state_friend_code == 1) {
+                type_register = Constant.REGISTER_SHARE_APP;
+            }
+
+            RequestBody tipo_registro = RequestBody.create(MediaType.parse("text/plain"), type_register);
+
+            RequestBody codigo_app = RequestBody.create(MediaType.parse("text/plain"), getFriendCode());
 
             UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
             Call<JsonRequest> mCall = null;
@@ -346,6 +363,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         mPD.dimissPD();
                         finish();
                     }else{
+                        mPD.dimissPD();
                         Toast.makeText(ctx, "No se ha podido registrar, intentelo nuevamente", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -369,7 +387,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG, "1");
                 getUserByPromoCode();
             }else{
-                service();
+                verifyUser();
             }
         }
     }
@@ -385,12 +403,44 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
                     Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
-                    mPD.dimissPD();
                     if (response.body().getStatus().getCode() == 200){
                         Toast.makeText(ctx, "Código correcto", Toast.LENGTH_SHORT).show();
-                        service();
+                        verifyUser();
                     }else{
+                        mPD.dimissPD();
                         Toast.makeText(ctx, "Código de amigo incorrecto", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonRequest> call, Throwable t) {
+                    Toast.makeText(ctx, getResources().getString(R.string.server_problems), Toast.LENGTH_SHORT).show();
+                    mPD.dimissPD();
+                }
+            });
+        }else{
+            mPD.dimissPD();
+            Toast.makeText(ctx, getResources().getString(R.string.network_problems), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void verifyUser(){
+        Log.d(TAG, "verifyUser");
+        mPD.showPD();
+        if(NetworkHelper.isNetworkAvailable(this)){
+            UserInterface mInterface = ApiRetrofitClient.getRetrofitClient().create(UserInterface.class);
+            Call<JsonRequest> mCall = mInterface.verifyUser(getEmail());
+
+            mCall.enqueue(new Callback<JsonRequest>() {
+                @Override
+                public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
+                    Log.d(TAG, "Retrofit Response: "+JsonPretty.getPrettyJson(response));
+                    if (response.body().getStatus().getCode() == 200){
+                        mPD.dimissPD();
+                        Toast.makeText(ctx, "Email reggistrado, ingrese otro email", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(ctx, "Usuario correcto", Toast.LENGTH_SHORT).show();
+                        service();
                     }
                 }
 

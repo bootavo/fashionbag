@@ -122,6 +122,8 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void verifyShoppingCar(){
+        coins = 0;
+        cash = 0;
         mPD.showPD();
         mSearching.setText("Cargando reservas...");
         if(NetworkHelper.isNetworkAvailable(ctx)){
@@ -274,27 +276,41 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
 
     public void orderProcess(){
 
-        if (coins < userSession.getTotal_fichas()) {
-            Intent mIntent = new Intent(ctx, OrderRegisterOne.class);
-            mIntent.putExtra("cash",cash);
-            mIntent.putExtra("coins", coins);
-            mIntent.putExtra("cantidad", cantidad);
-            ctx.startActivity(mIntent);
-        }else {
-            if(cash < 20 || (userSession.getTotal_fichas() < coins ) ){
-                if (userSession.getTotal_fichas() > coins){
-                    Toast.makeText(ctx, "El monto minimo de compra es S/20.00", Toast.LENGTH_LONG).show();
-                }else if (cash < 20){
-                    Toast.makeText(ctx, "Fichas insuficientes", Toast.LENGTH_LONG).show();
-                }
+        if(coins > 0){
 
-            }else {
+            if (coins < userSession.getTotal_fichas()) {
                 Intent mIntent = new Intent(ctx, OrderRegisterOne.class);
                 mIntent.putExtra("cash",cash);
                 mIntent.putExtra("coins", coins);
                 mIntent.putExtra("cantidad", cantidad);
                 ctx.startActivity(mIntent);
             }
+
+        }else if(cash >= 20){
+            if (coins < userSession.getTotal_fichas()) {
+                Intent mIntent = new Intent(ctx, OrderRegisterOne.class);
+                mIntent.putExtra("cash",cash);
+                mIntent.putExtra("coins", coins);
+                mIntent.putExtra("cantidad", cantidad);
+                ctx.startActivity(mIntent);
+            }else {
+                if(cash < 20 || (userSession.getTotal_fichas() < coins ) ){
+                    if (userSession.getTotal_fichas() > coins){
+                        Toast.makeText(ctx, "El monto minimo de compra es S/20.00", Toast.LENGTH_LONG).show();
+                    }else if (cash < 20){
+                        Toast.makeText(ctx, "Fichas insuficientes", Toast.LENGTH_LONG).show();
+                    }
+
+                }else {
+                    Intent mIntent = new Intent(ctx, OrderRegisterOne.class);
+                    mIntent.putExtra("cash",cash);
+                    mIntent.putExtra("coins", coins);
+                    mIntent.putExtra("cantidad", cantidad);
+                    ctx.startActivity(mIntent);
+                }
+            }
+        }else {
+            Toast.makeText(ctx, "El monto mínimo para hacer un pedido es de: S/ 20.00", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -305,6 +321,7 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
     }
 
     public static final void reloadPage(){
+        Log.d("reloadPage", "change");
         ReserveActivity activity2 = (ReserveActivity) activity;
         activity2.verifyShoppingCar();
     }

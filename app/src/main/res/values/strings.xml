@@ -3,7 +3,7 @@
 
     <!-- NavigationButtomViewEx -->
     <string name="home">Inicio</string>
-    <string name="catalog">Catálogo</string>
+    <string name="catalog">Productos</string>
     <string name="bag">Reservas</string>
     <string name="order">Pedidos</string>
     <string name="settings">Mi cuenta</string>

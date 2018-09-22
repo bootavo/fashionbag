@@ -54,4 +54,25 @@ public class Constant {
     public static float DISCOUNT_AMOUNT = 0.0f;
     public static List<Integer> CATEGORIES_DISCOUNT_OFFER = null;
 
+    public static int getCoinsByOrderDone(float total_payment){
+
+        int coins = 0;
+
+        if (total_payment >= 20.0 && total_payment <= 35.0){
+            coins = 20;
+        }else if(total_payment >= 35.1 && total_payment <= 50.0){
+            coins = 45;
+        }else if (total_payment >= 50.1 && total_payment <= 100){
+            coins = 75;
+        }else if(total_payment >= 100.1 && total_payment <= 200){
+            coins = 150;
+        }else if(total_payment >= 200.1 && total_payment <= 400){
+            coins = 300;
+        }else if(total_payment >= 400.1){
+            coins = 500;
+        }
+
+        return coins;
+    }
+
 }

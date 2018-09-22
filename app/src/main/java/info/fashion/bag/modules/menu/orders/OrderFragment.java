@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -45,6 +46,8 @@ public class OrderFragment extends Fragment{
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
     @BindView(R.id.pb_products_offers) ProgressBar mPBProducts;
+
+    @BindView(R.id.tv_order) TextView mOrderMessage;
 
     private String TAG = OrderFragment.class.getSimpleName();
     private Context ctx = null;
@@ -144,24 +147,31 @@ public class OrderFragment extends Fragment{
                 public void onResponse(Call<JsonRequest> call, Response<JsonRequest> response) {
                     Log.d(TAG, "Retrofit Response: "+ JsonPretty.getPrettyJson(response));
 
-                    mPBProducts.setVisibility(View.GONE);
+                    if (!response.body().getResults().getOrders().isEmpty()){
+                        mPBProducts.setVisibility(View.GONE);
 
-                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 1);
-                    mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, GridSpacingItemDecoration.dpToPx(0, ctx), true));
-                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                    mRecyclerView.setAdapter(new OrderAdapter(response.body().getResults().getOrders(), new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Object o, int position) {
-                            Order order = (Order) o;
-                            Toast.makeText(ctx, ""+order.getId_pedido(), Toast.LENGTH_SHORT).show();
-                            //Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
-                            //ctx.startActivity(mIntent);
-                        }
-                    }, ctx));
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(ctx, 1);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, GridSpacingItemDecoration.dpToPx(0, ctx), true));
+                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        mRecyclerView.setAdapter(new OrderAdapter(response.body().getResults().getOrders(), new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Object o, int position) {
+                                Order order = (Order) o;
+                                Toast.makeText(ctx, ""+order.getId_pedido(), Toast.LENGTH_SHORT).show();
+                                //Intent mIntent = new Intent(ctx, ProductDetailActivity.class);
+                                //ctx.startActivity(mIntent);
+                            }
+                        }, ctx));
 
-                    //mRecyclerView.setHasFixedSize(true);
-                    //mRecyclerView.setNestedScrollingEnabled(false);
+                        //mRecyclerView.setHasFixedSize(true);
+                        //mRecyclerView.setNestedScrollingEnabled(false);
+                    }else{
+                        mOrderMessage.setVisibility(View.VISIBLE);
+                        mPBProducts.setVisibility(View.GONE);
+                    }
+
+
                 }
 
                 @Override

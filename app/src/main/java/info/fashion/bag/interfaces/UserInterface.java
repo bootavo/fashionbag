@@ -85,4 +85,9 @@ public interface UserInterface {
             @Path("codigo") String codigo
     );
 
+    @GET("verify_user/{usuario}")
+    Call<JsonRequest> verifyUser(
+            @Path("usuario") String usuario
+    );
+
 }

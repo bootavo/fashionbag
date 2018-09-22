@@ -16,7 +16,9 @@ import java.io.ByteArrayOutputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import info.fashion.bag.R;
+import info.fashion.bag.models.User;
 import info.fashion.bag.utilities.BaseActivity;
+import info.fashion.bag.utilities.PreferencesHelper;
 
 /**
  * Created by bootavo on 30/12/2017.
@@ -96,7 +98,16 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
                         //intent.setType("*/*");
                         intent.putExtra(Intent.EXTRA_SUBJECT, "FashionBag");
                         intent.putExtra(Intent.EXTRA_STREAM, bs.toByteArray());
-                        String sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas\n\n";
+
+                        User user = PreferencesHelper.getMyUserPref(getApplicationContext());
+                        String sAux = "";
+                        if (user != null){
+                            sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
+                                    "Ingresa ahora el siguiente código:"+ user.getCodigo_app() +"y obten fichas para canjearls por productos gratis";
+                        }else{
+                            sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
+                                    "además obten fichas para canjearls por productos gratis";
+                        }
                         //sAux = sAux + "https://play.google.com/store/apps/details?id="+ getActivity().getPackageName() +"\n\n";
                         sAux = sAux + "https://call.midocvirtual.com/device.html"+"\n\n";
                         intent.putExtra(Intent.EXTRA_TEXT, sAux);

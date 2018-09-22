@@ -83,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:paddingTop="20dp">
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/tv_date"
@@ -103,7 +103,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal">
 
@@ -159,6 +158,16 @@
                                             android:paddingTop="5dp"
                                             android:paddingBottom="5dp"/>
 
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text="Fichas que ganarás"
+                                            android:textColor="@color/primary_text"
+                                            android:textStyle="bold"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"/>
+
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -189,6 +198,17 @@
                                             android:paddingBottom="5dp"
                                             android:textStyle="bold"/>
 
+                                        <TextView
+                                            android:id="@+id/tv_retrieve_coins"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textAlignment="center"
+                                            android:text=""
+                                            android:textColor="@color/primary_text"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"
+                                            android:textStyle="bold"/>
+
                                     </LinearLayout>
 
                                 </LinearLayout>
@@ -196,6 +216,28 @@
                             </LinearLayout>
 
 
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:layout_gravity="center_horizontal|center_vertical">
+
+                            <Spinner
+                                android:id="@+id/spinner_district"
+                                android:layout_below="@+id/xdsda"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:gravity="center_horizontal"
+                                android:visibility="visible"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp">
+                            </Spinner>
 
                         </LinearLayout>
 
@@ -241,6 +283,30 @@
                                 android:digits="0123456789"
                                 android:maxLength="9"
                                 android:inputType="phone"
+                                />
+
+                        </LinearLayout>
+
+                        <!-- Tract -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp">
+
+                            <EditText
+                                android:id="@+id/et_total_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textSize="@dimen/subtitle"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:hint="¿Con cuanto dinero pagará?"
+                                android:digits="0123456789."
+                                android:maxLength="10"
+                                android:inputType="numberDecimal"
                                 />
 
                         </LinearLayout>
@@ -329,11 +395,12 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginTop="20dp">
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="80dp"
                                 android:src="@drawable/creditcards"
                                 android:paddingLeft="50dp"
                                 android:paddingRight="50dp"/>

@@ -49,6 +49,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Nullable @BindView(R.id.btn_login) Button btnLogin;
     @Nullable @BindView(R.id.btn_register) Button btnRegister;
 
+    @Nullable @BindView(R.id.rl_questions) RelativeLayout btnQuestions;
     @Nullable @BindView(R.id.rl_share_us) RelativeLayout btnShareUs;
     @Nullable @BindView(R.id.rl_about_midoc) RelativeLayout btnAboutUs;
     @Nullable @BindView(R.id.rl_terms_conditions) RelativeLayout btnTermsConditions;
@@ -116,6 +117,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         if(state == 1){
+            btnQuestions.setOnClickListener(this);
             btnShareUs.setOnClickListener(this);
             btnAboutUs.setOnClickListener(this);
             btnTermsConditions.setOnClickListener(this);
@@ -163,21 +165,31 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_change_password:
                 startActivity(new Intent(ctx, ChangePasswordActivity.class));
                 break;
+            case R.id.rl_questions:
+                startActivity(new Intent(ctx, QuestionsActivty.class));
+                break;
             case R.id.rl_share_us:
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher); // your bitmapG
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
 
                 try {
-                    User user = PreferencesHelper.getMyUserPref(ctx);
-
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     //intent.setType("*/*");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "FashionBag");
                     intent.putExtra(Intent.EXTRA_STREAM, bs.toByteArray());
-                    String sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
-                            "Ingresa ahora el siguiente código:"+ user.getCodigo_app() +"y obten fichas gratis";
+
+                    User user = PreferencesHelper.getMyUserPref(ctx);
+                    String sAux = "";
+                    if (user != null){
+                        sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
+                                "Ingresa ahora el siguiente código:"+ user.getCodigo_app() +"y obten fichas para canjearls por productos gratis";
+                    }else{
+                        sAux = "\nDescarga Ahora Tarjetic y aprovecha nuestras ofertas en licores\n\n"+
+                                "además obten fichas para canjearls por productos gratis";
+                    }
+
                     //sAux = sAux + "https://play.google.com/store/apps/details?id="+ getActivity().getPackageName() +"\n\n";
                     sAux = sAux + "https://call.midocvirtual.com/device.html"+"\n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);

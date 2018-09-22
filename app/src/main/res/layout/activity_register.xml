@@ -92,7 +92,7 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="contraseña"
+                    android:hint="crear contraseña"
                     android:textSize="@dimen/content"
                     android:textColorHint="@color/third_text"
                     android:textColor="@color/primary_text"

@@ -9,6 +9,19 @@
     tools:showIn="@layout/fragment_order">
     <!-- app:layout_behavior="@string/appbar_scrolling_view_behavior" -->
 
+    <TextView
+        android:id="@+id/tv_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No has hecho pedidos aún :("
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/subtitle"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:visibility="invisible"/>
+
     <ProgressBar
         android:id="@+id/pb_products_offers"
         android:layout_width="match_parent"

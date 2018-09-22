@@ -73,7 +73,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/delivery"
+                        android:src="@drawable/ic_delivery"
                         android:layout_gravity="center_horizontal|center_vertical"
                         card_view:civ_border_color="@color/stars"
                         card_view:civ_border_overlay="false"
