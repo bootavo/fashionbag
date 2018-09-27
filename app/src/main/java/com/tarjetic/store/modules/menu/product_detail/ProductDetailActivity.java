@@ -40,6 +40,7 @@ import com.tarjetic.store.utilities.BaseActivity;
 import com.tarjetic.store.utilities.Constant;
 import com.tarjetic.store.utilities.GlideApp;
 import com.tarjetic.store.utilities.JsonPretty;
+import com.tarjetic.store.utilities.MathHelper;
 import com.tarjetic.store.utilities.NetworkHelper;
 import com.tarjetic.store.utilities.PreferencesHelper;
 import com.tarjetic.store.utilities.ProgressDialogHelper;
@@ -291,7 +292,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
             Log.d(TAG, "SIZE: "+mPrice.getText().toString().length());
 
-            total_price = current_quantity*price;
+            total_price = MathHelper.round(current_quantity*price, 2);
             total_coins = current_quantity*coins;
 
             mPrice.setText("S/."+ total_price +"");
