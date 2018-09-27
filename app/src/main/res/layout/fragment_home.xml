@@ -109,6 +109,24 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tomar bebidas alcoholicas en exceso es \ndañino para su salud"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_auth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

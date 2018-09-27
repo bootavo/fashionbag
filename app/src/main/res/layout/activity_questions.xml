@@ -153,10 +153,10 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/content"
                         android:textColor="@color/secondary_text"
-                        android:text="Hay 3 maneras de conseguir Tarjicoins: \n
-•	Compartiendo la Aplicación y haciendo que nuevos usuarios usen tu código de amigo para registrarse
-•	Comprando productos con dinero real en la App
-Ingresando un código promocional en el Menú “Perfil”  Canjear fichas"/>
+                        android:text="Hay 3 maneras de conseguir Tarjicoins:
+\n•	Compartiendo la Aplicación y haciendo que nuevos usuarios usen tu código de amigo para registrarse.
+\n•	Comprando productos con dinero real en la App.
+\n• Ingresando un código promocional en el Menú “Perfil”  Canjear fichas."/>
 
                 </LinearLayout>
 
@@ -244,6 +244,60 @@ Ingresando un código promocional en el Menú “Perfil”  Canjear fichas"/>
                         android:textSize="@dimen/content"
                         android:textColor="@color/secondary_text"
                         android:text="Escribiendo al Whatsapp (999885197) hasta máximo 5 minutos después de realizar su compra."/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿Cuáles son los distritos a los que llegan?"
+                        android:textSize="@dimen/title"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/content"
+                        android:textColor="@color/secondary_text"
+                        android:text="Llegamos actualmente a 4 distritos: Jesús María, San Isidro, Pueblo Libre y Lince (Aledaños a San Isidro)"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿Qué pasa si pongo una dirección que no está dentro de los 4 distritos a los que llegamos?"
+                        android:textSize="@dimen/title"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/content"
+                        android:textColor="@color/secondary_text"
+                        android:text="Nosotros detectaremos automáticamente el distrito de la dirección que brindo y si no se encuentra dentro de los distritos a los que llegamos se procederá a anular el pedido automáticamente."/>
 
                 </LinearLayout>
 

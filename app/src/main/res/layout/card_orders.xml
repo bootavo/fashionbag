@@ -235,7 +235,7 @@
                                 android:textSize="@dimen/small"
                                 android:textColor="@color/colorPrimary"
                                 android:textStyle="bold"
-                                android:text="S/.150.00"/>
+                                android:text=""/>
 
                         </LinearLayout>
 

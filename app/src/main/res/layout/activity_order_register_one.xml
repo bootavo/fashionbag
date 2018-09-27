@@ -287,30 +287,6 @@
 
                         </LinearLayout>
 
-                        <!-- Tract -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="20dp">
-
-                            <EditText
-                                android:id="@+id/et_total_price"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:textSize="@dimen/subtitle"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:hint="¿Con cuanto dinero pagará?"
-                                android:digits="0123456789."
-                                android:maxLength="10"
-                                android:inputType="numberDecimal"
-                                />
-
-                        </LinearLayout>
-
                         <LinearLayout
                             android:id="@+id/rl_pay_cash"
                             android:layout_width="match_parent"
@@ -389,6 +365,30 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:theme="@style/SCBSwitch"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp">
+
+                            <EditText
+                                android:id="@+id/et_total_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textSize="@dimen/subtitle"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:hint="¿Con cuanto dinero pagará?"
+                                android:digits="0123456789."
+                                android:maxLength="10"
+                                android:inputType="numberDecimal"
+                                android:visibility="gone"
+                                />
 
                         </LinearLayout>
 
