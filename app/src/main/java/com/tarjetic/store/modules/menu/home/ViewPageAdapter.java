@@ -19,7 +19,7 @@ public class ViewPageAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private  int []images={R.drawable.banner_1,R.drawable.banner_2,R.drawable.banner_3};
+    private  int []images={R.drawable.banner_1,R.drawable.banner_2,R.drawable.banner_3,R.drawable.banner_4};
 
 
     public ViewPageAdapter(Context context){
@@ -50,9 +50,10 @@ public class ViewPageAdapter extends PagerAdapter {
                     Toast.makeText(context, "Slide 1 Clicked ", Toast.LENGTH_SHORT).show();
                 }else if(position == 1) {
                     Toast.makeText(context, "Slide 2 Clicked ", Toast.LENGTH_SHORT).show();
-                }else {
-
+                }else if(position == 2){
                     Toast.makeText(context, "Slide 3 Clicked ", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context, "Slide 4 Clicked ", Toast.LENGTH_SHORT).show();
                 }
             }
         });

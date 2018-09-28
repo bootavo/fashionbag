@@ -132,7 +132,7 @@
                     android:background="@drawable/bg_btn_bordered_wa_main"
                     android:textSize="@dimen/content"
                     android:textColor="@color/white"
-                    android:text="Registrar Pedido"
+                    android:text="Continuar"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:enabled="false"/>

@@ -87,11 +87,10 @@
                         android:textSize="15dp"
                         android:textColor="@color/white"
                         android:padding="20dp"
-                        android:text="Tarjetic inició como un proyecto de la Universidad de San Martin de Porres, al ver el gusto que ocasionó en el público se optó por potenciar esta idea volviéndose única.
-\nTarjetic desea inculcar en nuestros clientes a la compra de licores y vinos a través de la venta por delivery para así reducir la tasa de accidentes al salir en búsqueda de bebidas alcohólicas justamente en estado etílico.
+                        android:text="Tarjetic desea inculcar en nuestros clientes a la compra de licores y vinos a través de la venta por delivery para así reducir la tasa de accidentes al salir en búsqueda de bebidas alcohólicas justamente en estado etílico.
 \nNosotros nos comprometemos a darle un servicio de excelencia y al tiempo justo.
 \nFinalmente esperamos que sea de agrado nuestra aplicación y puedan compartirla con sus amigos y familiares a fin de agrandar esta comunidad.
-\nAtentamente: La gerencia, Diego Moscoso c:
+\nAtentamente: Tarjetic Store
 "/>
 
                 </LinearLayout>
