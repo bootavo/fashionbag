@@ -133,7 +133,7 @@
                                 android:paddingLeft="@dimen/album_title_padding"
                                 android:paddingRight="@dimen/album_title_padding"
                                 android:textSize="@dimen/small"
-                                android:text="Rencompenza en Fichas"/>
+                                android:text="Rencompenza en Tarjicoins"/>
 
                             <TextView
                                 android:id="@+id/tv_coins_gain"
@@ -193,7 +193,7 @@
                                 android:paddingLeft="@dimen/album_title_padding"
                                 android:paddingRight="@dimen/album_title_padding"
                                 android:textSize="@dimen/small"
-                                android:text="Costo Total Fichas"/>
+                                android:text="Tarjicoins"/>
 
                             <TextView
                                 android:id="@+id/tv_total_coins"

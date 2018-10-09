@@ -273,7 +273,7 @@ public class OrderRegisterOne extends BaseActivity {
                             Toast.makeText(ctx, "Pedido registrado", Toast.LENGTH_SHORT).show();
                             user.setTotal_fichas(user.getTotal_fichas()-coins);
                             PreferencesHelper.setMyUserPref(ctx, user);
-                            Toast.makeText(ctx, "Fichas actuales: "+user.getTotal_fichas(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ctx, "Tarjicoins actuales: "+user.getTotal_fichas(), Toast.LENGTH_SHORT).show();
                             ReserveActivity.activity.finish();
                             finish();
                         }else {

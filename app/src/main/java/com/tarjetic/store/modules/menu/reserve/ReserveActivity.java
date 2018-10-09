@@ -239,8 +239,8 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
                         Log.d(TAG, "-----------------> CANTIDAD: "+cantidad);
 
                         mRLBtn.setVisibility(View.VISIBLE);
-                        Toast.makeText(ctx, "Efectivo: "+cash+", Fichas: "+coins, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Efectivo: "+cash+", Fichas: "+coins);
+                        Toast.makeText(ctx, "Efectivo: "+cash+", Tarjicoins: "+coins, Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Efectivo: "+cash+", Tarjicoins: "+coins);
                     }else{
                         mRecyclerView.removeAllViewsInLayout();
                         mRLBtn.setVisibility(View.GONE);
@@ -293,7 +293,7 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
                 mIntent.putExtra("cantidad", cantidad);
                 ctx.startActivity(mIntent);
             }else{
-                Toast.makeText(ctx, "Fichas insuficientes 1", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Tarjicoins insuficientes 1", Toast.LENGTH_LONG).show();
             }
 
         }else if(cash >= 20){
@@ -308,7 +308,7 @@ public class ReserveActivity extends BaseActivity implements View.OnClickListene
                     if (userSession.getTotal_fichas() > coins){
                         Toast.makeText(ctx, "El monto minimo de compra es S/20.00", Toast.LENGTH_LONG).show();
                     }else if (cash < 20){
-                        Toast.makeText(ctx, "Fichas insuficientes 2", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ctx, "Fichas Tarjicoins 2", Toast.LENGTH_LONG).show();
                     }
 
                 }else {

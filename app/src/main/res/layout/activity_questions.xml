@@ -97,7 +97,7 @@
                         android:textSize="@dimen/content"
                         android:textColor="@color/secondary_text"
                         android:text="Paso 1: Seleccionar los productos que desea adquirir en el menú “Inicio” o en el menú “Catalogo” y agregarlos al carrito de compras
-\nPaso 2: Seleccionar como desea pagarlos, con efectivo o con fichas (si es que poseyera la cantidad que requiere) y una vez este conforme seleccionar el botón “Registrar pedido”.
+\nPaso 2: Seleccionar como desea pagarlos, con efectivo o con Tarjicoins (si es que poseyera la cantidad que requiere) y una vez este conforme seleccionar el botón “Registrar pedido”.
 \nPaso 3: Llenar bien los datos que se le piden (Dirección, teléfono, el método de pago y la cantidad con la que cancelará en caso sea efectivo)
 \nPaso 4: Seleccionar el botón “Comprar” y esperar a que llegue a su domicilio"/>
 
@@ -156,7 +156,7 @@
                         android:text="Hay 3 maneras de conseguir Tarjicoins:
 \n•	Compartiendo la Aplicación y haciendo que nuevos usuarios usen tu código de amigo para registrarse.
 \n•	Comprando productos con dinero real en la App.
-\n• Ingresando un código promocional en el Menú “Perfil”  Canjear fichas."/>
+\n• Ingresando un código promocional en el Menú “Perfil”  Canjear Tarjicoins."/>
 
                 </LinearLayout>
 

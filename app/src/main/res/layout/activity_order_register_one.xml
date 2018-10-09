@@ -153,7 +153,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:textAlignment="center"
-                                            android:text="Fichas"
+                                            android:text="Tarjicoins"
                                             android:textColor="@color/primary_text"
                                             android:paddingTop="5dp"
                                             android:paddingBottom="5dp"/>
@@ -162,7 +162,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:textAlignment="center"
-                                            android:text="Fichas que ganarás"
+                                            android:text="Tarjicoins que ganarás"
                                             android:textColor="@color/primary_text"
                                             android:textStyle="bold"
                                             android:paddingTop="5dp"
@@ -354,7 +354,7 @@
                             <TextView
                                 android:layout_width="200dp"
                                 android:layout_height="wrap_content"
-                                android:text="Pago en fichas"
+                                android:text="Pago en Tarjicoins"
                                 android:textSize="@dimen/subtitle"
                                 android:textStyle="normal"
                                 android:textColor="@color/primary_text"

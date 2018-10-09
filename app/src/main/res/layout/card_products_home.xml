@@ -62,7 +62,7 @@
                     android:maxLines="2"
                     android:paddingLeft="@dimen/album_title_padding"
                     android:paddingRight="@dimen/album_title_padding"
-                    android:text="Cartera 123"
+                    android:text="Cartera 123 \n gola"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/content"
                     android:textStyle="bold"/>
@@ -76,25 +76,31 @@
                 android:layout_below="@+id/ll_title"
                 android:orientation="horizontal">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/songs_count_padding_bottom"
-                    android:paddingLeft="@dimen/album_title_padding"
-                    android:paddingRight="@dimen/album_title_padding"
-                    android:text="Precio: "
-                    android:textSize="@dimen/songs_count" />
+                    android:layout_height="18sp">
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/songs_count_padding_bottom"
-                    android:paddingRight="@dimen/album_title_padding"
-                    android:text="S/.25.00"
-                    android:textColor="@color/primary_text"
-                    android:textSize="@dimen/small"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/album_title_padding"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:text="Precio: "
+                        android:textSize="@dimen/songs_count" />
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:text="S/.25.00"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/small"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true"
+                        android:textAlignment="textStart"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -105,25 +111,31 @@
                 android:layout_below="@+id/ll_price_whole_sale"
                 android:orientation="horizontal">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/songs_count_padding_bottom"
-                    android:paddingLeft="@dimen/album_title_padding"
-                    android:paddingRight="@dimen/album_title_padding"
-                    android:text="Fichas:"
-                    android:textSize="@dimen/songs_count" />
+                    android:layout_height="18sp">
 
-                <TextView
-                    android:id="@+id/tv_coins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/songs_count_padding_bottom"
-                    android:paddingRight="@dimen/album_title_padding"
-                    android:text="S/.25.00"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/small"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/album_title_padding"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:text="Tarjicoins:"
+                        android:textSize="@dimen/songs_count" />
+
+                    <TextView
+                        android:id="@+id/tv_coins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/album_title_padding"
+                        android:text="S/.25.00"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/small"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true"
+                        android:textAlignment="textStart"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
 

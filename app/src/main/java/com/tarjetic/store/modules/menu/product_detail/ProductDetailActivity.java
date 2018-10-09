@@ -225,7 +225,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 .setMessage("¿Como desea adquirir este producto?.");
 
                 if (total_coins > 0){
-                    builder.setPositiveButton("CON FICHAS", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("TARJICOINS", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //Toast.makeText(ctx, "CON FICHAS", Toast.LENGTH_SHORT).show();
                             kind_buy = ORDER_KIND_PAY_COINS;
@@ -416,7 +416,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
         if (kind_buy.equals(Constant.ORDER_KIND_PAY_COINS)){
             if (Integer.parseInt(mCoins.getText().toString()) > user.getTotal_fichas()){
-                Toast.makeText(ctx, "No tiene suficiente fichas para guardar el producto en el carrito de compras.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "No tienes suficientes tarjicoins para guardar el producto en el carrito de compras.", Toast.LENGTH_LONG).show();
                 mPD.dimissPD();
                 return;
             }

@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tv_price_whole_sale_text"
-                    android:text="FICHAS"
+                    android:text="TARJICOINS"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/content"
                     android:textStyle="bold" />

@@ -110,8 +110,8 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ReserveH
                     mPrice.setText("S/."+shoppingCarItem.getItemProduct().get(0).getPrecio());
                     mSubTotal.setText("S/."+shoppingCarItem.getPrecio_total());
                 }else {
-                    mPrice.setText("Fichas "+shoppingCarItem.getItemProduct().get(0).getPrecio_fichas());
-                    mSubTotal.setText("Fichas "+(shoppingCarItem.getCantidad()*shoppingCarItem.getItemProduct().get(0).getPrecio_fichas()));
+                    mPrice.setText("Tarjicoins "+shoppingCarItem.getItemProduct().get(0).getPrecio_fichas());
+                    mSubTotal.setText("Tarjicoins "+(shoppingCarItem.getCantidad()*shoppingCarItem.getItemProduct().get(0).getPrecio_fichas()));
                 }
             }else {
                 GlideApp.with(ctx)
@@ -123,8 +123,8 @@ public class ReserveAdapter extends RecyclerView.Adapter<ReserveAdapter.ReserveH
                     mPrice.setText("S/."+shoppingCarItem.getItemPromotion().get(0).getPrecio());
                     mSubTotal.setText("S/."+shoppingCarItem.getPrecio_total());
                 }else {
-                    mPrice.setText("Fichas "+shoppingCarItem.getItemPromotion().get(0).getPrecio_fichas());
-                    mSubTotal.setText("Fichas "+(shoppingCarItem.getCantidad()*shoppingCarItem.getItemPromotion().get(0).getPrecio_fichas()));
+                    mPrice.setText("Tarjicoins "+shoppingCarItem.getItemPromotion().get(0).getPrecio_fichas());
+                    mSubTotal.setText("Tarjicoins "+(shoppingCarItem.getCantidad()*shoppingCarItem.getItemPromotion().get(0).getPrecio_fichas()));
                 }
             }
             mQuantity.setText(shoppingCarItem.getCantidad()+"");
